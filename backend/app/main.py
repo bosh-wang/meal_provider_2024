@@ -1,22 +1,20 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
+
+from services import order_history, get_rating
 
 app = Flask(__name__)
-
-# Sample data
-data = [
-    {"id": 1, "name": "Alice", "age": 30},
-    {"id": 2, "name": "Bob", "age": 25},
-    {"id": 3, "name": "Charlie", "age": 35}
-]
 
 @app.route('/')
 def index():
     return 'Hello, I am alive!'
 
-# Route to get all data
-@app.route('/api/data', methods=['GET'])
-def get_data():
+# get order history
+@app.route('/api/orderHistory', methods=['GET'])
+def get_order_history():
+    data = order_history.get_order_history(request.get_json())
     return jsonify(data)
+
+
 
 
 if __name__ == '__main__':
