@@ -1,4 +1,4 @@
-CREATE TABLE restaurants_stand (
+CREATE TABLE restaurants_stands (
     stand_id VARCHAR(50) PRIMARY KEY,
     restaurant_id VARCHAR(50),
     name VARCHAR(255) NOT NULL,

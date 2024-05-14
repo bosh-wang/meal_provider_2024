@@ -5,6 +5,6 @@ CREATE TABLE meal_ratings (
     rating INT,
     comment TEXT,
     rating_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (menu_id) REFERENCES Menus(menu_id),
-    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+    FOREIGN KEY (menu_id) REFERENCES menus(menu_id),
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
 )PARTITION BY RANGE (rating_date);

@@ -1,4 +1,4 @@
-CREATE TABLE restaurant_staffs (
+CREATE TABLE restaurants_staffs (
     staff_id VARCHAR(50) PRIMARY KEY,
     user_id VARCHAR(50) NOT NULL,
     restaurant_id VARCHAR(50) NOT NULL,
