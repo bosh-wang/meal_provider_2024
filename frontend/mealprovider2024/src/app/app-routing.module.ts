@@ -4,8 +4,9 @@ import { HomeComponent } from './components/home/home.component';
 import { MenuComponent } from './components/menu/menu.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent },
-  { path: '/menu', component: MenuComponent },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
+  { path: 'menu', component: MenuComponent },
 ];
 
 @NgModule({
