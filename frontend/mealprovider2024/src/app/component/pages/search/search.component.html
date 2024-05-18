@@ -1,0 +1,7 @@
+<div>
+  <input #s type="text" placeholder="Search here (name, types, tags, ...) !"
+   (keyup.enter)="search(s.value)"
+   [value]="searchTerm">
+  <!--search func. for routing-->
+  <button (click)="search(s.value)">Search</button>
+</div>
