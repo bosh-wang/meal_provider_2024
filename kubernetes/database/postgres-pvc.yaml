@@ -9,11 +9,16 @@ spec:
     requests:
       storage: 10Gi
   storageClassName: "local-path"
+  selector:
+    matchLabels:
+      name: postgres-pv
 ---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: postgres-pv
+  labels:
+    name: postgres-pv
 spec:
   capacity:
     storage: 10Gi

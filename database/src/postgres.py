@@ -11,9 +11,9 @@ if __name__ == "__main__":
     pg_connection.connect()
     conn = pg_connection.conn
     print(conn)
-    table_list = ['users','employees','restaurants','restaurants_staffs','restaurants_stands','menus','menus_items']
+    table_list = ['users','employees','restaurants','restaurants_staffs','restaurants_stands','menus','menus_items','meals_ratings']
     # for table in table_list:
-    table = 'menus_items'
+    table = 'meals_ratings'
     sqlpath = f'database/sql/create/create_{table}_table.sql'
     # Prepare to check if the table already exists
     create_table(conn, sqlpath,table)

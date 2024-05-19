@@ -1,5 +1,11 @@
+# enviroment
 venv/
-data/
 __pycache__
+
+#data
+data/
+
+#config
 credential.yaml
 config/meal_provider_system.json
+config/.ssh.txt
