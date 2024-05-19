@@ -1,6 +1,7 @@
 from openai import OpenAI
 import json
 from lib.iac_config_helper import IACConfigHelper
+import os
 # 你的 OpenAI API 金鑰
 
 
@@ -51,9 +52,16 @@ if __name__ == "__main__":
             unique_list.append(item)
     print(len(unique_list))
     # print(unique_list[2])
-    for menu in unique_list[151:161]:
-        print("可以請你幫我依照下面菜品文字，產出圖片")
-        print(menu)
+    for menu in unique_list:
+        # print("可以請你幫我依照下面菜品文字，產出圖片")
+        # print(menu['item_name'])
+        for root, dirs, files in os.walk('database/data/pic'):
+            new_files = []  
+            for file in files:
+                new_files.append(file.replace('.jpg',''))
+            if menu['item_name'] not in new_files:
+                print(menu['item_name'] )
+                break            
     # from openai import OpenAI
     # client = OpenAI(api_key=api_key)
 
