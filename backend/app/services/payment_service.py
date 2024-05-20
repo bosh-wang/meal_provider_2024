@@ -64,4 +64,4 @@ def send_email(email, total_amount):
                 print(f'Email sent successfully to {receiver_email}!')
             except Exception as e:
                 print(f'Failed to send email. Error: {e}')
-send_email(['boshwang.mg12@nycu.edu.tw', 'wangbosh0604@gmail.com'], 9000000)
+# send_email(['boshwang.mg12@nycu.edu.tw', 'wangbosh0604@gmail.com'], 9000000)
