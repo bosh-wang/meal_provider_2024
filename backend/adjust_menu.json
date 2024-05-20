@@ -1,0 +1,10 @@
+{
+    "add_del": "adj",
+    "restaurant": "Tasty Burgers",
+    "items": [
+      {
+        "name": "Classic Burger",
+        "price": 18
+      }
+    ]
+}

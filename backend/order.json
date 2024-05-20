@@ -1,0 +1,10 @@
+{
+    "customer_ID": "312706028",
+    "restaurant": "Tasty Burgers",
+    "items": [
+      {
+        "name": "Classic Burger",
+        "price": 8.99
+      }
+    ]
+}

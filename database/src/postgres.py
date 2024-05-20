@@ -11,14 +11,14 @@ if __name__ == "__main__":
     pg_connection.connect()
     conn = pg_connection.conn
     print(conn)
-    table_list = ['users','employees','restaurants','restaurants_staffs','restaurants_stands','menus','menus_items']
-    # for table in table_list:
-    table = 'menus_items'
-    sqlpath = f'database/sql/create/create_{table}_table.sql'
-    # Prepare to check if the table already exists
-    create_table(conn, sqlpath,table)
-    json_path = f'database/data/{table}.json'
-    insert_json = read_json(json_path)
-    print(type(insert_json))
-    insert_data(conn,insert_json,table)
+    # table_list = ['users','employees','restaurants','restaurants_staffs','restaurants_stands','menus','menus_items']
+    # # for table in table_list:
+    # table = 'menus_items'
+    # sqlpath = f'database/sql/create/create_{table}_table.sql'
+    # # Prepare to check if the table already exists
+    # create_table(conn, sqlpath,table)
+    # json_path = f'database/data/{table}.json'
+    # insert_json = read_json(json_path)
+    # print(type(insert_json))
+    # insert_data(conn,insert_json,table)
     
