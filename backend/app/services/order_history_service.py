@@ -1,14 +1,20 @@
 from datetime import datetime
-import mysql.connector
+import psycopg2
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 
 def get_order_history_service():#data
     
-    # conn = mysql.connector.connect(
-    # host='localhost',           
-    # user='user',               
-    # password='@MySQLPassword', 
-    # )
+    # host = os.getenv("DB_HOST")
+    # dbname = os.getenv("DB_NAME")
+    # user = os.getenv("DB_USER")
+    # password = os.getenv("DB_PASSWORD")
+    # sslmode = "require"
+    # conn_string = "host={0} user={1} dbname={2} password={3} sslmode={4}".format(host, user, dbname, password, sslmode)
+    # conn = psycopg2.connect(conn_string)
+    # print("Connection established")
     # cursor = conn.cursor()
 
     # try:
@@ -40,7 +46,8 @@ def get_order_history_service():#data
     #             "total_amount": float(total_price)
     #         })
 
-    #     cursor.close()
+        # cursor.close()
+        # conn.close()
     #     return ({"orders": order_history})
     # except Exception as e:
     #     return ({"error": str(e)}), 500
