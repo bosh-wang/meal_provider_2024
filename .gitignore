@@ -1,0 +1,5 @@
+venv/
+data/
+__pycache__
+credential.yaml
+config/meal_provider_system.json
