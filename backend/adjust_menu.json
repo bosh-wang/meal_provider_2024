@@ -1,6 +1,6 @@
 {
-    "add_del": "adj",
-    "restaurant": "Tasty Burgers",
+    "add_del": "add",
+    "restaurant": "restaurant001",
     "items": [
       {
         "name": "Classic Burger",

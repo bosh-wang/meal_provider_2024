@@ -38,17 +38,17 @@ where each item is a dictionary with a name and a price.
 #     }
 # ]
 
-fast_food = {
-    "Restaurant": ["Tasty Burgers","Tasty Burgers", "Pizza Palace", "Pizza Palace"],
-    "Items": ["Classic Burger","Cheeseburger", "Pepperoni Pizza", "Margherita Pizza"],
-    "Price": [8.99,9.99, 11.99, 10.99]
-}
-df = pd.DataFrame(fast_food)
-# print(df)
-restaurants = []
-for name, group in df.groupby("Restaurant"):
-    items = [{"name": row["Items"], "price": row["Price"]} for idx, row in group.iterrows()]
-    restaurants.append({"name": name, "items": items})
+# fast_food = {
+#     "Restaurant": ["Tasty Burgers","Tasty Burgers", "Pizza Palace", "Pizza Palace"],
+#     "Items": ["Classic Burger","Cheeseburger", "Pepperoni Pizza", "Margherita Pizza"],
+#     "Price": [8.99,9.99, 11.99, 10.99]
+# }
+# df = pd.DataFrame(fast_food)
+# # print(df)
+# restaurants = []
+# for name, group in df.groupby("Restaurant"):
+#     items = [{"name": row["Items"], "price": row["Price"]} for idx, row in group.iterrows()]
+#     restaurants.append({"name": name, "items": items})
 # print(restaurants)
 
 import psycopg2
@@ -72,13 +72,16 @@ conn = psycopg2.connect(database=Database,
                         port=Port)
 
 # 從資料庫取資料
+conn.set_client_encoding('UTF8')
 cursor = conn.cursor()
 cursor.execute("SELECT COUNT(*) FROM restaurants")
 size = cursor.fetchone()
 print(size[0])
 cursor.execute("SELECT * FROM menus_items;")
 data = cursor.fetchmany(size=size[0])
+
 conn.close()
+print(data)
 # 定义列名
 columns = ['item_id', 'menu_id', 'restaurant_id', 'category', 'item_name', 'description', 'price', 'available', 'image', 'image_url', 'created_time']
 # 创建 DataFrame
@@ -95,7 +98,10 @@ print(json_result)
 # to the `/restaurant` endpoint.
 
 def get_menu():
-    return {"menu": json_result}
+    response = jsonify({"menu": menu})
+    response.headers['Content-Type'] = 'application/json; charset=utf-8'
+    return response
+    # return {"menu": data}
 # The above is a function that returns a dictionary that contains the `restaurants` list
 
 

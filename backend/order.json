@@ -4,6 +4,7 @@
     "items": [
       {
         "name": "Classic Burger",
+        "quantity": 1,
         "price": 8.99
       }
     ]
