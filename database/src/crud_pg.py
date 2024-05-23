@@ -41,7 +41,7 @@ def create_table(conn, sql_file_name: str,table_name:str):
         # Table exists
         print(f"{table_name} table already exists.")
         
-def update_table(conn,connection_params, table, data, update_column, condition_column):
+def update_table(conn, table, data, update_column, condition_column):
     """Update a table based on the provided data and column specifications."""
     cursor = conn.cursor()
     try:

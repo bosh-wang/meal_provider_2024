@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: citus-coordinator-service
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
   - port: 5432
     targetPort: 5432
@@ -16,7 +16,7 @@ kind: Service
 metadata:
   name: citus-worker-service
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
   - port: 5432
   selector:
@@ -28,6 +28,7 @@ kind: Service
 metadata:
   name: redis-service
 spec:
+  type: ClusterIP
   selector:
     app: redis
   ports:
