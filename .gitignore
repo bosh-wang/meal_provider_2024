@@ -9,3 +9,5 @@ data/
 credential.yaml
 config/meal_provider_system.json
 config/.ssh.txt
+
+get_helm.sh
