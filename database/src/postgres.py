@@ -10,6 +10,8 @@ if __name__ == "__main__":
     pg_connection = PGConnect(**pg_config)
     pg_connection.connect()
     conn = pg_connection.conn
+    cur = conn.cursor()
+    # Check if the table exists
     print(conn)
     table_list = ['users','employees','restaurants','restaurants_staffs','restaurants_stands','menus','menus_items','meals_ratings','orders','orders_items']
     # for table in table_list:
@@ -21,4 +23,3 @@ if __name__ == "__main__":
     insert_json = read_json(json_path)
     print(type(insert_json))
     insert_data(conn,insert_json,table)
-    
