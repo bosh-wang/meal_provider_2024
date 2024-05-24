@@ -1,0 +1,10 @@
+{
+    "change_status": "ADD",
+    "restaurant_id": "restaurant002",
+    "category": "主食",
+    "item_name": "活力飯",
+    "description": "活力飯，吃四年都吃不膩",
+    "price": 120,
+    "availability": true,
+    "image_url": "https://images.app.goo.gl/q4aVdPB83r7kHM1d7"
+}

@@ -29,13 +29,13 @@ conn = psycopg2.connect(database=Database,
 with open('adjust_menu.json', 'r') as f:
     adj_data = json.load(f)
 # 解析 order.json 中的数据
-add_del = adj_data['add_del']
-Restaurant = adj_data['restaurant']
+add_del = adj_data['change_status']
+Restaurant = adj_data['restaurant_id']
 Item = adj_data['items'][0]['name']
 price = adj_data['items'][0]['price']
 
 cursor = conn.cursor()
-if add_del == 'add':
+if add_del == 'ADD':
     # 構建 SQL 語句
     insert_query = """
     INSERT INTO menus_items (item_id, menu_id, restaurant_id, category,item_name,description,price,availability,image,image_url)
@@ -44,12 +44,12 @@ if add_del == 'add':
     """
     # 執行 SQL 語句
     cursor.execute(insert_query, ('item041', 'menu02',Restaurant, "主食",Item,"goooooood",price,True,None,r"https://storage.googleapis.com/meal_provider_system/%E8%B1%AC%E8%A1%80%E7%B3%95.jpg"))
-elif add_del == 'del':
+elif add_del == 'DELETE':
     for index, row in df_menu.iterrows():
         if row['Restaurant'] == Restaurant and row['Items'] == Item:
             ind = index
     df_menu = df_menu.drop(index = ind)
-else: #adj
+else: #add_del == 'ADJUST':
     for index, row in df_menu.iterrows():
         if row['Restaurant'] == Restaurant and row['Items'] == Item:
             ind = index

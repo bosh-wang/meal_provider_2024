@@ -4,11 +4,11 @@
     "items": [
       {
         "name": "Classic Burger",
-        "price": 8.99
+        "price": 170
       },
       {
         "name": "Cheeseburger",
-        "price": 9.99
+        "price": 160
       }
     ]
 }

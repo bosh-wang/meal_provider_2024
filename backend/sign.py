@@ -39,9 +39,19 @@ def sign_in(r,cID,passw):
 
     # 检查是否有匹配的记录
     if result:
-        print("登入成功", result)
+        print("Login successful")
+        data = {
+            "message" : "Login Successful"
+        }
+        print("回傳值：",data)
+        return json.dumps(data)
     else:
-        print("登入失敗，請檢查資料是否有誤")
+        print("Login failed")
+        data = {
+           "message" : "Login failed"
+        }
+        print("回傳值：",data)
+        return json.dumps(data)
 
     # 关闭游标和连接
     cur.close()
@@ -59,8 +69,8 @@ def sign_in(r,cID,passw):
 with open('signin.json', 'r') as f:
     sign_in_data = json.load(f)
 r = sign_in_data['role']
-cID = sign_in_data['customer_ID']
-passw = sign_in_data['pwd']
+cID = sign_in_data['email']
+passw = sign_in_data['password_hash']
 print(r,cID,passw)
 sign_in(r,cID,passw)
 # data = {'customer_ID': ['312706006','311706006'],

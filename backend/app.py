@@ -74,11 +74,11 @@ conn = psycopg2.connect(database=Database,
 # 從資料庫取資料
 conn.set_client_encoding('UTF8')
 cursor = conn.cursor()
-cursor.execute("SELECT COUNT(*) FROM restaurants")
+cursor.execute("SELECT COUNT(*) FROM menus_items")
 size = cursor.fetchone()
 print(size[0])
 cursor.execute("SELECT * FROM menus_items;")
-data = cursor.fetchmany(size=size[0])
+data = cursor.fetchmany(size=1)
 
 conn.close()
 print(data)
@@ -105,4 +105,22 @@ def get_menu():
 # The above is a function that returns a dictionary that contains the `restaurants` list
 
 
-
+# 以上可以取出要的值和rating
+# SELECT 
+#     m.*,
+#     ROUND(AVG(r.star_rating), 1) AS star_rating
+# FROM 
+#     menu_items m
+# LEFT JOIN 
+#     meals_ratings r ON m.item_id = r.item_id
+# GROUP BY 
+#     m.item_id,
+#     m.menu_id,
+#     m.restaurant_id,
+#     m.category,
+#     m.item_name,
+#     m.description,
+#     m.price,
+#     m.availability,
+#     m.image,
+#     m.image_url;
