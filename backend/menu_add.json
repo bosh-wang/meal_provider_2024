@@ -1,10 +1,10 @@
 {
     "change_status": "ADD",
-    "restaurant_id": "restaurant002",
+    "restaurant_id": "restaurant003",
     "category": "主食",
-    "item_name": "活力飯",
-    "description": "活力飯，吃四年都吃不膩",
-    "price": 120,
+    "item_name": "超好吃牛肉丸",
+    "description": "吃四年都吃不膩",
+    "price": 160,
     "availability": true,
     "image_url": "https://images.app.goo.gl/q4aVdPB83r7kHM1d7"
 }

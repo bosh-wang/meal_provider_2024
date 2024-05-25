@@ -307,6 +307,7 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 from datetime import datetime
 import pytz
+import json
 
 app = Flask(__name__)
 
@@ -353,10 +354,15 @@ def add_menu_item(data):
         conn = get_db_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         
-        cursor.execute("SELECT COUNT(*) FROM menus_items")
-        item_count = cursor.fetchone()['count']
-        new_item_id = f'item{item_count + 1:03d}'
-
+        # 获取当前最后一项的 item_id
+        cursor.execute("SELECT item_id FROM menus_items ORDER BY item_id DESC LIMIT 1")
+        last_item_id = cursor.fetchone()
+        if last_item_id:
+            last_item_id = last_item_id['item_id']
+            last_index = int(last_item_id.split('item')[-1])
+            new_item_id = f'item{last_index + 1:03d}'
+        else:
+            new_item_id = 'item001'  # 如果数据库为空，则从第一项开始
         menu_id = 'menu01'
         image = None
         created_time = datetime.now(pytz.timezone('Asia/Taipei')).isoformat()
@@ -376,8 +382,7 @@ def add_menu_item(data):
         conn.commit()
         cursor.close()
         conn.close()
-
-        response = jsonify({
+        response_data = {
             "item_id": new_item_id,
             "menu_id": menu_id,
             "restaurant_id": restaurant_id,
@@ -389,9 +394,27 @@ def add_menu_item(data):
             "image": image,
             "image_url": image_url,
             "created_time": created_time
-        })
+        }
+
+        response_json = json.dumps(response_data, ensure_ascii=False)
+        response = make_response(response_json, 201)
         response.headers['Content-Type'] = 'application/json; charset=utf-8'
-        return make_response(response, 201)
+        return response
+        # response = jsonify({
+        #     "item_id": new_item_id,
+        #     "menu_id": menu_id,
+        #     "restaurant_id": restaurant_id,
+        #     "category": category,
+        #     "item_name": item_name,
+        #     "description": description,
+        #     "price": price,
+        #     "availability": availability,
+        #     "image": image,
+        #     "image_url": image_url,
+        #     "created_time": created_time
+        # })
+        # response.headers['Content-Type'] = 'application/json; charset=utf-8'
+        # return make_response(response, 201)
     
     except Exception as e:
         return make_response(jsonify({"error": str(e)}), 500)
@@ -421,14 +444,17 @@ def adjust_menu_item(data):
         conn.close()
 
         if updated_item:
-            response = jsonify({
+            response_data = {
                 "item_id": updated_item['item_id'],
                 "item_name": updated_item['item_name'],
                 "price": updated_item['price'],
                 "message": "Price updated successfully"
-            })
+            }
+
+            response_json = json.dumps(response_data, ensure_ascii=False)
+            response = make_response(response_json, 201)
             response.headers['Content-Type'] = 'application/json; charset=utf-8'
-            return make_response(response, 200)
+            return response
         else:
             return make_response(jsonify({"error": "Item not found"}), 404)
     

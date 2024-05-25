@@ -1,15 +1,8 @@
 {
-    "customer_ID": "312706028",
-    "restaurant": "Tasty Burgers",
-    "items": [
-      {
-        "name": "Classic Burger",
-        "price": 170
-      },
-      {
-        "name": "Cheeseburger",
-        "price": 160
-      }
-    ]
+  "user_id": "user01",
+  "restaurant_id": "restaurant003",
+  "items": [
+      {"item_id": "item807", "quantity": 2},
+      {"item_id": "item808", "quantity": 1}
+  ]
 }
-
