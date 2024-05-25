@@ -1,5 +1,6 @@
 import psycopg2
 
+
 class PGConnect:
     def __init__(
         self,
@@ -55,4 +56,3 @@ class PGConnect:
             self.conn.commit()
             cursor.close()
             print("Query executed successfully")
-

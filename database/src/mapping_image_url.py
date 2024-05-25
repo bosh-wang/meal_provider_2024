@@ -1,4 +1,4 @@
-from lib.json_helper import read_json,write_json
+from lib.json_helper import read_json, write_json
 
 # image_url_json = read_json('database/data/menus_items_image_url.json')
 # new_list = {}
@@ -8,12 +8,11 @@ from lib.json_helper import read_json,write_json
 
 # print(new_list)
 # write_json('database/data/menus_items_non_dp_image_url.json',new_list)
-mapping_data = read_json('database/data/menus_items_non_dp_image_url.json')
-menu_items = read_json('database/data/menus_items.json')    
+mapping_data = read_json("database/data/menus_items_non_dp_image_url.json")
+menu_items = read_json("database/data/menus_items.json")
 for item in menu_items:
-    if item['item_name'] in mapping_data:
-        item['image_url'] = mapping_data[item['item_name']]
+    if item["item_name"] in mapping_data:
+        item["image_url"] = mapping_data[item["item_name"]]
     else:
         print(f"Error: {item['item_name']} not found.")
-write_json('database/data/menus_items_new.json',menu_items)
-        
+write_json("database/data/menus_items_new.json", menu_items)
