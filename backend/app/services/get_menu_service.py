@@ -28,7 +28,7 @@ def custom_json_serializer(obj):
         return float(obj)
     raise TypeError(f"Type {type(obj)} not serializable")
 
-@app.route('/menu', methods=['GET'])
+# @app.route('/menu', methods=['GET'])
 def get_menu():
     try:
         conn = get_db_connection()
@@ -82,8 +82,8 @@ def get_menu():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(debug=True)
 
 
 

@@ -15,35 +15,42 @@ cd backend/
 pip install flask
 pip install psycopg2
 ```
+# 取得資料庫資料
+python get_information.py
 
-# 點餐
+# 點餐 order_service.py
 ```
-curl -X POST -H "Content-Type: application/json" -d @orders.json http://localhost:5000/create_order
+curl -X POST -H "Content-Type: application/json" -d @services/orders.json http://localhost:5000/api/create_order
+<!-- curl -X POST -H "Content-Type: application/json" -d @orders.json http://localhost:5000/create_order -->
 ```
 更改狀態
 ```
-curl -X POST -H "Content-Type: application/json" -d @status_change.json http://localhost:5000/change_order_status
+curl -X POST -H "Content-Type: application/json" -d @services/status_change.json http://localhost:5000/api/change_order_status
+<!-- curl -X POST -H "Content-Type: application/json" -d @status_change.json http://localhost:5000/change_order_status -->
 ```
 取得訂單狀態
 ```
-curl -X GET "http://localhost:5000/get_order?order_id=2"
+curl -X GET "http://localhost:5000/api/get_order?order_id=3"
+<!-- curl -X GET "http://localhost:5000/get_order?order_id=2" -->
 ```
-# 取得菜單
+# 取得菜單 get_menu_service.py
 ```
-python app.py
-curl -X GET http://localhost:5000/menu
+curl -X GET http://localhost:5000/api/menu
+<!-- python get_menu_service.py
+curl -X GET http://localhost:5000/menu -->
 ```
-# 登入
+# 登入 signin_service.py
 ```
-python sign.py
+python signin_service.py
+curl -X POST -H "Content-Type: application/json" -d @signin.json http://localhost:5000/api/signin
 ```
 # 更改菜單
 ```
-python menu_1change.py 
+python adjust_menu_service.py
 
-curl -X POST -H "Content-Type: application/json" -d @menu_add.json http://localhost:5000/change_menu_item
-curl -X POST -H "Content-Type: application/json" -d @menu_delete.json http://localhost:5000/change_menu_item
-curl -X POST -H "Content-Type: application/json" -d @menu_adjust.json http://localhost:5000/change_menu_item
+curl -X POST -H "Content-Type: application/json" -d @services/menu_add.json http://localhost:5000/api/change_menu_item
+curl -X POST -H "Content-Type: application/json" -d @services/menu_delete.json http://localhost:5000/api/change_menu_item
+curl -X POST -H "Content-Type: application/json" -d @services/menu_adjust.json http://localhost:5000/api/change_menu_item
 ```
 或是
 ```

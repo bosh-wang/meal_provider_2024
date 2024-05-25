@@ -1,0 +1,5 @@
+{
+    "order_id": 2,
+    "order_status_before": "CONFIRMED",
+    "order_status_after": "CANCELED"
+}

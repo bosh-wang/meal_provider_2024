@@ -18,9 +18,9 @@ def get_db_connection():
         port=config['GCP']['port']
     )
 
-@app.route('/create_order', methods=['POST'])
-def create_order():
-    data = request.json
+# @app.route('/create_order', methods=['POST'])
+def create_order(data):
+    # data = request.json
     user_id = data.get('user_id')
     restaurant_id = data.get('restaurant_id')
     items = data.get('items')  # List of items, each item is a dict with item_id and quantity
@@ -75,9 +75,9 @@ def create_order():
     except Exception as e:
         return make_response(jsonify({"error": str(e)}), 500)
 
-@app.route('/change_order_status', methods=['POST'])
-def change_order_status():
-    data = request.json
+# @app.route('/change_order_status', methods=['POST'])
+def change_order_status(data):
+    # data = request.json
     order_id = data.get('order_id')
     order_status_before = data.get('order_status_before')
     order_status_after = data.get('order_status_after')
@@ -112,9 +112,9 @@ def change_order_status():
     
     except Exception as e:
         return make_response(jsonify({"error": str(e)}), 500)
-@app.route('/get_order', methods=['GET'])
-def get_order():
-    order_id = request.args.get('order_id')
+# @app.route('/get_order', methods=['GET'])
+def get_order(order_id):
+    # order_id = request.args.get('order_id')
 
     if not order_id:
         return make_response(jsonify({"error": "Missing order_id parameter"}), 400)
@@ -146,5 +146,5 @@ def get_order():
     
     except Exception as e:
         return make_response(jsonify({"error": str(e)}), 500)
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(debug=True)

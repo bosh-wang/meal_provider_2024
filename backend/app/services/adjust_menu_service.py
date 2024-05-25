@@ -324,7 +324,7 @@ def get_db_connection():
     )
 
 
-@app.route('/change_menu_item', methods=['POST'])
+# @app.route('/change_menu_item', methods=['POST'])
 def change_menu_item():
     data = request.json
     change_status = data.get('change_status')
@@ -491,5 +491,5 @@ def delete_menu_item(data):
     except Exception as e:
         return make_response(jsonify({"error": str(e)}), 500)
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(debug=True)
