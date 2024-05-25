@@ -87,10 +87,12 @@ def change_order_status():
 
     if order_status_before == 'PENDING' and order_status_after == 'CONFIRMED':
         new_order_status = 'CONFIRMED'
-    elif order_status_before == 'PENDING' and order_status_after == 'CANCELED':
-        new_order_status = 'CANCELED'
-    elif order_status_before == 'CONFIRMED' and order_status_after == 'COMPLETED':
+    elif order_status_before == 'CONFIRMED' and order_status_after == 'PREPARED':
+        new_order_status = 'PREPARED'
+    elif order_status_before == 'PREPARED' and order_status_after == 'COMPLETED':
         new_order_status = 'COMPLETED'
+    elif order_status_before!='COMPLETED' and order_status_after == 'CANCELED':
+        new_order_status = 'CANCELED'
     else:
         return make_response(jsonify({"error": "Invalid order status transition"}), 400)
 
