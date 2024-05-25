@@ -7,7 +7,9 @@ import { Tag } from '../shared/model/Tag';
   providedIn: 'root',
 })
 export class FoodService {
+  sample_foods: any;
   constructor() {}
+
   getAll(): Food[] {
     return sample_foods;
   }

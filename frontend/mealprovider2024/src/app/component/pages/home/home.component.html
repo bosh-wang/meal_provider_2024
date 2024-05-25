@@ -9,21 +9,21 @@
         <div class="name">
           {{item.name}}
         </div>
-        <span class="favorite {{item.favorite?'':'not'}}">❤</span>
+        <!--<span class="favorite {{item.favorite?'':'not'}}">❤</span>-->
         <div class="stars">
           <p class="star-rating">star-rating: {{item.stars}}</p>
         </div>
         <div class="product-item-footer">
           <div class="origins">
-            <span *ngFor="let origin of item.origins">
+            <span *ngFor="let origin of item.tags">
               {{origin}}
             </span>
           </div>
 
-          <div class="cook-time">
+          <!--<div class="cook-time">
             <span>🕒</span>
             {{item.cookTime}}
-          </div>
+          </div>-->
 
           <div class="price">
             <span>

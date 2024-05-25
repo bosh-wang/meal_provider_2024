@@ -50,13 +50,13 @@ export class CartService {
     this.cart.totalCount = this.cart.items.reduce((prevSum, currentItem) =>
     prevSum + currentItem.quantity, 0);
 
-    const cartJson = JSON.stringify(this.cart);
+    const cartJson = JSON.stringify(this.cart); //Convert value into json string
     localStorage.setItem('Cart', cartJson);
     this.cartSubject.next(this.cart);
   }
   //When ever Set Local Storage Data then Get Data
   private getCartFromLocalStorage():Cart{
     const cartJson = localStorage.getItem('Cart');
-    return cartJson?JSON.parse(cartJson):new Cart();
+    return cartJson?JSON.parse(cartJson):new Cart();  //Convert json into object
   }
 }

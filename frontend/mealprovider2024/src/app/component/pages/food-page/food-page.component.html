@@ -6,17 +6,13 @@
       <span class="name">
         {{food.name}}
       </span>
-      <span class="favorite {{food.favorite? '':'not'}}">❤</span>
     </div>
 
+    <div class="restaurant_id">
+      <p class="Restaurant"> #{{food.restaurant_id}}</p>
+    </div>
     <div class="rating">
-      <p class="star-rating">star-rating: {{food.stars}}</p>
-    </div>
-
-    <div class="origins">
-      <span *ngFor="let origin of food.origins">
-        {{origin}}
-      </span>
+      <p class="star-rating"> {{food.stars}}★</p>
     </div>
 
     <div class="tags">
@@ -25,10 +21,10 @@
       </a>
     </div>
 
-    <div class="cook-time">
-      <span>
-        Time to cook about <strong>{{food.cookTime}}</strong> minutes
-      </span>
+    <div class="description">
+      <div>
+        <a>{{food.description}}</a>
+      </div>
     </div>
 
     <div class="price">
@@ -38,5 +34,24 @@
     </div>
 
     <button (click)="addToCart()"> Add to Cart</button>
+
+    <div class="button-options">
+      <button type="submit">Add Food</button>
+      <button (click)="deleteFood()"> Delete Food</button>
+      <button (click)="updateFoodPrice()"> Update Price</button>
+      <!-- Add New Food Modal -->
+      <div>
+        <h2>Add New Food</h2>
+        <form (submit)="addNewFood()">
+          <input type="text" placeholder="Name" [(ngModel)]="newFood.name" required>
+          <input type="number" placeholder="Price" [(ngModel)]="newFood.price" required>
+          <input type="number" placeholder="Stars" [(ngModel)]="newFood.stars" required>
+          <input type="text" placeholder="Image URL" [(ngModel)]="newFood.imageUrl" required>
+          <input type="text" placeholder="Restaurant ID" [(ngModel)]="newFood.restaurant_id" required>
+          <textarea placeholder="Description" [(ngModel)]="newFood.description"></textarea>
+        </form>
+      </div>
+    </div>
+
   </div>
 </div>
