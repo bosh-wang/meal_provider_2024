@@ -2,6 +2,7 @@ import logging
 import os
 import yaml
 
+
 class IACConfigHelper:
     @staticmethod
     def get_conn_info(conn_file):
