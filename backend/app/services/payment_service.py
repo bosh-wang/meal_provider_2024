@@ -8,35 +8,35 @@ import os
 
 load_dotenv()
 
-def payment_notification_service():#data
+def payment_notification_service(data):
 
-    # host = os.getenv("DB_HOST")
-    # dbname = os.getenv("DB_NAME")
-    # user = os.getenv("DB_USER")
-    # password = os.getenv("DB_PASSWORD")
-    # sslmode = "require"
-    # conn_string = "host={0} user={1} dbname={2} password={3} sslmode={4}".format(host, user, dbname, password, sslmode)
-    # conn = psycopg2.connect(conn_string)
-    # print("Connection established")
-    # cursor = conn.cursor()
+    data = {"user_id": ['user01', 'user02', 'user03']}
 
-    # try:
-    #     item_id = data['user_id']
+    host = os.getenv("DB_HOST")
+    dbname = os.getenv("DB_NAME")
+    user = os.getenv("DB_USER")
+    password = os.getenv("DB_PASSWORD")
+    sslmode = "require"
+    conn_string = "host={0} user={1} dbname={2} password={3} sslmode={4}".format(host, user, dbname, password, sslmode)
+    conn = psycopg2.connect(conn_string)
+    print("Connection established")
+    cursor = conn.cursor()
 
-    #     cursor.execute("SELECT orders.user_id, users.email, orders.total_amount FROM orders JOIN users ON orders.user_id=users.user_id group by orders.user_id")
-    #     orders = cursor.fetchall()
+    try:
+        user_id = data['user_id']
+        cursor.execute("SELECT users.email FROM users WHERE users.user_id = ANY(%s)", (user_id,))
+        emails = cursor.fetchall()
 
-    #     for user_id, email, total_amount in orders:
-    #         if total_amount > 0:
-    #             print(f"Sending email to {email} for payment of {total_amount}")
-    #             send_email(email, total_amount)
+        for email in emails:
+            total_amount = 9000000
+            print(f"Sending email to {email} for payment of {total_amount}")
+            send_email(email, total_amount)
 
-    #     cursor.close()
-        # conn.close()
-    #     return ({"message": "Notification sent successfully"})
-    # except Exception as e:
-    #     return ({"error": str(e)}), 500
-    return({"message": "Notification sent successfully"})
+        cursor.close()
+        conn.close()
+        return ({"message": "Notification sent successfully"})
+    except Exception as e:
+        return ({"error": str(e)}), 500
 
 
 def send_email(email, total_amount):
@@ -65,3 +65,29 @@ def send_email(email, total_amount):
             except Exception as e:
                 print(f'Failed to send email. Error: {e}')
 # send_email(['boshwang.mg12@nycu.edu.tw', 'wangbosh0604@gmail.com'], 9000000)
+
+def payment(data):
+    
+    order_id, customer_id, payment_method = data['order_id'], data['customer_id'], data['payment_method']
+    
+    host = os.getenv("DB_HOST")
+    dbname = os.getenv("DB_NAME")
+    user = os.getenv("DB_USER")
+    password = os.getenv("DB_PASSWORD")
+    sslmode = "require"
+    conn_string = "host={0} user={1} dbname={2} password={3} sslmode={4}".format(host, user, dbname, password, sslmode)
+    conn = psycopg2.connect(conn_string)
+    print("Connection established")
+    cursor = conn.cursor()
+
+    try:
+
+        cursor.execute("UPDATE orders SET paid = 1, WHERE order_id = %s", (order_id,))
+        result = cursor.fetchall()
+        print(result)
+
+        cursor.close()
+        conn.close()
+        return ({"message": "sucessfully paid via " + payment_method})
+    except Exception as e:
+        return ({"error": str(e)}), 500

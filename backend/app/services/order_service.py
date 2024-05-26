@@ -3,6 +3,7 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 from datetime import datetime
 import pytz
+import os
 
 app = Flask(__name__)
 
@@ -11,14 +12,13 @@ def get_db_connection():
     from config import load_config
     config = load_config()
     return psycopg2.connect(
-        database=config['GCP']['database'],
-        host=config['GCP']['host'],
-        user=config['GCP']['user'],
-        password=config['GCP']['password'],
-        port=config['GCP']['port']
+        host = os.getenv("DB_HOST"),
+        database = os.getenv("DB_NAME"),
+        user = os.getenv("DB_USER"),
+        password = os.getenv("DB_PASSWORD"),
+        port = os.getenv("DB_PORT")
     )
 
-# @app.route('/create_order', methods=['POST'])
 def create_order(data):
     # data = request.json
     user_id = data.get('user_id')
@@ -146,5 +146,3 @@ def get_order(order_id):
     
     except Exception as e:
         return make_response(jsonify({"error": str(e)}), 500)
-# if __name__ == '__main__':
-#     app.run(debug=True)

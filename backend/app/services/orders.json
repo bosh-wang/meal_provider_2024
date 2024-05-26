@@ -1,8 +1,8 @@
 {
   "user_id": "user01",
-  "restaurant_id": "restaurant003",
+  "restaurant_id": "restaurant040",
   "items": [
-      {"item_id": "item807", "quantity": 2},
-      {"item_id": "item808", "quantity": 1}
+      {"item_id": "item789", "quantity": 2},
+      {"item_id": "item790", "quantity": 1}
   ]
 }
