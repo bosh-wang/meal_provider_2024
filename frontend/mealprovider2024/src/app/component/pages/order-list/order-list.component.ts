@@ -1,5 +1,6 @@
 import { Component ,OnInit} from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Cart } from '../../../shared/model/Cart';
 interface OrderItem {
   name: string;
   price: number;

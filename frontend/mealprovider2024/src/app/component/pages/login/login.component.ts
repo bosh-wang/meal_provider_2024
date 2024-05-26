@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { Login } from '../../../shared/model/Login';
 import CryptoJS from 'crypto-js';
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -14,10 +16,11 @@ export class LoginComponent {
   submitted = false;
 
   constructor(private formBuilder: FormBuilder) {
+    const formModel = new Login();
     this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      role: ['', Validators.required]
+      email: [formModel.email, [Validators.required, Validators.email]],
+      password: [formModel.password, [Validators.required, Validators.minLength(6)]],
+      role: [formModel.role, Validators.required]
     });
   }
 
