@@ -1,0 +1,37 @@
+<div class="login-container">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" formControlName="email">
+        <div *ngIf="submitted && formControls.email.errors">
+          <small *ngIf="formControls.email.errors.required">Email is required</small>
+          <small *ngIf="formControls.email.errors.email">Email must be valid</small>
+        </div>
+      </div>
+  
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" formControlName="password">
+        <div *ngIf="submitted && formControls.password.errors">
+          <small *ngIf="formControls.password.errors.required">Password is required</small>
+          <small *ngIf="formControls.password.errors.minlength">Password must be at least 6 characters</small>
+        </div>
+      </div>
+  
+      <div>
+        <label for="role">Role:</label>
+        <select id="role" formControlName="role">
+          <option value="" disabled selected>Select your role</option>
+          <option value="customer">Customer</option>
+          <option value="admin">Kitchen Admin</option>
+          <option value="HR">HR</option>
+        </select>
+        <div *ngIf="submitted && formControls.role.errors">
+          <small *ngIf="formControls.role.errors.required">Role is required</small>
+        </div>
+      </div>
+  
+      <button type="submit">Login</button>
+    </form>
+  </div>
+  
