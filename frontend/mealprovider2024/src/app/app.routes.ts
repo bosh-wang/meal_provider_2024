@@ -4,6 +4,7 @@ import { FoodPageComponent } from './component/pages/food-page/food-page.compone
 import { CartPageComponent } from './component/pages/cart-page/cart-page.component';
 import { LoginComponent } from './component/pages/login/login.component';
 import { OrderListComponent } from './component/pages/order-list/order-list.component';
+import { OrderAdminComponent } from './component/pages/order-admin/order-admin.component';
 import { OrderDashboardComponent } from './component/pages/order-dashboard/order-dashboard.component';
 export const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -22,6 +23,7 @@ export const routes: Routes = [
   {path: 'order', component: OrderListComponent},
   {path: 'login', component: LoginComponent},
   {path: 'orderdashboard', component: OrderDashboardComponent },
+  {path: 'orderadmin', component: OrderAdminComponent },
   {path: 'logout', component: HomeComponent}
 
 ];
