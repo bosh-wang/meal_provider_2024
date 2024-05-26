@@ -4,6 +4,7 @@ import { FoodPageComponent } from './component/pages/food-page/food-page.compone
 import { CartPageComponent } from './component/pages/cart-page/cart-page.component';
 import { LoginComponent } from './component/pages/login/login.component';
 import { OrderListComponent } from './component/pages/order-list/order-list.component';
+import { OrderDashboardComponent } from './component/pages/order-dashboard/order-dashboard.component';
 export const routes: Routes = [
   {path: '', component: HomeComponent},
 
@@ -16,10 +17,11 @@ export const routes: Routes = [
   {path: 'cart-page', component: CartPageComponent},
   
   {path: 'header', component: HomeComponent},
-  {path: 'dashboard', component: HomeComponent},
+  {path: 'dashboard', component: OrderDashboardComponent},
   {path: 'profile', component: HomeComponent},
   {path: 'order', component: OrderListComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'orderdashboard', component: OrderDashboardComponent },
   {path: 'logout', component: HomeComponent}
 
 ];
