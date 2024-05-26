@@ -3,7 +3,7 @@ import { HomeComponent } from './component/pages/home/home.component';
 import { FoodPageComponent } from './component/pages/food-page/food-page.component';
 import { CartPageComponent } from './component/pages/cart-page/cart-page.component';
 import { LoginComponent } from './component/pages/login/login.component';
-
+import { OrderListComponent } from './component/pages/order-list/order-list.component';
 export const routes: Routes = [
   {path: '', component: HomeComponent},
 
@@ -18,7 +18,7 @@ export const routes: Routes = [
   {path: 'header', component: HomeComponent},
   {path: 'dashboard', component: HomeComponent},
   {path: 'profile', component: HomeComponent},
-  {path: 'order', component: HomeComponent},
+  {path: 'order', component: OrderListComponent},
   {path: 'login', component: LoginComponent},
   {path: 'logout', component: HomeComponent}
 
