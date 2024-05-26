@@ -6,6 +6,7 @@ import { LoginComponent } from './component/pages/login/login.component';
 import { OrderListComponent } from './component/pages/order-list/order-list.component';
 import { OrderAdminComponent } from './component/pages/order-admin/order-admin.component';
 import { OrderDashboardComponent } from './component/pages/order-dashboard/order-dashboard.component';
+import { OrderHRComponent } from './component/pages/order-hr/order-hr.component';
 export const routes: Routes = [
   {path: '', component: HomeComponent},
 
@@ -24,6 +25,7 @@ export const routes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'orderdashboard', component: OrderDashboardComponent },
   {path: 'orderadmin', component: OrderAdminComponent },
+  {path: 'orderhr', component: OrderHRComponent },
   {path: 'logout', component: HomeComponent}
 
 ];
