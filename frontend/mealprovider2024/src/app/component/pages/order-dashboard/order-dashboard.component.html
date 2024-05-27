@@ -1,23 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <!-- Modal -->
-<div class="modal fade" id="RatingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-      <div class="modal-content">
-          <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-              ...
-          </div>
-          <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary">Save changes</button>
-          </div>
-      </div>
-  </div>
-</div>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -27,8 +10,8 @@
 
 </head>
 
-
-  <table style="width: 100%;">
+  
+  <table class="table table-striped" style="width: 100%;">
       <thead>
           <tr>
               <th scope="col">Order ID</th>
@@ -54,7 +37,39 @@
           </tr>
       </tbody>
   </table>
-
+<!-- Rating Modal -->
+<div class="modal fade" id="RatingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Rating</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="mb-3">
+                      <label for="user" class="form-label">User Name : Mark</label>
+                    </div>
+                    <div class="mb-3">
+                      <label for="item" class="form-label">Item Name : Fruit Salad</label>
+                    </div>
+                    <div class="mb-3">
+                        <select class="form-select" aria-label="Default select example">
+                            <option selected>Rating</option>
+                            <option value="0">0</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                          </select>    
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
+            </div>
+        </div>
+    </div>
+  </div>
 
 
 
