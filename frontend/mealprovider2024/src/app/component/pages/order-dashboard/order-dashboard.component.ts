@@ -49,7 +49,7 @@ export class OrderDashboardComponent {
           { "name": "Mango Smoothie", "price": 200, "quantity": 2 }
         ],
         "totalAmount": 700,
-        "order_status": "DELIVERED"
+        "order_status": "PREPARED"
       },
       {
         "order_id": "4",
@@ -96,8 +96,71 @@ export class OrderDashboardComponent {
       // 这里可以添加提交评分的逻辑，例如调用服务来发送评分数据到服务器
     }
   }
-  setrating(ord:Order){
-     
+  getProgressWidth(status: string): string {
+    switch (status) {
+      case 'PENDING':
+        return '25%';
+      case 'CONFIRMED':
+        return '50%';
+      case 'PREPARED':
+        return '75%';
+      case 'COMPLETED':
+        return '100%';
+      case 'CANCELLED':
+        return '0%';
+      default:
+        return '0%';
+    }
+  }
 
+  getProgressClass(status: string): string {
+    switch (status) {
+      case 'PENDING':
+        return 'bg-warning';
+      case 'CONFIRMED':
+        return 'bg-info';
+      case 'PREPARED':
+        return 'bg-primary';
+      case 'COMPLETED':
+        return 'bg-success';
+      case 'CANCELLED':
+        return 'bg-danger';
+      default:
+        return 'bg-secondary';
+    }
+  }
+
+  getProgressText(status: string): string {
+    switch (status) {
+      case 'PENDING':
+        return 'PENDING';
+      case 'CONFIRMED':
+        return 'CONFIRMED';
+      case 'PREPARED':
+        return 'PREPARED';
+      case 'COMPLETED':
+        return 'COMPLETED';
+      case 'CANCELLED':
+        return 'Cancelled';
+      default:
+        return '0%';
+    }
+  }
+
+  getProgressValue(status: string): number {
+    switch (status) {
+      case 'PENDING':
+        return 25;
+      case 'CONFIRMED':
+        return 50;
+      case 'PREPARED':
+        return 75;
+      case 'COMPLETED':
+        return 100;
+      case 'CANCELLED':
+        return 0;
+      default:
+        return 0;
+    }
   }
 }

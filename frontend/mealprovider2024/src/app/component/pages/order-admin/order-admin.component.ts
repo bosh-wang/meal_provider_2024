@@ -49,7 +49,7 @@ export class OrderAdminComponent {
           { "name": "Mango Smoothie", "price": 200, "quantity": 2 }
         ],
         "totalAmount": 700,
-        "order_status": "DELIVERED"
+        "order_status": "PREPARED"
       },
       {
         "order_id": "4",

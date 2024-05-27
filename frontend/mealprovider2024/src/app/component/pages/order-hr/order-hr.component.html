@@ -9,12 +9,46 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">Order_HR</a>
+
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
+
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+        <form class="d-flex" role="search">
+          <select class="form-select me-2" aria-label="Department">
+            <option selected disabled>Department</option>
+            <option value="HR">HR</option>
+            <option value="Engineering">Engineering</option>
+            <option value="Sales">Sales</option>
+            <option value="Marketing">Marketing</option>
+          </select>
+          <select class="form-select me-2" aria-label="Position">
+            <option selected disabled>Position</option>
+            <option value="Manager">Manager</option>
+            <option value="Developer">Developer</option>
+            <option value="Sales Representative">Sales Representative</option>
+            <option value="Marketing Specialist">Marketing Specialist</option>
+          </select>
+          <select class="form-select me-2" aria-label="Position">
+            <option selected disabled>Month</option>
+            <option value="January">January</option>
+            <option value="February">February</option>
+            <option value="March">March</option>
+            <option value="April">April</option>
+            <option value="May">May</option>
+            <option value="June">June</option>
+            <option value="July">July</option>
+            <option value="August">August</option>
+            <option value="September">September</option>
+            <option value="October">October</option>
+            <option value="November">November</option>
+            <option value="December">December</option>
+          </select>
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
       </div>
+
     </div>
   </nav>
 

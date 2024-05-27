@@ -36,7 +36,15 @@
           </ul>
         </td>
         <td>${{ order.totalAmount }}</td>
-        <td>{{ order.order_status }}</td>
+        <!--<td>{{ order.order_status }}</td> --->
+        <td>
+          <div class="progress">
+            <div class="progress-bar" role="progressbar" [style.width]="getProgressWidth(order.order_status)" 
+              [ngClass]="getProgressClass(order.order_status)" aria-valuenow="getProgressValue(order.order_status)" aria-valuemin="0" aria-valuemax="100">
+              {{ getProgressText(order.order_status) }}
+            </div>
+          </div>
+        </td>
         <td class="text-center">
             <button *ngIf="order.order_status === 'COMPLETED'"
             type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#RatingModal" (click)="submitRating">Rating</button>
@@ -59,10 +67,10 @@
         <div class="modal-body">
           <form (ngSubmit)="submitRating()">
             <div class="mb-3">
-              <label for="user" class="form-label">User ID: {{ selectedUserId }}</label>
+              <label for="user" class="form-label">User ID: u001</label>
             </div>
             <div class="mb-3">
-              <label for="item" class="form-label">Item Name: {{ selectedItem?.name }}</label>
+              <label for="item" class="form-label">Item Name: Fruit Salad</label>
             </div>
             <div class="mb-3">
               <select class="form-select" aria-label="Default select example" [(ngModel)]="rating" name="rating">
@@ -75,6 +83,20 @@
                 <option value="5">5</option>
               </select>
             </div>
+            <div class="mb-3">
+                <label for="item" class="form-label">Item Name: Spicy Beef Fry</label>
+              </div>
+              <div class="mb-3">
+                <select class="form-select" aria-label="Default select example" [(ngModel)]="rating" name="rating">
+                  <option selected>Rating</option>
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                </select>
+              </div>
             <button type="submit" class="btn btn-primary">Submit</button>
           </form>
         </div>
