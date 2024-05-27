@@ -1,6 +1,7 @@
 import { OrderItem } from "./Orderitem";
 export class Order {
     order_id!: string;
+    user_id!: string;
     orderNumber!: number;
     date!: string;
     items!: OrderItem[];

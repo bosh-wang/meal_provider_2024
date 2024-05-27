@@ -1,6 +1,7 @@
 <div class="orders-container">
     <h2>Orders</h2>
     <div *ngFor="let order of orders" class="order-card">
+
       <div class="order-header">
         Order # {{ order.orderNumber }} placed on {{ order.date }}
       </div>
@@ -20,6 +21,7 @@
         </select>
         <button type="submit">submit</button>
       </div>
+      
     </div>
   </div>
   
