@@ -49,10 +49,10 @@ def update_date(conn, table, data_list, update_columns, condition_column):
     """Update a table based on the provided data list and column specifications."""
     cursor = conn.cursor()
     # try:
-        # Generate the SQL statement dynamically based on the input
+    # Generate the SQL statement dynamically based on the input
     set_clause = ", ".join([f"{col} = %s" for col in update_columns])
     sql = f"UPDATE {table} SET {set_clause} WHERE {condition_column} = %s;"
-    
+
     for data in data_list:
         print(data)
         # Values to be updated
@@ -60,7 +60,7 @@ def update_date(conn, table, data_list, update_columns, condition_column):
         condition_value = data[condition_column]
         # Execute the update statement
         cursor.execute(sql, (*update_values, condition_value))
-    
+
     conn.commit()
     print("Database has been updated successfully.")
     # except Exception as e:
