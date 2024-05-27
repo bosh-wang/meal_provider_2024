@@ -45,22 +45,27 @@ def create_table(conn, sql_file_name: str, table_name: str):
         print(f"{table_name} table already exists.")
 
 
-def update_table(conn, table, data, update_column, condition_column):
-    """Update a table based on the provided data and column specifications."""
+def update_date(conn, table, data_list, update_columns, condition_column):
+    """Update a table based on the provided data list and column specifications."""
     cursor = conn.cursor()
-    try:
+    # try:
         # Generate the SQL statement dynamically based on the input
-        sql = f"UPDATE {table} SET {update_column} = %s WHERE {condition_column} = %s;"
+    set_clause = ", ".join([f"{col} = %s" for col in update_columns])
+    sql = f"UPDATE {table} SET {set_clause} WHERE {condition_column} = %s;"
+    
+    for data in data_list:
+        print(data)
         # Values to be updated
-        update_value = data[update_column.split("=")[0].strip()]
+        update_values = [data[col] for col in update_columns]
         condition_value = data[condition_column]
         # Execute the update statement
-        cursor.execute(sql, (update_value, condition_value))
-        conn.commit()
-        print("Database has been updated successfully.")
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        conn.rollback()
-    finally:
-        cursor.close()
-        conn.close()
+        cursor.execute(sql, (*update_values, condition_value))
+    
+    conn.commit()
+    print("Database has been updated successfully.")
+    # except Exception as e:
+    #     print(f"An error occurred: {e}")
+    #     conn.rollback()
+    # finally:
+    cursor.close()
+    conn.close()
