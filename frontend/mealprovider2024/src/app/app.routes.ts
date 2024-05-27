@@ -21,9 +21,9 @@ export const routes: Routes = [
   {path: 'header', component: HomeComponent},
   {path: 'dashboard', component: OrderDashboardComponent},
   {path: 'profile', component: HomeComponent},
-  {path: 'order', component: OrderListComponent},
+  //{path: 'order', component: OrderListComponent},
   {path: 'login', component: LoginComponent},
-  {path: 'orderdashboard', component: OrderDashboardComponent },
+  {path: 'order', component: OrderDashboardComponent },
   {path: 'orderadmin', component: OrderAdminComponent },
   {path: 'orderhr', component: OrderHRComponent },
   {path: 'logout', component: HomeComponent}
