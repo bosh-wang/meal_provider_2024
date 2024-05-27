@@ -44,7 +44,7 @@ if __name__ == "__main__":
     #             print(item)
     #             break
     # write_json(url_file_path, item_list)
-    
+
     json_file_path = "database/data/restaurants.json"
     rest_items = read_json(json_file_path)
     for filename in os.listdir(folder_path):
@@ -56,5 +56,3 @@ if __name__ == "__main__":
                 break
     write_json("database/data/restaurants_new.json", rest_items)
     # print(rest_items)
-        
-    
