@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  labels:
+    app: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: ghcr.io/${{ github.repository_owner }}/meal_provider_backend:${{ github.sha }}
+        ports:
+        - containerPort: 5000
+        resources:
+          requests:
+            cpu: 100m
+            memory: 512Mi
+            ephemeral-storage: "2Gi"
+          limits:
+            cpu: 200m
+            memory: 1Gi
+            ephemeral-storage: "3Gi"
+        # env:
+        #   - name: FLASK_ENV
+        #     value: "production"
+          # - name: MONGO_CONNECTION_STRING
+          #   value: "mongodb://mongo:27017/myMernApp"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 120
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 5000
+          initialDelaySeconds: 30
+          periodSeconds: 10
