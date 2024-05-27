@@ -37,7 +37,7 @@ def payment_notification_service(data):
         for i  in range(len(emails)):
     
             print(f"Sending email to {emails[i][0]} for payment of {total_amount[i]}")
-            send_email(emails[i][0], total_amount)
+            send_email(emails[i][0], total_amount[i])
 
         cursor.close()
         conn.close()
