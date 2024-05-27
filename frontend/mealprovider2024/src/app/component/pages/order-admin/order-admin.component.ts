@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { Order } from '../../../shared/model/Order';
 import { CommonModule } from '@angular/common';
+import { FormGroup,FormBuilder,FormControl,ReactiveFormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-order-admin',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,ReactiveFormsModule],
   templateUrl: './order-admin.component.html',
   styleUrl: './order-admin.component.css'
 })

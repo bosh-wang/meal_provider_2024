@@ -7,7 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   </head>
 
-  <table class="table  table-hover" style="width: 100%;">
+  <table class="table  table-striped table-hover" style="width: 100%;">
     <thead>
       <tr>
         <th scope="col">Order ID</th>
@@ -34,9 +34,15 @@
         <td>${{ order.totalAmount }}</td>
         <td>{{ order.order_status }}</td>
         <td class="text-center">
-          <button *ngIf="order.order_status !== 'COMPLETED' && order.order_status !== 'CANCELLED'" type="button" class="btn btn-primary me-2">PREPARED</button>
-          <button *ngIf="order.order_status !== 'COMPLETED' && order.order_status !== 'CANCELLED'" type="button" class="btn btn-success me-2">COMPLETED</button>
-          <button *ngIf="order.order_status !== 'COMPLETED' && order.order_status !== 'CANCELLED'" type="button" class="btn btn-danger">CANCELLED</button>
+          <button *ngIf="order.order_status !== 'COMPLETED' && order.order_status !== 'CANCELLED'"
+                type="button" class="btn btn-primary me-2"
+                >PREPARED</button>
+        <button *ngIf="order.order_status !== 'COMPLETED' && order.order_status !== 'CANCELLED'"
+                type="button" class="btn btn-success me-2"
+                >COMPLETED</button>
+        <button *ngIf="order.order_status !== 'COMPLETED' && order.order_status !== 'CANCELLED'"
+                type="button" class="btn btn-danger"
+                >CANCELLED</button>
         </td>
       </tr>
     </tbody>

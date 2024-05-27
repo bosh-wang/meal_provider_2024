@@ -11,63 +11,75 @@
 </head>
 
   
-  <table class="table table-striped" style="width: 100%;">
-      <thead>
-          <tr>
-              <th scope="col">Order ID</th>
-              <th scope="col">Time</th>
-              <th scope="col">Person</th>
-              <th scope="col">Food</th>
-              <th scope="col">Total Payment</th>
-              <th scope="col">Status</th>
-          </tr>
-      </thead>
-      <tbody>
-          <tr>
-              <th scope="row">1</th>
-              <td>5/26/2021, 3:06:21 AM</td>
-              <td>Mark</td>
-              <td>Fruit Salad</td>
-              <td>$745</td>
-              <td>COMPLETED</td>
-              <td>
-                  <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#RatingModal">Rating</button>  
-                  
-              </td>
-          </tr>
-      </tbody>
+<table class="table  table-striped table-hover" style="width: 100%;">
+    <thead>
+      <tr>
+        <th scope="col">Order ID</th>
+        <th scope="col">Time</th>
+        <th scope="col">Person</th>
+        <th scope="col">Food</th>
+        <th scope="col">Total Payment</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let order of orders">
+        <th scope="row">{{ order.order_id }}</th>
+        <td>{{ order.date }}</td>
+        <td>{{ order.user_id }}</td>
+        <td>
+          <ul>
+            <li *ngFor="let item of order.items">
+              {{ item.name }} (x{{ item.quantity }}) - ${{ item.price }}
+            </li>
+          </ul>
+        </td>
+        <td>${{ order.totalAmount }}</td>
+        <td>{{ order.order_status }}</td>
+        <td class="text-center">
+            <button *ngIf="order.order_status === 'COMPLETED'"
+            type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#RatingModal" (click)="submitRating">Rating</button>
+        </td>
+      </tr>
+    </tbody>
+    
+    
   </table>
 <!-- Rating Modal -->
 <div class="modal fade" id="RatingModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Rating</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form>
-                    <div class="mb-3">
-                      <label for="user" class="form-label">User Name : Mark</label>
-                    </div>
-                    <div class="mb-3">
-                      <label for="item" class="form-label">Item Name : Fruit Salad</label>
-                    </div>
-                    <div class="mb-3">
-                        <select class="form-select" aria-label="Default select example">
-                            <option selected>Rating</option>
-                            <option value="0">0</option>
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                            <option value="3">3</option>
-                            <option value="4">4</option>
-                            <option value="5">5</option>
-                          </select>    
-                    </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
-                  </form>
-            </div>
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Rating</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+
+        <div class="modal-body">
+          <form (ngSubmit)="submitRating()">
+            <div class="mb-3">
+              <label for="user" class="form-label">User ID: {{ selectedUserId }}</label>
+            </div>
+            <div class="mb-3">
+              <label for="item" class="form-label">Item Name: {{ selectedItem?.name }}</label>
+            </div>
+            <div class="mb-3">
+              <select class="form-select" aria-label="Default select example" [(ngModel)]="rating" name="rating">
+                <option selected>Rating</option>
+                <option value="0">0</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+        </div>
+
+      </div>
     </div>
   </div>
 
