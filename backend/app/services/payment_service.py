@@ -10,8 +10,6 @@ load_dotenv()
 
 def payment_notification_service(data):
 
-    data = {"user_id": ['user01', 'user02', 'user03']}
-
     host = os.getenv("DB_HOST")
     dbname = os.getenv("DB_NAME")
     user = os.getenv("DB_USER")
@@ -27,10 +25,19 @@ def payment_notification_service(data):
         cursor.execute("SELECT users.email FROM users WHERE users.user_id = ANY(%s)", (user_id,))
         emails = cursor.fetchall()
 
-        for email in emails:
-            total_amount = 9000000
-            print(f"Sending email to {email} for payment of {total_amount}")
-            send_email(email, total_amount)
+        total_amount = []
+        for each_user_id in data['user_id']:
+            cursor.execute("SELECT orders.total_price FROM orders WHERE orders.user_id = %s", (each_user_id,))
+            price = cursor.fetchall()
+            p = 0
+            for i in range(len(price)):
+                p += float(price[i][0])
+            total_amount.append(p)
+
+        for i  in range(len(emails)):
+    
+            print(f"Sending email to {emails[i][0]} for payment of {total_amount[i]}")
+            send_email(emails[i][0], total_amount)
 
         cursor.close()
         conn.close()
@@ -44,6 +51,9 @@ def send_email(email, total_amount):
     smtp_port = 587 
     sender_email = os.getenv("SENDER_EMAIL")
     password = os.getenv("SENDER_PASSWORD")
+
+    # real email address to avoid error
+    email = ['wangbosh0604@gmail.com']
 
     for receiver_email in email:
         message = MIMEMultipart()
@@ -64,7 +74,6 @@ def send_email(email, total_amount):
                 print(f'Email sent successfully to {receiver_email}!')
             except Exception as e:
                 print(f'Failed to send email. Error: {e}')
-# send_email(['boshwang.mg12@nycu.edu.tw', 'wangbosh0604@gmail.com'], 9000000)
 
 def payment(data):
     
@@ -82,12 +91,11 @@ def payment(data):
 
     try:
 
-        cursor.execute("UPDATE orders SET paid = 1, WHERE order_id = %s", (order_id,))
-        result = cursor.fetchall()
-        print(result)
+        cursor.execute("UPDATE orders SET paid = true WHERE order_id = %s", (order_id,))
+        conn.commit()
 
         cursor.close()
         conn.close()
-        return ({"message": "sucessfully paid via " + payment_method})
+        return ({"message": "sucessfully pay order" + str(order_id) + "via " + payment_method})
     except Exception as e:
         return ({"error": str(e)}), 500

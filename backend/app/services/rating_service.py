@@ -6,7 +6,6 @@ import os
 load_dotenv()
 
 def get_rating_service(data):
-    # data = {"item_id": 'item001'}
 
     host = os.getenv("DB_HOST")
     dbname = os.getenv("DB_NAME")
@@ -28,7 +27,8 @@ def get_rating_service(data):
         for r in ratings:
             rating += float(r[0])
         
-        rating /= len(ratings)
+        if rating != 0.0:
+            rating /= len(ratings)
 
         cursor.close()
         conn.close()
@@ -37,8 +37,6 @@ def get_rating_service(data):
         return ({"error": str(e)}), 500
     
 def update_rating_service(data):
-
-    # data= {"user_id": "A0001", "item_id": 'item001', "rating": "4.5"}
 
     host = os.getenv("DB_HOST")
     dbname = os.getenv("DB_NAME")
@@ -58,11 +56,15 @@ def update_rating_service(data):
         current_time = datetime.now(timezone.utc)
         formatted_date = current_time.strftime('%a, %d %b %Y %H:%M:%S GMT')
 
-        cursor.execute('''INSERT INTO 
-                        meals_ratings (user_id, item_id, star_rating, created_at, updated_at)
-                        VALUES(%s, %s, %s, %s, %s)''',
-                        (user_id, item_id, rating, formatted_date, formatted_date))
+        cursor.execute("SELECT rating_id FROM meals_ratings;")
+        last_id = cursor.fetchall()
+        last_id = str(int(last_id[-1][0])+1)
 
+        cursor.execute('''INSERT INTO 
+                        meals_ratings (rating_id, user_id, item_id, star_rating, created_at, updated_at)
+                        VALUES(%s, %s, %s, %s, %s, %s)''',
+                        (last_id , user_id, item_id, rating, formatted_date, formatted_date,))
+        conn.commit()
         cursor.close()
         conn.close()
         return ({"message" : "successfully inserted rating"})
