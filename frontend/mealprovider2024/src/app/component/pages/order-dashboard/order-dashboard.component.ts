@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Order } from '../../../shared/model/Order';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators,FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-order-dashboard',
   standalone: true,
-  imports: [CommonModule,FormsModule],
+  imports: [CommonModule,FormsModule,ReactiveFormsModule],
   templateUrl: './order-dashboard.component.html',
   styleUrl: './order-dashboard.component.css'
 })
@@ -79,22 +79,9 @@ export class OrderDashboardComponent {
     ;
   }
 
-  selectedUserId: string | null = null;
-  selectedItem: any = null;
-  rating: number | null = null;
-
-  selectItem(userId: string, item: any) {
-    this.selectedUserId = userId;
-    this.selectedItem = item;
-  }
-
-  submitRating() {
-    if (this.selectedItem) {
-      console.log('User ID:', this.selectedUserId);
-      console.log('Item:', this.selectedItem.name);
-      console.log('Rating:', this.rating);
-      // 这里可以添加提交评分的逻辑，例如调用服务来发送评分数据到服务器
-    }
+  selectedOrder: any = null;
+  selectOrder(order: any) {
+    this.selectedOrder = order;
   }
   getProgressWidth(status: string): string {
     switch (status) {
@@ -162,5 +149,26 @@ export class OrderDashboardComponent {
       default:
         return 0;
     }
+  }
+
+  OrderForm: FormGroup;
+  constructor(private fb: FormBuilder) {
+    this.OrderForm = this.fb.group({
+      
+      rating: ['', Validators.required]
+    });
+  }
+  submit(user_id:string,item_id:string) {
+    const formValue = this.OrderForm.value;
+
+    const dataToSend = {
+      user_id:user_id,
+      item_id:item_id,
+      rating: formValue.rating,
+      
+    };
+    
+    console.log('Data to send:', dataToSend);
+    // Here you can add the logic to send dataToSend to your server.
   }
 }

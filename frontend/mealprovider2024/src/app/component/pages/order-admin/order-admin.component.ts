@@ -78,5 +78,42 @@ export class OrderAdminComponent {
     ]
     ;
   }
-
+  selectedOrder: any = null;
+  selectOrder(order: any) {
+    this.selectedOrder = order;
+  }
+  submit(order_id:string,order_status_before:string,flag:Number) {
+    
+    if(flag===0){
+      const dataToSend = {
+        order_id:order_id,
+        order_status_before:order_status_before,
+        order_status_after:'PREPARED',
+        
+      }
+      console.log('Data to send:', dataToSend);
+    }
+    else if(flag===1){
+      const dataToSend = {
+        order_id:order_id,
+        order_status_before:order_status_before,
+        order_status_after:'CONFIRMED',
+        
+      }
+      console.log('Data to send:', dataToSend);
+    }
+    else if(flag===2){
+      const dataToSend = {
+        order_id:order_id,
+        order_status_before:order_status_before,
+        order_status_after:'CANCELED',
+        
+      }
+      console.log('Data to send:', dataToSend);
+    }
+    
+    
+    
+    // Here you can add the logic to send dataToSend to your server.
+  }
 }
