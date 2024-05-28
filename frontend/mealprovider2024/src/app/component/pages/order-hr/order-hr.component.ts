@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { Order } from '../../../shared/model/Order';
 import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+
 @Component({
   selector: 'app-order-hr',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,ReactiveFormsModule],
   templateUrl: './order-hr.component.html',
   styleUrl: './order-hr.component.css'
 })
@@ -75,6 +77,51 @@ export class OrderHRComponent {
       }
     ]
     ;
+  }
+  departments = ['HR', 'Engineering', 'Sales', 'Marketing'];
+  positions = ['Manager', 'Developer', 'Sales Representative', 'Marketing Specialist'];
+  months = [
+    { name: 'January', value: 0 },
+    { name: 'February', value: 1 },
+    { name: 'March', value: 2 },
+    { name: 'April', value: 3 },
+    { name: 'May', value: 4 },
+    { name: 'June', value: 5 },
+    { name: 'July', value: 6 },
+    { name: 'August', value: 7 },
+    { name: 'September', value: 8 },
+    { name: 'October', value: 9 },
+    { name: 'November', value: 10 },
+    { name: 'December', value: 11 }
+  ];
+
+  searchForm: FormGroup;
+
+  constructor(private fb: FormBuilder) {
+    this.searchForm = this.fb.group({
+      department: ['', Validators.required],
+      position: ['', Validators.required],
+      month: ['', Validators.required]
+    });
+  }
+
+  submit() {
+    const formValue = this.searchForm.value;
+    const monthValue = Number(formValue.month);
+    const monthValue2 = monthValue +Number(1);
+    const year = new Date().getFullYear();
+    const firstDay = new Date(year, monthValue, 2);
+    const lastDay = new Date(year, monthValue2, 1);
+    
+    const dataToSend = {
+      department: formValue.department,
+      position: formValue.position,
+      firstDay: firstDay.toISOString().split('T')[0],
+      lastDay: lastDay.toISOString().split('T')[0]
+    };
+    
+    console.log('Data to send:', dataToSend);
+    // Here you can add the logic to send dataToSend to your server.
   }
 
 }
