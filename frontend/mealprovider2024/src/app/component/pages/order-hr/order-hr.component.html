@@ -51,21 +51,21 @@
     </thead>
 
     <tbody>
-      <tr *ngFor="let order of orders">
-        <th scope="row">{{ order.order_id }}</th>
-        <td>{{ order.date }}</td>
-        <td>{{ order.user_id }}</td>
+      <tr *ngFor="let Employee of orders">
+        <th scope="row">{{ Employee.order_id }}</th>
+        <td>{{ Employee.date }}</td>
+        <td>{{ Employee.user_id }}</td>
         <td>
           <ul>
-            <li *ngFor="let item of order.items">
+            <li *ngFor="let item of Employee.items">
               {{ item.name }} (x{{ item.quantity }}) - ${{ item.price }}
             </li>
           </ul>
         </td>
-        <td>${{ order.totalAmount }}</td>
-        <td>{{ order.order_status }}</td>
+        <td>${{ Employee.totalAmount }}</td>
+        <td>{{ Employee.order_status }}</td>
         <td class="text-center">
-            <button type="button" class="btn btn-danger"  >Notification</button>
+            <button type="button" class="btn btn-danger"   (click)="paymentNotification(Employee.user_id)" >Notification</button>
         </td>
       </tr>
     </tbody>
