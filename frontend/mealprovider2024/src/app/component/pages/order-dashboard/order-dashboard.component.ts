@@ -107,7 +107,7 @@ export class OrderDashboardComponent {
       case 'COMPLETED':
         return '100%';
       case 'CANCELLED':
-        return '0%';
+        return '100%';
       default:
         return '0%';
     }

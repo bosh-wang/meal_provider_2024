@@ -10,7 +10,6 @@ import { CommonModule } from '@angular/common';
 })
 export class OrderHRComponent {
   orders: Order[] = [];
-  orderObj : Order=new Order();
   ngOnInit() {
     // Example data
     this.orders = [
