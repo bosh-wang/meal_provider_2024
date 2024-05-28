@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 
-from services import rating_service, order_history_service, payment_service, signin_service, order_service, get_menu_service, adjust_menu_service
+from services import rating_service, order_history_service, payment_service, signin_service, order_service, get_menu_service, adjust_menu_service, get_restaurants_service
 
 app = Flask(__name__)
 
@@ -69,10 +69,15 @@ def get_order():
     return order_service.get_order(order_id)
 
 
-# Get menu 合體成功
+# Get menu 還沒改成只有特定餐廳的menu
 @app.route('/api/menu', methods=['GET'])
 def get_menu():
     return get_menu_service.get_menu()
+
+# Get menu 合體成功
+@app.route('/api/restaurants', methods=['GET'])
+def get_restaurant():
+    return get_restaurants_service.get_restaurant()
 
 # Adjust menu 刪除還有點問題
 @app.route('/api/change_menu_item', methods=['POST'])

@@ -152,10 +152,11 @@ def delete_menu_item(data):
         cursor = conn.cursor()
 
         delete_query = """
-        DELETE FROM menus_items
-        WHERE item_name = %s
-        RETURNING item_id
-        """
+            UPDATE menus_items
+            SET availability = False
+            WHERE item_name = %s
+            RETURNING item_id;
+            """
 
         cursor.execute(delete_query, (item_name,))
         deleted_item = cursor.fetchone()
