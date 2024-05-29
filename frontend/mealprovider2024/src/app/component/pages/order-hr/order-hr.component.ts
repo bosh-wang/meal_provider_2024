@@ -126,16 +126,20 @@ export class OrderHRComponent {
     // Here you can add the logic to send dataToSend to your server.
   }
   
-  selectedEmployee: any = null;
+  
 
   paymentNotification(user_id:string) {
     const dataToSend = {
       user_id:user_id,
-      
-      
     };
-    
     console.log('Data to send:', dataToSend);
   }
-
+  selectedEmployee: any = null;
+  selectEmployee(employee: any) {
+    this.selectedEmployee = employee;
+  }
+  onClick(employee: any,user_id:string) {
+    this.paymentNotification(user_id);
+    this.selectEmployee(employee);
+  }
 }
