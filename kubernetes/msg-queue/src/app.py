@@ -8,9 +8,10 @@ import json
 from datetime import datetime, date
 from decimal import Decimal
 import redis
-import os 
+import os
 from datetime import timedelta
 import time
+
 app = Flask(__name__)
 config_path = "config/credential.yaml"
 conn_config = IACConfigHelper.get_conn_info(config_path)
@@ -124,12 +125,16 @@ def update_order_status():
     except Exception as e:
         app.logger.error("Error updating order status: %s", str(e))
         return jsonify({"error": str(e)}), 500
+
+
 def custom_json_serializer(obj):
     if isinstance(obj, (datetime, date)):
         return obj.isoformat()
     elif isinstance(obj, Decimal):
         return float(obj)
     raise TypeError(f"Type {type(obj)} not serializable")
+
+
 # 连接到 Redis，加入密码认证
 pool = redis.ConnectionPool(
     host=os.getenv("REDIS_HOST"),
@@ -138,15 +143,17 @@ pool = redis.ConnectionPool(
     decode_responses=True,
 )
 redis_client = redis.Redis(connection_pool=pool)
-@app.route('/get_menu', methods=['POST'])
+
+
+@app.route("/get_menu", methods=["POST"])
 def get_menu():
     data = request.get_json()
-    r_id = data.get('restaurant_id')
-    
+    r_id = data.get("restaurant_id")
+
     try:
         cache_key = f"menu:{r_id}"
         cache_expiry = timedelta(hours=1)
-        
+
         start_time = time.time()  # Start timing for Redis
 
         # Check if the data is in Redis cache
@@ -155,16 +162,14 @@ def get_menu():
             redis_time = time.time() - start_time  # Calculate Redis time
             print(f"Cache hit, Time taken with Redis: {redis_time:.6f} seconds")
             return app.response_class(
-                response=cached_menu,
-                status=200,
-                mimetype='application/json'
+                response=cached_menu, status=200, mimetype="application/json"
             )
-        
+
         start_time = time.time()  # Start timing for DB query
 
         conn = get_db_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
-        
+
         query = """
             SELECT 
                 m.item_id,
@@ -200,7 +205,7 @@ def get_menu():
             ORDER BY 
                 m.item_id;
         """
-        
+
         cursor.execute(query, (r_id,))
         menu_items = cursor.fetchall()
         cursor.close()
@@ -208,22 +213,23 @@ def get_menu():
 
         db_time = time.time() - start_time  # Calculate DB query time
         print(f"Time taken with DB: {db_time:.6f} seconds")
-        
-        json_result = json.dumps(menu_items, ensure_ascii=False, default=custom_json_serializer)
-        
+
+        json_result = json.dumps(
+            menu_items, ensure_ascii=False, default=custom_json_serializer
+        )
+
         # Store the result in Redis cache
         redis_client.setex(cache_key, cache_expiry, json_result)
-        
+
         response = app.response_class(
-            response=json_result,
-            status=200,
-            mimetype='application/json'
+            response=json_result, status=200, mimetype="application/json"
         )
-        response.headers['Content-Type'] = 'application/json; charset=utf-8'
+        response.headers["Content-Type"] = "application/json; charset=utf-8"
         return response
-    
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5002, debug=True)
