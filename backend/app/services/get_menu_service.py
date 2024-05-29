@@ -30,7 +30,9 @@ def custom_json_serializer(obj):
     raise TypeError(f"Type {type(obj)} not serializable")
 
 
-def get_menu():
+
+def get_menu(data):
+    r_id = data.get('restaurant_id')
     try:
         conn = get_db_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
@@ -54,6 +56,8 @@ def get_menu():
                 meals_ratings rt ON m.item_id = rt.item_id
             INNER JOIN
                 restaurants r ON m.restaurant_id = r.restaurant_id
+            WHERE 
+                m.restaurant_id = %s
             GROUP BY 
                 m.item_id,
                 m.restaurant_id,
@@ -69,13 +73,12 @@ def get_menu():
                 m.item_id;
         """
         
-        cursor.execute(query)
+        cursor.execute(query, (r_id,))
         menu_items = cursor.fetchall()
         
         cursor.close()
         conn.close()
         
-        # Convert the results to a JSON string with ensure_ascii=False
         json_result = json.dumps(menu_items, ensure_ascii=False, default=custom_json_serializer)
         
         response = app.response_class(

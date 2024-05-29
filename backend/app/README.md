@@ -65,6 +65,8 @@ curl -X GET "http://localhost:5000/api/get_order?order_id=3"
 # 取得菜單 get_menu_service.py
 ```
 curl -X GET http://localhost:5000/api/menu
+
+curl -X POST -H "Content-Type: application/json" -d @services/menu.json http://localhost:5000/api/menu
 ```
 
 # 登入 signin_service.py

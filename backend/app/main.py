@@ -70,11 +70,12 @@ def get_order():
 
 
 # Get menu 還沒改成只有特定餐廳的menu
-@app.route('/api/menu', methods=['GET'])
+@app.route('/api/menu', methods=['POST'])
 def get_menu():
-    return get_menu_service.get_menu()
+    data = request.json
+    return get_menu_service.get_menu(data)
 
-# Get menu 合體成功
+# 取得餐廳
 @app.route('/api/restaurants', methods=['GET'])
 def get_restaurant():
     return get_restaurants_service.get_restaurant()
