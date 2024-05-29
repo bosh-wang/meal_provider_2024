@@ -3,7 +3,7 @@ CREATE TABLE shopping_cart (
     user_id VARCHAR(50) NOT NULL,
     item_id VARCHAR(50) NOT NULL,
     quantity INT NOT NULL,
-    status VARCHAR(20) DEFAULT 'active',
+    status VARCHAR(20) DEFAULT 'ACTIVE',
     added_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users(user_id),
