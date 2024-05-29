@@ -2,15 +2,22 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './component/pages/home/home.component';
 import { FoodPageComponent } from './component/pages/food-page/food-page.component';
 import { CartPageComponent } from './component/pages/cart-page/cart-page.component';
+import { RestaurantPageComponent } from './component/pages/restaurant-page/restaurant-page.component';
 
 export const routes: Routes = [
   {path: '', component: HomeComponent},
 
   {path: 'search/:searchTerm', component: HomeComponent},
 
+  {path: 'food-search/:food-searchTerm', component: RestaurantPageComponent},
+
   {path: 'tag/:tag', component: HomeComponent},
 
-  {path: 'food/:id', component: FoodPageComponent},
+  {path: 'restaurant-tag/:tag-type', component: HomeComponent},
+
+  {path: 'restaurant/:id', component: RestaurantPageComponent},
+
+  {path: 'food/:food-id', component: FoodPageComponent},
 
   {path: 'cart-page', component: CartPageComponent},
 

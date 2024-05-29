@@ -1,4 +1,4 @@
-<app-not-found [visible]="!food.id" notFoundMessage="Food Not Found!" resetLinkText="Back to Home"></app-not-found>
+<app-not-found [visible]="!food.id" notFoundMessage="查無此餐點!" resetLinkText="返回首頁"></app-not-found>
 <div *ngIf="food.id" class="container">
   <img [src]="food.imageUrl" [alt]="food.name">
   <div class="details">
@@ -8,8 +8,8 @@
       </span>
     </div>
 
-    <div class="restaurant_id">
-      <p class="Restaurant"> #{{food.restaurant_id}}</p>
+    <div class="restaurant_name">
+      <p class="Restaurant"> {{food.restaurant_name}}</p>
     </div>
     <div class="rating">
       <p class="star-rating"> {{food.stars}}★</p>

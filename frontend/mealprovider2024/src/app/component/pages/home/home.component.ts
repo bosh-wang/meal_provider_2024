@@ -6,25 +6,28 @@ import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet } from '@ang
 import { SearchComponent } from '../search/search.component';
 import { TagComponent } from '../tag/tag.component';
 import { NotFoundComponent } from '../not-found/not-found.component';
+import { Restaurant } from '../../../shared/model/Restaurant';
+import { RestaurantService } from '../../../services/restaurant.service';
+import { RestaurantTypeComponent } from '../restaurant-type/restaurant-type.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive, SearchComponent, TagComponent, NotFoundComponent],
+  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive, SearchComponent, TagComponent, NotFoundComponent, RestaurantTypeComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
   food: Food[] = [];
-
-  constructor(private foodService: FoodService, private activateRoute: ActivatedRoute) {
+  restaurant: Restaurant[] = [];
+  constructor(private restaurantService: RestaurantService, private activateRoute: ActivatedRoute) {
     this.activateRoute.params.subscribe((params) => {
       if (params['searchTerm']) {
-        this.food = this.foodService.getAllFoodBySearchTerm(params['searchTerm']);
-      } else if (params['tag']) {
-        this.food = this.foodService.getAllFoodByTag(params['tag']);
+        this.restaurant = this.restaurantService.getAllRestaurantBySearchTerm(params['searchTerm']);
+      } else if (params['tag-type']) {
+        this.restaurant = this.restaurantService.getAllRestaurantByTag(params['tag-type']);
       } else {
-        this.food = this.foodService.getAll();
+        this.restaurant = this.restaurantService.getAll();
       }
     });
   }

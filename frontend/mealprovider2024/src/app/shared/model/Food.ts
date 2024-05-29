@@ -7,4 +7,6 @@ export class Food{
   imageUrl!: string;  //image_url
   restaurant_id!: string; //restaurant_id
   description?: string; //description
+  availibility!: boolean; //availibility
+  restaurant_name!: string; //restaurant_name
 }

@@ -1,0 +1,37 @@
+<app-food-search></app-food-search>
+<!--<app-tag></app-tag>-->
+<app-not-found [visible]="!food || !food.length" notFoundMessage="查無此餐點!" resetLinkText="返回首頁"></app-not-found>
+<ul>
+  <li *ngFor="let item of food">
+    <a routerLink="/food/{{item.id}}">
+      <img [src]="item.imageUrl" [alt]="item.name">
+      <div class="content">
+        <div class="name">
+          {{item.name}}
+        </div>
+        <!--<span class="favorite {{item.favorite?'':'not'}}">❤</span>-->
+        <div class="stars">
+          <p class="star-rating">評分: {{item.stars}}★</p>
+        </div>
+        <div class="product-item-footer">
+          <div class="origins">
+            <span *ngFor="let origin of item.tags">
+              {{origin}}
+            </span>
+          </div>
+
+          <!--<div class="cook-time">
+            <span>🕒</span>
+            {{item.cookTime}}
+          </div>-->
+
+          <div class="price">
+            <span>
+              {{item.price | currency}}
+            </span>
+          </div>
+        </div>
+      </div>
+    </a>
+  </li>
+</ul>
