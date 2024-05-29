@@ -78,8 +78,8 @@ export class OrderHRComponent {
     ]
     ;
   }
-  departments = ['HR', 'Engineering', 'Sales', 'Marketing'];
-  positions = ['Manager', 'Developer', 'Sales Representative', 'Marketing Specialist'];
+  departments = ['Human Resources','Administration','Technology'];
+  positions = ['HR Manager','Engineer','Administrator'];
   months = [
     { name: 'January', value: 0 },
     { name: 'February', value: 1 },
@@ -118,6 +118,8 @@ export class OrderHRComponent {
       position: formValue.position,
       firstDay: firstDay.toISOString().split('T')[0],
       lastDay: lastDay.toISOString().split('T')[0]
+      //firstDay: firstDay,
+      //lastDay: lastDay
     };
     
     console.log('Data to send:', dataToSend);
