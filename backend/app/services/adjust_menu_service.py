@@ -55,7 +55,7 @@ def add_menu_item(data):
             last_index = int(last_item_id.split('item')[-1])
             new_item_id = f'item{last_index + 1:03d}'
         else:
-            new_item_id = 'item001'  # 如果数据库为空，则从第一项开始
+            new_item_id = 'item001'  # 如果database为空，则从第一项开始
         menu_id = 'menu01'
         image = None
         created_time = datetime.now(pytz.timezone('Asia/Taipei')).isoformat()
@@ -151,7 +151,7 @@ def delete_menu_item(data):
 
         delete_query = """
             UPDATE menus_items
-            SET availability = False
+            SET availability = FALSE
             WHERE item_name = %s
             RETURNING item_id;
             """

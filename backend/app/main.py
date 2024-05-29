@@ -42,14 +42,32 @@ def payment():
 def test():
     data = order_history_service.test()
     return jsonify(data)
-# 登入 合體成功
+
+# 登入
 @app.route('/api/signin', methods=['POST'])
 def signin():
     data = request.json
     return signin_service.signin(data)
 
+# Get menu
+@app.route('/api/menu', methods=['POST'])
+def get_menu():
+    data = request.json
+    return get_menu_service.get_menu(data)
 
-# 下訂單 合體完成
+# 取得餐廳
+@app.route('/api/restaurants', methods=['GET'])
+def get_restaurant():
+    return get_restaurants_service.get_restaurant()
+
+# Adjust menu 刪除還有點問題
+@app.route('/api/change_menu_item', methods=['POST'])
+def adjust_menu():
+    return adjust_menu_service.change_menu_item()
+
+
+
+## 訂單部分
 # Create order
 @app.route('/api/create_order', methods=['POST'])
 def create_order():
@@ -69,21 +87,9 @@ def get_order():
     return order_service.get_order(order_id)
 
 
-# Get menu 還沒改成只有特定餐廳的menu
-@app.route('/api/menu', methods=['POST'])
-def get_menu():
-    data = request.json
-    return get_menu_service.get_menu(data)
 
-# 取得餐廳
-@app.route('/api/restaurants', methods=['GET'])
-def get_restaurant():
-    return get_restaurants_service.get_restaurant()
 
-# Adjust menu 刪除還有點問題
-@app.route('/api/change_menu_item', methods=['POST'])
-def adjust_menu():
-    return adjust_menu_service.change_menu_item()
+
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)

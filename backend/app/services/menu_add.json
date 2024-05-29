@@ -5,6 +5,6 @@
     "item_name": "超級爆炸好吃牛肉丸",
     "description": "吃四年都吃不膩",
     "price": 160,
-    "availability": true,
+    "availability": false,
     "image_url": "https://images.app.goo.gl/q4aVdPB83r7kHM1d7"
 }

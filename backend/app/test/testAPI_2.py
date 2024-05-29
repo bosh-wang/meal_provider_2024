@@ -22,20 +22,45 @@ print("GET /api/data response:", response.json())
 
 #get menu
 post_data = {
-    "restaurant_id": "restaurant040"
+    "restaurant_id": "restaurant003"
 }
 response = requests.post(f"{base_url}/api/menu", json=post_data)
 print("POST /api/data response:", response.json())
 
 
+#adjust menu
+post_data = {
+    "change_status": "ADD",
+    "restaurant_id": "restaurant003",
+    "category": "主食",
+    "item_name": "超級爆炸天啊好吃牛肉丸",
+    "description": "吃四年都吃不膩",
+    "price": 160,
+    "availability": 'False', #測試用
+    "image_url": "https://images.app.goo.gl/q4aVdPB83r7kHM1d7"
+}
+response = requests.post(f"{base_url}/api/adjust_menu", json=post_data)
+print("POST /api/data response:", response.json())
+
+
 # order
-# post_data = 
 
 
 #change order status
 
 #check order status
 
-#adjust menu
 
+
+
+
+## 購物車部分
+
+# 加入購物車
+
+# 查看購物車
+
+# 更新購物車
+
+# 刪除整個購物車
 
