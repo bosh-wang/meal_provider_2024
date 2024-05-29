@@ -1,13 +1,11 @@
 from flask import jsonify, request
 import psycopg2
 from psycopg2.extras import RealDictCursor
-from config import load_config
 import os
 
 
 # 取得config內的資訊
 def get_db_connection():
-    # config = load_config()
     return psycopg2.connect(
         host = os.getenv("DB_HOST"),
         database = os.getenv("DB_NAME"),

@@ -1,7 +1,6 @@
 from flask import Flask, jsonify
 import psycopg2
 from psycopg2.extras import RealDictCursor
-from config import load_config
 import json
 from decimal import Decimal
 from datetime import datetime, date
@@ -11,7 +10,6 @@ app = Flask(__name__)
 
 # Database connection configuration
 def get_db_connection():
-    config = load_config()
     conn = psycopg2.connect(
         host = os.getenv("DB_HOST"),
         database = os.getenv("DB_NAME"),

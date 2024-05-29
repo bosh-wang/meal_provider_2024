@@ -6,7 +6,7 @@ from email.mime.text import MIMEText
 from dotenv import load_dotenv
 import os
 
-load_dotenv()
+# load_dotenv()
 
 def payment_notification_service(data):
 
