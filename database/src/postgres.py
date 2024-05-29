@@ -24,6 +24,7 @@ if __name__ == "__main__":
         "meals_ratings",
         "orders",
         "orders_items",
+        "shopping_cart",
     ]
     # for table in table_list:
     # table = "orders_items"
