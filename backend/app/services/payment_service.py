@@ -8,8 +8,8 @@ import os
 
 load_dotenv()
 
-def payment_notification_service():#data
 
+def payment_notification_service():  # data
     # host = os.getenv("DB_HOST")
     # dbname = os.getenv("DB_NAME")
     # user = os.getenv("DB_USER")
@@ -32,36 +32,45 @@ def payment_notification_service():#data
     #             send_email(email, total_amount)
 
     #     cursor.close()
-        # conn.close()
+    # conn.close()
     #     return ({"message": "Notification sent successfully"})
     # except Exception as e:
     #     return ({"error": str(e)}), 500
-    return({"message": "Notification sent successfully"})
+    return {"message": "Notification sent successfully"}
 
 
 def send_email(email, total_amount):
-    smtp_server = 'smtp.gmail.com'  
-    smtp_port = 587 
+    smtp_server = "smtp.gmail.com"
+    smtp_port = 587
     sender_email = os.getenv("SENDER_EMAIL")
     password = os.getenv("SENDER_PASSWORD")
 
     for receiver_email in email:
         message = MIMEMultipart()
-        message['From'] = sender_email
-        message['To'] = receiver_email
-        message['Subject'] = '[Notification from Meal Provider] You have a food pending payment of $' + str(total_amount)
+        message["From"] = sender_email
+        message["To"] = receiver_email
+        message["Subject"] = (
+            "[Notification from Meal Provider] You have a food pending payment of $"
+            + str(total_amount)
+        )
 
-        body = 'Hi there!\n\nThis is a reminder that you have a pending payment of $' + str(total_amount) + ' for your recent food order. Please make the payment at your earliest convenience.\n\nThank you!\n\nBest,\nMeal Provider Team'
-        message.attach(MIMEText(body, 'plain'))
+        body = (
+            "Hi there!\n\nThis is a reminder that you have a pending payment of $"
+            + str(total_amount)
+            + " for your recent food order. Please make the payment at your earliest convenience.\n\nThank you!\n\nBest,\nMeal Provider Team"
+        )
+        message.attach(MIMEText(body, "plain"))
 
         with smtplib.SMTP(smtp_server, smtp_port) as smtp:
             try:
                 smtp.ehlo()
-                smtp.starttls()  
-                smtp.login(sender_email, password) 
-                text = message.as_string() 
+                smtp.starttls()
+                smtp.login(sender_email, password)
+                text = message.as_string()
                 smtp.sendmail(sender_email, receiver_email, text)
-                print(f'Email sent successfully to {receiver_email}!')
+                print(f"Email sent successfully to {receiver_email}!")
             except Exception as e:
-                print(f'Failed to send email. Error: {e}')
+                print(f"Failed to send email. Error: {e}")
+
+
 # send_email(['boshwang.mg12@nycu.edu.tw', 'wangbosh0604@gmail.com'], 9000000)
