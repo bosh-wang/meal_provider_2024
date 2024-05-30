@@ -1,0 +1,5 @@
+<div *ngIf="type">
+  <a *ngFor="let tag of type" routerLink="/restaurant-tag/{{tag.type}}">
+    {{tag.type}}
+  </a>
+</div>

@@ -1,33 +1,18 @@
 <app-search></app-search>
-<app-tag></app-tag>
-<app-not-found [visible]="!food || !food.length" resetLinkText="Reset Search"></app-not-found>
+<app-restaurant-type></app-restaurant-type>
+<app-not-found [visible]="!restaurant || !restaurant.length" notFoundMessage="查無此餐廳!" resetLinkText="返回首頁"></app-not-found>
 <ul>
-  <li *ngFor="let item of food">
-    <a routerLink="/food/{{item.id}}">
+  <li *ngFor="let item of restaurant">
+    <a routerLink="/restaurant/{{item.id}}">
       <img [src]="item.imageUrl" [alt]="item.name">
       <div class="content">
         <div class="name">
           {{item.name}}
         </div>
-        <!--<span class="favorite {{item.favorite?'':'not'}}">❤</span>-->
-        <div class="stars">
-          <p class="star-rating">star-rating: {{item.stars}}</p>
-        </div>
         <div class="product-item-footer">
           <div class="origins">
-            <span *ngFor="let origin of item.tags">
+            <span *ngFor="let origin of item.type">
               {{origin}}
-            </span>
-          </div>
-
-          <!--<div class="cook-time">
-            <span>🕒</span>
-            {{item.cookTime}}
-          </div>-->
-
-          <div class="price">
-            <span>
-              {{item.price | currency}}
             </span>
           </div>
         </div>
