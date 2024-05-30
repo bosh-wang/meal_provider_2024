@@ -22,8 +22,8 @@
         <label for="role">Role:</label>
         <select id="role" formControlName="role">
           <option value="" disabled selected>Select your role</option>
-          <option value="customer">Customer</option>
-          <option value="admin">Kitchen Admin</option>
+          <option value="employee">employee</option>
+          <option value="restaurant_staff">restaurant_staff</option>
           <option value="HR">HR</option>
         </select>
         <div *ngIf="submitted && formControls.role.errors">
