@@ -29,8 +29,9 @@
               <option selected disabled>Month</option>
               <option *ngFor="let month of months" [value]="month.value">{{ month.name }}</option>
             </select>
-            <button class="btn btn-outline-success" type="submit">Search</button>
+            <button class="btn btn-outline-success me-2" type="submit">Search</button>
           </form>
+          <button type="button" class="btn btn-danger"   (click)="onClick()" data-bs-toggle="modal" data-bs-target="#exampleModal">Notification</button>
         </div>
       </div>
   </nav>
@@ -53,9 +54,6 @@
         <td>{{ Employee.customer_id }}</td>
         <td>{{ Employee.paid }}</td>
         <td>${{ Employee.total_price }}</td>
-        <td class="text-center" *ngIf="Employee.paid === false">
-            <button type="button" class="btn btn-danger"   (click)="onClick(Employee,Employee.customer_id)" data-bs-toggle="modal" data-bs-target="#exampleModal">Notification</button>
-        </td>
       </tr>
     </tbody>
   </table>
@@ -69,8 +67,7 @@
         <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body" *ngIf="selectedEmployee">
-        <p><strong>Person:</strong> {{ selectedEmployee.customer_id}}</p>
+      <div class="modal-body" >
         <p>已成功提醒付款</p>
       </div>
       <div class="modal-footer">

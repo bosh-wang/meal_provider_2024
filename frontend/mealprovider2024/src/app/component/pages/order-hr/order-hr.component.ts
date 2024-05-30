@@ -112,8 +112,16 @@ export class OrderHRComponent {
   selectEmployee(employee: any) {
     this.selectedEmployee = employee;
   }
-  onClick(employee: any,user_id:string) {
-    this.paymentNotification(user_id);
-    this.selectEmployee(employee);
+  onClick() {
+    const unpaidCustomerIds = this.getUnpaidCustomerIds(this.orders);
+    console.log(unpaidCustomerIds);
   }
+  getUnpaidCustomerIds(orders: Order_HR[]): string[] {
+    return orders
+      .filter(order => !order.paid)
+      .map(order => order.customer_id);
+  }
+  
+  // 调用函数并输出结果
+  
 }
