@@ -46,15 +46,29 @@ export class FoodPageComponent implements OnInit {
   }
 
   deleteFood() {
-    this.menuService.deleteFood(this.food.id);
-    this.router.navigateByUrl('/home'); // Redirect to home after deletion
+    //this.menuService.deleteFood(this.food.id);
+    const dataToSend = {
+      "change_status":"DELETE",
+      "item_id":this.food.id,
+      "availability":this.food.availibility,
+    }
+    console.log('Data to send:', dataToSend);
+    this.router.navigateByUrl(''); // Redirect to home after deletion
   }
 
   updateFoodPrice() {
     const newPrice = prompt('Enter new price:', this.food.price.toString());
+
     if (newPrice) {
-      this.menuService.updateFoodPrice(this.food.id, parseFloat(newPrice));
-      this.food.price = parseFloat(newPrice); // Update the displayed price
+      const dataToSend = {
+        "change_status":"ADJUST",
+        "item_id":this.food.id,
+        "price":Number(newPrice),
+      }
+      console.log('Data to send:', dataToSend);
+      this.router.navigateByUrl(''); // Redirect to home after deletion
+      //this.menuService.updateFoodPrice(this.food.id, parseFloat(newPrice));
+      //this.food.price = parseFloat(newPrice); // Update the displayed price
     }
   }
 }

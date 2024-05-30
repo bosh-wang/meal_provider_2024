@@ -39,18 +39,6 @@
       <button type="submit">Add Food</button>
       <button (click)="deleteFood()"> Delete Food</button>
       <button (click)="updateFoodPrice()"> Update Price</button>
-      <!-- Add New Food Modal -->
-      <div>
-        <h2>Add New Food</h2>
-        <form (submit)="addNewFood()">
-          <input type="text" placeholder="Name" [(ngModel)]="newFood.name" required>
-          <input type="number" placeholder="Price" [(ngModel)]="newFood.price" required>
-          <input type="number" placeholder="Stars" [(ngModel)]="newFood.stars" required>
-          <input type="text" placeholder="Image URL" [(ngModel)]="newFood.imageUrl" required>
-          <input type="text" placeholder="Restaurant ID" [(ngModel)]="newFood.restaurant_id" required>
-          <textarea placeholder="Description" [(ngModel)]="newFood.description"></textarea>
-        </form>
-      </div>
     </div>
 
   </div>
