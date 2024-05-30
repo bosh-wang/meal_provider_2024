@@ -110,9 +110,10 @@ def change_order_status(data):
     
     except Exception as e:
         return make_response(jsonify({"error": str(e)}), 500)
-# @app.route('/get_order', methods=['GET'])
-def get_order(order_id):
-    # order_id = request.args.get('order_id')
+
+
+def get_order(data):
+    order_id = data.get('order_id')
 
     if not order_id:
         return make_response(jsonify({"error": "Missing order_id parameter"}), 400)
@@ -121,12 +122,14 @@ def get_order(order_id):
         conn = get_db_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
         
+        # Fetch order details
         cursor.execute("SELECT * FROM orders WHERE order_id = %s", (order_id,))
         order_data = cursor.fetchone()
 
         if not order_data:
             return make_response(jsonify({"error": "Order not found"}), 404)
         
+        # Fetch order items
         cursor.execute("SELECT item_id, quantity, price FROM orders_items WHERE order_id = %s", (order_id,))
         items_data = cursor.fetchall()
 
@@ -144,3 +147,6 @@ def get_order(order_id):
     
     except Exception as e:
         return make_response(jsonify({"error": str(e)}), 500)
+    finally:
+        cursor.close()
+        conn.close()

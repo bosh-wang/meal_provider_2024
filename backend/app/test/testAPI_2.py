@@ -16,15 +16,24 @@ print("Home endpoint response:", response.text)
 # response = requests.post(f"{base_url}/api/signin", json=post_data)
 # print("POST /api/data response:", response.json())
 
-# get restaurant 
-post_data = {
-    "campus": "南科嘉義園區"
-}
-response = requests.post(f"{base_url}/api/restaurants", json=post_data)
-print("POST /api/data response:", response.json())
+# # get restaurant 
+# post_data = {
+#     "campus": "南科嘉義園區"
+# }
+# post_data = {
+# }
+# response = requests.post(f"{base_url}/api/restaurants", json=post_data)
+# print("POST /api/data response:", response.json())
 
 # # get menu
+## 餐廳管理員
 # post_data = {
+#     "role": "restaurant_staff",
+#     "restaurant_id": "restaurant003"
+# }
+## 員工
+# post_data = {
+#     "role": "employee",
 #     "restaurant_id": "restaurant003"
 # }
 # response = requests.post(f"{base_url}/api/menu", json=post_data)
@@ -60,7 +69,7 @@ print("POST /api/data response:", response.json())
 # print("POST /api/data response:", response.json())
 
 
-# # order
+# order
 # post_data ={
 #   "user_id": "user01",
 #   "restaurant_id": "restaurant040",
@@ -74,7 +83,7 @@ print("POST /api/data response:", response.json())
 
 # # change order status 好像要先改成去資料庫抓
 # post_data ={
-#     "order_id": 6,
+#     "order_id": 14,
 #     "order_status_before": "PENDING",
 #     "order_status_after": "CONFIRMED"
 # }
@@ -82,36 +91,37 @@ print("POST /api/data response:", response.json())
 # print("POST /api/data response:", response.json())
 
 
-# # check order status
-# post_data ={
-#     "order_id": 6
-# }
-# response = requests.post(f"{base_url}/api/get_order", json=post_data)
-# print("POST /api/data response:", response.json())
+# check order status
+post_data ={
+    "order_id": 14
+}
+response = requests.post(f"{base_url}/api/get_order", json=post_data)
+print("POST /api/data response:", response.json())
 
 
 
 ## 購物車部分
-# 更新購物車
+# # 更新購物車
 # post_data ={
 #    "cart_status": "update",
-#    "user_id": "user02",
-#    "item_id": "item002", 
-#    "quantity": 1
+#    "user_id": "user03",
+#    "item_id": "item003", 
+#    "quantity": 2
 # }
+# response = requests.post(f"{base_url}/api/update_cart", json=post_data)
+# print("POST /api/data response:", response.json())
 
 
 # # 查看購物車
 # post_data ={
 #    "cart_status": "check",
-#    "user_id": "user02"
+#    "user_id": "user03"
 # }
 
-# 送出訂單
+# #送出訂單
 # post_data ={
 #    "cart_status": "submit",
-#    "user_id": "user02"
+#    "user_id": "user03"
 # }
 # response = requests.post(f"{base_url}/api/update_cart", json=post_data)
-# print("Response text:", response.text)
 # print("POST /api/data response:", response.json())

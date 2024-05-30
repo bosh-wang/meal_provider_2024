@@ -159,7 +159,7 @@ def purchased(data):
         }
         
         order_service.create_order(order_data)
-        
+
         # Update the cart items to set them as PURCHASED
         update_query = """
             UPDATE shopping_cart
@@ -172,7 +172,7 @@ def purchased(data):
         cursor.close()
         conn.close()
         
-        return jsonify({"message": "Order placed successfully"}), 200
+        return jsonify({"message": "成功送出訂單"}), 200
     
     except Exception as e:
         return jsonify({"error": str(e)}), 500

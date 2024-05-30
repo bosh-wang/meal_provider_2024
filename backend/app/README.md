@@ -45,6 +45,9 @@ pip install -r requirements.txt
 cd app/
 python main.py
 
+cd backend/app/test/
+python testAPI_2.py
+
 ```
 
 # 取得資料庫資料 get_information.py
