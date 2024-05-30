@@ -1,6 +1,6 @@
 from flask import Flask, jsonify, request
 
-from services import rating_service, order_history_service, payment_service, signin_service, order_service, get_menu_service, adjust_menu_service, get_restaurants_service
+from services import rating_service, order_history_service, payment_service, signin_service, order_service, get_menu_service, adjust_menu_service, get_restaurants_service,cart_service
 
 app = Flask(__name__)
 
@@ -92,10 +92,16 @@ def change_order_status():
     return order_service.change_order_status(data)
 
 # Get order
-@app.route('/api/get_order', methods=['GET'])
+@app.route('/api/get_order', methods=['POST'])
 def get_order():
-    order_id = request.args.get('order_id')
-    return order_service.get_order(order_id)
+    data = request.json
+    return order_service.get_order(data)
+
+## 購物車
+@app.route('/api/update_cart', methods=['POST'])
+def update_cart():
+    data = request.json
+    return cart_service.handle_cart(data)
 
 
 

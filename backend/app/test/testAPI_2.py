@@ -7,7 +7,7 @@ base_url = "http://127.0.0.1:5000"
 response = requests.get(f"{base_url}/")
 print("Home endpoint response:", response.text)
 
-# # sign in url
+# # sign in
 # post_data = {
 #     "role": "restaurant_staff",
 #     "email": "ranbirkapoor@tsmc.com",
@@ -16,11 +16,11 @@ print("Home endpoint response:", response.text)
 # response = requests.post(f"{base_url}/api/signin", json=post_data)
 # print("POST /api/data response:", response.json())
 
-# #get restaurant 
-# response = requests.get(f"{base_url}/api/restaurants")
-# print("GET /api/data response:", response.json())
+# get restaurant 
+response = requests.get(f"{base_url}/api/restaurants")
+print("GET /api/data response:", response.json())
 
-# #get menu
+# # get menu
 # post_data = {
 #     "restaurant_id": "restaurant003"
 # }
@@ -39,40 +39,76 @@ print("Home endpoint response:", response.text)
 #     "availability": False, #測試用
 #     "image_url": "https://images.app.goo.gl/q4aVdPB83r7kHM1d7"
 # }
-# adjust menu-price change
+
+# # adjust menu-price change
 # post_data = {
 #     "change_status": "ADJUST",
 #     "item_id": "item809",
 #     "price": 190
 # }
 
-# adjust menu-availability false
-post_data ={
-    "change_status": "DELETE",
-    "item_id": "item809"
-}
-response = requests.post(f"{base_url}/api/change_menu_item", json=post_data)
-print("POST /api/data response:", response.json())
+# # adjust menu-availability false
+# post_data ={
+#     "change_status": "DELETE",
+#     "item_id": "item809",
+#     "availability": False
+# }
+# response = requests.post(f"{base_url}/api/change_menu_item", json=post_data)
+# print("POST /api/data response:", response.json())
 
 
-# order
+# # order
+# post_data ={
+#   "user_id": "user01",
+#   "restaurant_id": "restaurant040",
+#   "items": [
+#       {"item_id": "item789", "quantity": 2},
+#       {"item_id": "item790", "quantity": 1}
+#   ]
+# }
+# response = requests.post(f"{base_url}/api/create_order", json=post_data)
+# print("POST /api/data response:", response.json())
+
+# # change order status 好像要先改成去資料庫抓
+# post_data ={
+#     "order_id": 6,
+#     "order_status_before": "PENDING",
+#     "order_status_after": "CONFIRMED"
+# }
+# response = requests.post(f"{base_url}/api/change_order_status", json=post_data)
+# print("POST /api/data response:", response.json())
 
 
-#change order status
-
-#check order status
-
-
+# # check order status
+# post_data ={
+#     "order_id": 6
+# }
+# response = requests.post(f"{base_url}/api/get_order", json=post_data)
+# print("POST /api/data response:", response.json())
 
 
 
 ## 購物車部分
-
-# 加入購物車
-
-# 查看購物車
-
 # 更新購物車
+# post_data ={
+#    "cart_status": "update",
+#    "user_id": "user02",
+#    "item_id": "item002", 
+#    "quantity": 1
+# }
 
-# 刪除整個購物車
 
+# # 查看購物車
+# post_data ={
+#    "cart_status": "check",
+#    "user_id": "user02"
+# }
+
+# 送出訂單
+# post_data ={
+#    "cart_status": "submit",
+#    "user_id": "user02"
+# }
+# response = requests.post(f"{base_url}/api/update_cart", json=post_data)
+# print("Response text:", response.text)
+# print("POST /api/data response:", response.json())
