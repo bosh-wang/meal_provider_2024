@@ -171,4 +171,14 @@ export class OrderDashboardComponent {
     console.log('Data to send:', dataToSend);
     // Here you can add the logic to send dataToSend to your server.
   }
+  submit_completed(order_id:string,order_status_before:string) {
+    const dataToSend = {
+      order_id:order_id,
+      order_status_before:order_status_before,
+      order_status_after:'COMPLETED',
+      
+    }
+    console.log('Data to send:', dataToSend);
+    
+  }
 }

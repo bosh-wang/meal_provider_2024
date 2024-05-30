@@ -49,8 +49,11 @@
             </div>
           </td>
           <td class="text-center">
-              <button *ngIf="order.order_status === 'COMPLETED'"
-              type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#RatingModal" (click)="selectOrder(order)">Rating</button>
+            <button *ngIf="order.order_status === 'PREPARED' "
+                type="button" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#orderModal-completed" (click)="selectOrder(order)"
+                >COMPLETED</button>
+            <button *ngIf="order.order_status === 'COMPLETED'"
+            type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#RatingModal" (click)="selectOrder(order)">Rating</button>
           </td>
         </tr>
       </tbody>
@@ -90,7 +93,6 @@
           </li>
         </ul>
       </div>
-
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
@@ -98,6 +100,30 @@
   </div>
 </div>
 
-
+<!-- Order Modal completed -->
+<div class="modal fade" id="orderModal-completed" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="orderModalLabel">Order Details</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="selectedOrder">
+        <p><strong>Order ID:</strong> {{ selectedOrder.order_id }}</p>
+        <p><strong>Time:</strong> {{ selectedOrder.date }}</p>
+        <p><strong>Person:</strong> {{ selectedOrder.user_id }}</p>
+        <p><strong>Total Payment:</strong> ${{ selectedOrder.totalAmount }}</p>
+        <p><strong>Status:</strong> {{ selectedOrder.order_status }}</p>
+        <ul>
+          <li *ngFor="let item of selectedOrder.items">
+            {{ item.name }} (x{{ item.quantity }}) - ${{ item.price }}
+          </li>
+        </ul>
+        <p> Status : {{ selectedOrder.order_status }} To COMPLETED</p>
+        <button type="button" class="btn btn-primary me-2" (click)=submit_completed(selectedOrder.order_id,selectedOrder.order_status)>Sure</button>
+      </div>
+    </div>
+  </div>
+</div>  
 
 
