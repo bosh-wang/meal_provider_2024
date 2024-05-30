@@ -40,7 +40,7 @@ def add_menu_item(data):
     availability = data.get('availability')
     image_url = data.get('image_url')
 
-    if not (restaurant_id and category and item_name and description and price and availability and image_url):
+    if not (restaurant_id and category and item_name and description and price and image_url) or availability== None:
         return make_response(jsonify({"error": "Missing required fields"}), 400)
 
     try:
@@ -98,10 +98,10 @@ def add_menu_item(data):
         return make_response(jsonify({"error": str(e)}), 500)
 
 def adjust_menu_item(data):
-    item_name = data.get('item_name')
+    item_id = data.get('item_id')
     new_price = data.get('price')
 
-    if not (item_name and new_price):
+    if not (item_id and new_price):
         return make_response(jsonify({"error": "Missing required fields"}), 400)
 
     try:
@@ -111,12 +111,13 @@ def adjust_menu_item(data):
         update_query = """
         UPDATE menus_items
         SET price = %s
-        WHERE item_name = %s
+        WHERE item_id = %s
         RETURNING item_id, item_name, price
         """
 
-        cursor.execute(update_query, (new_price, item_name))
+        cursor.execute(update_query, (new_price, item_id))
         updated_item = cursor.fetchone()
+        print(updated_item)
         conn.commit()
         cursor.close()
         conn.close()
@@ -140,30 +141,46 @@ def adjust_menu_item(data):
         return make_response(jsonify({"error": str(e)}), 500)
 
 def delete_menu_item(data):
-    item_name = data.get('item_name')
-
-    if not item_name:
+    item_id = data.get('item_id')
+    availability = data.get('availability')
+    print("看這裡！！",availability)
+    if availability == False:
+        return make_response(jsonify({"error": "已經不會顯示了"}), 400)
+    print(item_id)
+    if not item_id:
         return make_response(jsonify({"error": "Missing required fields"}), 400)
 
     try:
         conn = get_db_connection()
-        cursor = conn.cursor()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
 
         delete_query = """
             UPDATE menus_items
-            SET availability = FALSE
-            WHERE item_name = %s
-            RETURNING item_id;
+            SET availability = False
+            WHERE item_id = %s
+            RETURNING item_id, item_name, availability
             """
-
-        cursor.execute(delete_query, (item_name,))
+        
+        cursor.execute(delete_query, (item_id,))
         deleted_item = cursor.fetchone()
+        print(deleted_item)
         conn.commit()
         cursor.close()
         conn.close()
 
         if deleted_item:
-            return make_response(jsonify({"message": "Item deleted successfully"}), 200)
+            response_data = {
+                "item_id": deleted_item['item_id'],
+                "item_name": deleted_item['item_name'],
+                "availability": deleted_item['availability'],
+                "message": "Item availability change to False."
+            }
+            print(response_data)
+            response_json = json.dumps(response_data, ensure_ascii=False)
+            response = make_response(response_json, 201)
+            response.headers['Content-Type'] = 'application/json; charset=utf-8'
+            return response
+            # return make_response(jsonify({"message": "Item deleted successfully"}), 200)
         else:
             return make_response(jsonify({"error": "Item not found"}), 404)
     

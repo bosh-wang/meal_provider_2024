@@ -1,4 +1,5 @@
 {
     "change_status": "DELETE",
-    "item_name": "超級爆炸好吃牛肉丸"
+    "item_id": "item809",
+    "availability": true
 }

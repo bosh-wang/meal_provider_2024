@@ -40,10 +40,11 @@ kubectl port-forward pods/citus-coordinator-0 5432:5432
 ```
 開另一個終端機
 ```
-cd backend/app
-pip install flask
-pip install psycopg2
-python app.py
+cd backend/
+pip install -r requirements.txt
+cd app/
+python main.py
+
 ```
 
 # 取得資料庫資料 get_information.py
