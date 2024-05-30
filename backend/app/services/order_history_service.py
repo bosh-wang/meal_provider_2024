@@ -5,8 +5,8 @@ import os
 
 load_dotenv()
 
-def get_order_history_service():#data
-    
+
+def get_order_history_service():  # data
     # host = os.getenv("DB_HOST")
     # dbname = os.getenv("DB_NAME")
     # user = os.getenv("DB_USER")
@@ -46,45 +46,44 @@ def get_order_history_service():#data
     #             "total_amount": float(total_price)
     #         })
 
-        # cursor.close()
-        # conn.close()
+    # cursor.close()
+    # conn.close()
     #     return ({"orders": order_history})
     # except Exception as e:
     #     return ({"error": str(e)}), 500
-    return ({
+    return {
         "orders": [
             {
-            "order_id": "123456",
-            "order_date": "2024-04-15 10:30:00",
-            "items": [
-                {
-                "item_id": "ABC123",
-                "item_name": "Spaghetti Carbonara",
-                "quantity": 2,
-                "unit_price": 12.99
-                },
-                {
-                "item_id": "DEF456",
-                "item_name": "Caesar Salad",
-                "quantity": 1,
-                "unit_price": 8.99
-                }
-            ],
-            "total_price": 34.97,
+                "order_id": "123456",
+                "order_date": "2024-04-15 10:30:00",
+                "items": [
+                    {
+                        "item_id": "ABC123",
+                        "item_name": "Spaghetti Carbonara",
+                        "quantity": 2,
+                        "unit_price": 12.99,
+                    },
+                    {
+                        "item_id": "DEF456",
+                        "item_name": "Caesar Salad",
+                        "quantity": 1,
+                        "unit_price": 8.99,
+                    },
+                ],
+                "total_price": 34.97,
             },
             {
-            "order_id": "789012",
-            "order_date": "2024-04-20T12:00:00",
-            "items": [
-                {
-                "item_id": "GHI789",
-                "item_name": "Margherita Pizza",
-                "quantity": 1,
-                "unit_price": 14.99
-                }
-            ],
-            "total_price": 14.99,
-            }
+                "order_id": "789012",
+                "order_date": "2024-04-20T12:00:00",
+                "items": [
+                    {
+                        "item_id": "GHI789",
+                        "item_name": "Margherita Pizza",
+                        "quantity": 1,
+                        "unit_price": 14.99,
+                    }
+                ],
+                "total_price": 14.99,
+            },
         ]
-        }
-    )
+    }
