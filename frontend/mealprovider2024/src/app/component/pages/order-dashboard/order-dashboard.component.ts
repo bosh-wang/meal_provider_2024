@@ -160,12 +160,16 @@ export class OrderDashboardComponent {
   }
   monthForm: FormGroup;
   OrderForm: FormGroup;
+  payForm :FormGroup;
   constructor(private fb: FormBuilder) {
     this.OrderForm = this.fb.group({
       rating: ['', Validators.required]
     });
     this.monthForm = this.fb.group({
       month: ['', Validators.required]
+    });
+    this.payForm = this.fb.group({
+      payment_method: ['', Validators.required]
     });
   }
   submit(user_id:string,item_id:string) {
@@ -188,6 +192,19 @@ export class OrderDashboardComponent {
       "order_status_after":'COMPLETED',
     }
     console.log('Data to send:', dataToSend);
+  }
+  submit_payment(customer_id:string,order_id:string) {
+    const formValue = this.payForm.value;
+
+    const dataToSend = {
+      "customer_id":customer_id,
+      "order_id":order_id,
+      "payment_method": formValue.payment_method,
+      
+    };
+    
+    console.log('Data to send:', dataToSend);
+    // Here you can add the logic to send dataToSend to your server.
   }
   submit_month() {
     const formValue = this.monthForm.value;

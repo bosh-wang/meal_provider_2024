@@ -72,7 +72,7 @@
             type="button" class="btn btn-dark me-2" data-bs-toggle="modal" data-bs-target="#RatingModal" (click)="selectOrder(order)">Rating</button>
 
             <button *ngIf="order.paid === false "
-                type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#orderModal-completed" (click)="selectOrder(order)"
+                type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#orderModal-payment" (click)="selectOrder(order)"
                 >Payment</button>
           </td>
         </tr>
@@ -145,4 +145,30 @@
   </div>
 </div>  
 
-
+<!-- Rating Modal -->
+<div class="modal fade" id="orderModal-payment" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="orderModalLabel">Order Payment</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="selectedOrder">
+        <p><strong>Person:</strong> {{ selectedOrder.user_id }}</p>
+        <div>
+          <form class="d-flex" [formGroup]="payForm" (ngSubmit)="submit_payment(selectedOrder.user_id,selectedOrder.order_id)">
+            <select class="form-select me-2" formControlName="payment_method" aria-label="payment_method">
+              <option selected disabled>How to Pay</option>
+              <option  value='credit card'>credit card</option>
+              <option  value='cash'>cash</option>
+            </select>
+            <button class="btn btn-outline-dark" type="submit">Pay</button>
+          </form>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
