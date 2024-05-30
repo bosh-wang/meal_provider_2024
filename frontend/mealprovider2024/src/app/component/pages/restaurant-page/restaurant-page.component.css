@@ -82,3 +82,13 @@ li a img{
 .star-rating{
   margin-bottom: 0.2rem;
 }
+button {
+  color: white;
+  background: #e72929;
+  border: none;
+  font-size: 1.2rem;
+  padding: 1rem;
+  border-radius: 10rem;
+  outline: none;
+}
+

@@ -1,6 +1,9 @@
 <app-food-search></app-food-search>
 <!--<app-tag></app-tag>-->
 <app-not-found [visible]="!food || !food.length" notFoundMessage="查無此餐點!" resetLinkText="返回首頁"></app-not-found>
+<div class="container">
+  <button type="submit">Add Food</button>
+</div>
 <ul>
   <li *ngFor="let item of food">
     <a routerLink="/food/{{item.id}}">

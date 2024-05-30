@@ -114,10 +114,10 @@ export class OrderHRComponent {
     const lastDay = new Date(year, monthValue2, 1);
     
     const dataToSend = {
-      department: formValue.department,
-      position: formValue.position,
-      firstDay: firstDay.toISOString().split('T')[0],
-      lastDay: lastDay.toISOString().split('T')[0]
+      "department": formValue.department,
+      "position": formValue.position,
+      "firstDay": firstDay.toISOString().split('T')[0],
+      "lastDay": lastDay.toISOString().split('T')[0]
       //firstDay: firstDay,
       //lastDay: lastDay
     };
@@ -130,7 +130,7 @@ export class OrderHRComponent {
 
   paymentNotification(user_id:string) {
     const dataToSend = {
-      user_id:user_id,
+      "user_id":user_id,
     };
     console.log('Data to send:', dataToSend);
   }

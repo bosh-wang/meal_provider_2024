@@ -162,9 +162,9 @@ export class OrderDashboardComponent {
     const formValue = this.OrderForm.value;
 
     const dataToSend = {
-      user_id:user_id,
-      item_id:item_id,
-      rating: formValue.rating,
+      "user_id":user_id,
+      "item_id":item_id,
+      "rating": formValue.rating,
       
     };
     
@@ -173,9 +173,9 @@ export class OrderDashboardComponent {
   }
   submit_completed(order_id:string,order_status_before:string) {
     const dataToSend = {
-      order_id:order_id,
-      order_status_before:order_status_before,
-      order_status_after:'COMPLETED',
+      "order_id":order_id,
+      "order_status_before":order_status_before,
+      "order_status_after":'COMPLETED',
       
     }
     console.log('Data to send:', dataToSend);

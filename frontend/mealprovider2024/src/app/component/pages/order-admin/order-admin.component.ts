@@ -86,27 +86,27 @@ export class OrderAdminComponent {
     
     if(flag===0){
       const dataToSend = {
-        order_id:order_id,
-        order_status_before:order_status_before,
-        order_status_after:'PREPARED',
+        "order_id":order_id,
+        "order_status_before":order_status_before,
+        "order_status_after":'PREPARED',
         
       }
       console.log('Data to send:', dataToSend);
     }
     else if(flag===1){
       const dataToSend = {
-        order_id:order_id,
-        order_status_before:order_status_before,
-        order_status_after:'CONFIRMED',
+        "order_id":order_id,
+        "order_status_before":order_status_before,
+        "order_status_after":'CONFIRMED',
         
       }
       console.log('Data to send:', dataToSend);
     }
     else if(flag===2){
       const dataToSend = {
-        order_id:order_id,
-        order_status_before:order_status_before,
-        order_status_after:'CANCELED',
+        "order_id":order_id,
+        "order_status_before":order_status_before,
+        "order_status_after":'CANCELED',
         
       }
       console.log('Data to send:', dataToSend);

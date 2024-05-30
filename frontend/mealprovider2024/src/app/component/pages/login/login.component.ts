@@ -40,9 +40,9 @@ export class LoginComponent {
 
     // Create the final form value object
     const formValue = {
-      email: this.loginForm.value.email,
-      password_hash: passwordHash,
-      role: this.loginForm.value.role
+      "email": this.loginForm.value.email,
+      "password_hash": passwordHash,
+      "role": this.loginForm.value.role
     };
     // Process login
     console.log('Login successful');
