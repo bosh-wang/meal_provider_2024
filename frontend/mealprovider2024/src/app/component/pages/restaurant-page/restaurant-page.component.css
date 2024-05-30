@@ -82,6 +82,11 @@ li a img{
 .star-rating{
   margin-bottom: 0.2rem;
 }
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 button {
   color: white;
   background: #e72929;
