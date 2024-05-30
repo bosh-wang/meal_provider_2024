@@ -42,25 +42,25 @@
     <tbody>
       <tr *ngFor="let order of orders">
         <th scope="row">{{ order.order_id }}</th>
-        <td>{{ order.date }}</td>
-        <td>{{ order.user_id }}</td>
+        <td>{{ order.order_date }}</td>
+        <td>{{ order.customer_id }}</td>
         <td>
           <ul>
             <li *ngFor="let item of order.items">
-              {{ item.name }} (x{{ item.quantity }}) - ${{ item.price }}
+              {{ item.item_name }} (x{{ item.quantity }}) 
             </li>
           </ul>
         </td>
-        <td>${{ order.totalAmount }}</td>
+        <td>${{ order.total_price }}</td>
         <td>{{ order.order_status }}</td>
         <td class="text-center">
-          <button *ngIf="order.order_status === 'PENDING' "
+          <button *ngIf="order.order_status === 'PENDING'"
                 type="button" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#orderModal-comfirm" (click)="selectOrder(order)"
                 >COMFIRMED</button>
           <button *ngIf="order.order_status === 'CONFIRMED' "
                 type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#orderModal-prepared" (click)="selectOrder(order)"
                 >PREPARED</button>
-        <button *ngIf="order.order_status !== 'COMPLETED' && order.order_status !== 'CANCELLED'"
+        <button *ngIf="order.order_status !== 'COMPLETED' && order.order_status !== 'CANCELED'"
                 type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#orderModal-canceled" (click)="selectOrder(order)"
                 >CANCELLED</button>
         </td>
@@ -78,13 +78,13 @@
       </div>
       <div class="modal-body" *ngIf="selectedOrder">
         <p><strong>Order ID:</strong> {{ selectedOrder.order_id }}</p>
-        <p><strong>Time:</strong> {{ selectedOrder.date }}</p>
-        <p><strong>Person:</strong> {{ selectedOrder.user_id }}</p>
-        <p><strong>Total Payment:</strong> ${{ selectedOrder.totalAmount }}</p>
+        <p><strong>Time:</strong> {{ selectedOrder.order_date }}</p>
+        <p><strong>Person:</strong> {{ selectedOrder.customer_id }}</p>
+        <p><strong>Total Payment:</strong> ${{ selectedOrder.total_price }}</p>
         <p><strong>Status:</strong> {{ selectedOrder.order_status }}</p>
         <ul>
           <li *ngFor="let item of selectedOrder.items">
-            {{ item.name }} (x{{ item.quantity }}) - ${{ item.price }}
+            {{ item.item_name }} (x{{ item.quantity }}) 
           </li>
         </ul>
         <p>Change Order Status  {{ selectedOrder.order_status }} to PREPARED</p>

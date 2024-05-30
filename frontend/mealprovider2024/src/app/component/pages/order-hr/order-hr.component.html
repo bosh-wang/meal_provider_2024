@@ -41,28 +41,20 @@
         <th scope="col">Order ID</th>
         <th scope="col">Time</th>
         <th scope="col">Person</th>
-        <th scope="col">Food</th>
+        <th scope="col">Paid</th>
         <th scope="col">Total Payment</th>
-        <th scope="col">Status</th>
       </tr>
     </thead>
 
     <tbody>
       <tr *ngFor="let Employee of orders">
         <th scope="row">{{ Employee.order_id }}</th>
-        <td>{{ Employee.date }}</td>
-        <td>{{ Employee.user_id }}</td>
-        <td>
-          <ul>
-            <li *ngFor="let item of Employee.items">
-              {{ item.name }} (x{{ item.quantity }}) - ${{ item.price }}
-            </li>
-          </ul>
-        </td>
-        <td>${{ Employee.totalAmount }}</td>
-        <td>{{ Employee.order_status }}</td>
-        <td class="text-center">
-            <button type="button" class="btn btn-danger"   (click)="onClick(Employee,Employee.user_id)" data-bs-toggle="modal" data-bs-target="#exampleModal">Notification</button>
+        <td>{{ Employee.order_date }}</td>
+        <td>{{ Employee.customer_id }}</td>
+        <td>{{ Employee.paid }}</td>
+        <td>${{ Employee.total_price }}</td>
+        <td class="text-center" *ngIf="Employee.paid === false">
+            <button type="button" class="btn btn-danger"   (click)="onClick(Employee,Employee.customer_id)" data-bs-toggle="modal" data-bs-target="#exampleModal">Notification</button>
         </td>
       </tr>
     </tbody>
@@ -78,7 +70,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" *ngIf="selectedEmployee">
-        <p><strong>Person:</strong> {{ selectedEmployee.user_id }}</p>
+        <p><strong>Person:</strong> {{ selectedEmployee.customer_id}}</p>
         <p>已成功提醒付款</p>
       </div>
       <div class="modal-footer">

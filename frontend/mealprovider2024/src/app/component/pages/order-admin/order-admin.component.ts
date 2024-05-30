@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Order } from '../../../shared/model/Order';
+import { Order_Kitchen } from '../../../shared/model/Order';
 import { CommonModule } from '@angular/common';
 import { FormGroup,FormBuilder,FormControl,ReactiveFormsModule, Validators} from '@angular/forms';
 
@@ -11,72 +11,91 @@ import { FormGroup,FormBuilder,FormControl,ReactiveFormsModule, Validators} from
   styleUrl: './order-admin.component.css'
 })
 export class OrderAdminComponent {
-  orders: Order[] = [];
+  orders: Order_Kitchen[] = [];
   ngOnInit() {
     // Example data
     this.orders = [
       {
-        "order_id": "1",
-        "orderNumber": 6,
-        "date": "5/26/2021, 3:06:21 AM",
-        "user_id": "u001",
-        "items": [
-          { "name": "Fruit Salad", "price": 165, "quantity": 1 },
-          { "name": "Spicy Beef Fry", "price": 580, "quantity": 1 }
+        customer_id: 'C001',
+        order_id: 'O1001',
+        order_date: '2024-05-01',
+        confirmed_date: '2024-05-01',
+        prepared_date: '2024-05-02',
+        completed_date: '2024-05-03',
+        canceled_date: '',
+        items: [
+          { item_id: '101', item_name: 'Burger', quantity: 2, unit_price: 5.99 },
+          { item_id: '102', item_name: 'Fries', quantity: 1, unit_price: 2.99 }
         ],
-        "totalAmount": 745,
-        "order_status": "COMPLETED"
+        order_status: 'PENDING',
+        total_price: 14.97,
+        paid: true
       },
       {
-        "order_id": "2",
-        "orderNumber": 5,
-        "date": "5/26/2021, 3:01:40 AM",
-        "user_id": "u002",
-        "items": [
-          { "name": "Chinese Salad", "price": 240, "quantity": 2 },
-          { "name": "Crispy Chilli Baby Corn", "price": 265, "quantity": 1 }
+        customer_id: 'C002',
+        order_id: 'O1002',
+        order_date: '2024-05-02',
+        confirmed_date: '2024-05-02',
+        prepared_date: '2024-05-03',
+        completed_date: '',
+        canceled_date: '',
+        items: [
+          { item_id: '103', item_name: 'Pizza', quantity: 1, unit_price: 12.99 },
+          { item_id: '104', item_name: 'Soda', quantity: 2, unit_price: 1.99 }
         ],
-        "totalAmount": 745,
-        "order_status": "CONFIRMED"
+        order_status: 'PREPARED',
+        total_price: 16.97,
+        paid: false
       },
       {
-        "order_id": "3",
-        "orderNumber": 7,
-        "date": "5/27/2021, 12:15:30 PM",
-        "user_id": "u003",
-        "items": [
-          { "name": "Grilled Chicken", "price": 300, "quantity": 1 },
-          { "name": "Mango Smoothie", "price": 200, "quantity": 2 }
+        customer_id: 'C003',
+        order_id: 'O1003',
+        order_date: '2024-05-03',
+        confirmed_date: '2024-05-03',
+        prepared_date: '',
+        completed_date: '',
+        canceled_date: '',
+        items: [
+          { item_id: '105', item_name: 'Pasta', quantity: 1, unit_price: 10.99 },
+          { item_id: '106', item_name: 'Salad', quantity: 1, unit_price: 6.99 }
         ],
-        "totalAmount": 700,
-        "order_status": "PREPARED"
+        order_status: 'CONFIRMED',
+        total_price: 17.98,
+        paid: true
       },
       {
-        "order_id": "4",
-        "orderNumber": 8,
-        "date": "5/27/2021, 1:45:00 PM",
-        "user_id": "u004",
-        "items": [
-          { "name": "Caesar Salad", "price": 180, "quantity": 1 },
-          { "name": "Tomato Soup", "price": 150, "quantity": 2 }
+        customer_id: 'C004',
+        order_id: 'O1004',
+        order_date: '2024-05-04',
+        confirmed_date: '2024-05-04',
+        prepared_date: '',
+        completed_date: '',
+        canceled_date: '2024-05-05',
+        items: [
+          { item_id: '107', item_name: 'Steak', quantity: 1, unit_price: 19.99 },
+          { item_id: '108', item_name: 'Mashed Potatoes', quantity: 1, unit_price: 4.99 }
         ],
-        "totalAmount": 480,
-        "order_status": "PENDING"
+        order_status: 'CANCELED',
+        total_price: 24.98,
+        paid: true
       },
       {
-        "order_id": "5",
-        "orderNumber": 9,
-        "date": "5/27/2021, 2:30:15 PM",
-        "user_id": "u005",
-        "items": [
-          { "name": "Pasta Primavera", "price": 220, "quantity": 1 },
-          { "name": "Garlic Bread", "price": 120, "quantity": 2 }
+        customer_id: 'C005',
+        order_id: 'O1005',
+        order_date: '2024-05-05',
+        confirmed_date: '2024-05-05',
+        prepared_date: '2024-05-06',
+        completed_date: '2024-05-07',
+        canceled_date: '',
+        items: [
+          { item_id: '109', item_name: 'Sushi', quantity: 1, unit_price: 14.99 },
+          { item_id: '110', item_name: 'Miso Soup', quantity: 1, unit_price: 3.99 }
         ],
-        "totalAmount": 460,
-        "order_status": "CANCELLED"
+        order_status: 'COMPLETED',
+        total_price: 18.98,
+        paid: false
       }
     ]
-    ;
   }
   months = [
     { name: 'January', value: 0 },

@@ -21,3 +21,23 @@ export class Order{
   totalAmount!: number;
   order_status!: string
 }
+export class Order_HR {
+  customer_id !:string;
+  order_id!: string;
+  order_date!: string;
+  total_price!: number;
+  paid !: boolean;
+};
+export class Order_Kitchen {
+  customer_id !:string;
+  order_id!: string;
+  order_date!: string;
+  confirmed_date !: string;
+  prepared_date !: string;
+  completed_date !: string;
+  canceled_date !: string;
+  items!:OrderItem[];
+  order_status!: string
+  total_price!: number;
+  paid !: boolean;
+};
