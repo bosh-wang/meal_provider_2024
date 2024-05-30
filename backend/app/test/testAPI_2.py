@@ -32,14 +32,19 @@ print("Home endpoint response:", response.text)
 #     "restaurant_id": "restaurant003"
 # }
 ## 員工
-# post_data = {
-#     "role": "employee",
-#     "restaurant_id": "restaurant003"
-# }
-# response = requests.post(f"{base_url}/api/menu", json=post_data)
-# print("POST /api/data response:", response.json())
+post_data = {
+    "role": "employee",
+    "restaurant_id": "restaurant007"
+}
+response = requests.post(f"{base_url}/api/menu", json=post_data)
+print("POST /api/data response:", response.json())
 
-
+post_data = {
+    "role": "restaurant_staff",
+    "restaurant_id": "restaurant007"
+}
+response = requests.post(f"{base_url}/api/menu", json=post_data)
+print("POST /api/data response:", response.json())
 # # adjust menu-add
 # post_data = {
 #     "change_status": "ADD",
@@ -91,12 +96,12 @@ print("Home endpoint response:", response.text)
 # print("POST /api/data response:", response.json())
 
 
-# check order status
-post_data ={
-    "order_id": 14
-}
-response = requests.post(f"{base_url}/api/get_order", json=post_data)
-print("POST /api/data response:", response.json())
+# # check order status
+# post_data ={
+#     "order_id": 14
+# }
+# response = requests.post(f"{base_url}/api/get_order", json=post_data)
+# print("POST /api/data response:", response.json())
 
 
 

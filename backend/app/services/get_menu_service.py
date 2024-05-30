@@ -5,8 +5,22 @@ import json
 from decimal import Decimal
 from datetime import datetime, date
 import os
+import redis
+from datetime import timedelta
+import time
 
 app = Flask(__name__)
+
+# 连接到 Redis，加入密码认证
+pool = redis.ConnectionPool(
+    host=os.getenv("REDIS_HOST"),
+    port=os.getenv("REDIS_PORT"),
+    db=0,
+    decode_responses=True,
+)
+redis_client = redis.Redis(connection_pool=pool)
+
+
 
 # Database connection configuration
 def get_db_connection():
@@ -33,6 +47,21 @@ def get_menu(data):
     role = data.get('role')
     
     try:
+        cache_key = f"menu:{r_id,role}"
+        cache_expiry = timedelta(hours=1)
+
+        start_time = time.time()  # Start timing for Redis
+
+        # Check if the data is in Redis cache
+        cached_menu = redis_client.get(cache_key)
+
+        if cached_menu:
+            redis_time = time.time() - start_time  # Calculate Redis time
+            print(f"Cache hit, Time taken with Redis: {redis_time:.6f} seconds")
+            return app.response_class(
+                response=cached_menu, status=200, mimetype="application/json"
+            )
+        start_time = time.time()  # Start timing for DB query
         conn = get_db_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
 
@@ -117,9 +146,13 @@ def get_menu(data):
 
         cursor.close()
         conn.close()
+        db_time = time.time() - start_time  # Calculate DB query time
+        print(f"Time taken with DB: {db_time:.6f} seconds")
+
 
         json_result = json.dumps(menu_items, ensure_ascii=False, default=custom_json_serializer)
-
+        # Store the result in Redis cache
+        redis_client.setex(cache_key, cache_expiry, json_result)
         response = app.response_class(
             response=json_result,
             status=200,
