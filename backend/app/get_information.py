@@ -24,7 +24,7 @@ def get_users():
         conn = get_db_connection()
         cur = conn.cursor(cursor_factory=RealDictCursor)
 
-        select_query = "SELECT * FROM shopping_cart;"
+        select_query = "SELECT * FROM restaurants_stands;"
         # 取得各個table的資料:menus_items meals_ratings users orders_items items
         cur.execute(select_query)
         users = cur.fetchall()

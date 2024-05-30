@@ -17,8 +17,11 @@ print("Home endpoint response:", response.text)
 # print("POST /api/data response:", response.json())
 
 # get restaurant 
-response = requests.get(f"{base_url}/api/restaurants")
-print("GET /api/data response:", response.json())
+post_data = {
+    "campus": "南科嘉義園區"
+}
+response = requests.post(f"{base_url}/api/restaurants", json=post_data)
+print("POST /api/data response:", response.json())
 
 # # get menu
 # post_data = {

@@ -49,10 +49,11 @@ python main.py
 
 # 取得資料庫資料 get_information.py
 python get_information.py
-
+curl -X GET http://localhost:5000/api/get_information
 # 點餐 order_service.py
 ```
 curl -X POST -H "Content-Type: application/json" -d @services/orders.json http://localhost:5000/api/create_order
+
 ```
 更改訂單狀態
 ```

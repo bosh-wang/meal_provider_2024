@@ -67,9 +67,10 @@ def get_menu():
     return get_menu_service.get_menu(data)
 
 # 取得餐廳
-@app.route('/api/restaurants', methods=['GET'])
+@app.route('/api/restaurants', methods=['POST'])
 def get_restaurant():
-    return get_restaurants_service.get_restaurant()
+    data = request.json
+    return get_restaurants_service.get_restaurant(data)
 
 # Adjust menu 刪除還有點問題
 @app.route('/api/change_menu_item', methods=['POST'])
