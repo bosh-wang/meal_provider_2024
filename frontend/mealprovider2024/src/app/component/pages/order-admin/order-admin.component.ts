@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Order } from '../../../shared/model/Order';
 import { CommonModule } from '@angular/common';
-import { FormGroup,FormBuilder,FormControl,ReactiveFormsModule} from '@angular/forms';
+import { FormGroup,FormBuilder,FormControl,ReactiveFormsModule, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-order-admin',
@@ -78,6 +78,45 @@ export class OrderAdminComponent {
     ]
     ;
   }
+  months = [
+    { name: 'January', value: 0 },
+    { name: 'February', value: 1 },
+    { name: 'March', value: 2 },
+    { name: 'April', value: 3 },
+    { name: 'May', value: 4 },
+    { name: 'June', value: 5 },
+    { name: 'July', value: 6 },
+    { name: 'August', value: 7 },
+    { name: 'September', value: 8 },
+    { name: 'October', value: 9 },
+    { name: 'November', value: 10 },
+    { name: 'December', value: 11 }
+  ];
+  monthForm:FormGroup;
+  constructor(private fb: FormBuilder) {
+    this.monthForm = this.fb.group({
+      month: ['', Validators.required]
+    });
+  }
+  submit_month() {
+    const formValue = this.monthForm.value;
+    const monthValue = Number(formValue.month);
+    const monthValue2 = monthValue +Number(1);
+    const year = new Date().getFullYear();
+    const firstDay = new Date(year, monthValue, 2);
+    const lastDay = new Date(year, monthValue2, 1);
+    
+    const dataToSend = {
+      "start_date": firstDay.toISOString().split('T')[0],
+      "end_date": lastDay.toISOString().split('T')[0],
+      "restaurant_id":"C46"
+      //firstDay: firstDay,
+      //lastDay: lastDay
+    };
+    
+    console.log('Data to send:', dataToSend);
+    // Here you can add the logic to send dataToSend to your server.
+  }
   selectedOrder: any = null;
   selectOrder(order: any) {
     this.selectedOrder = order;
@@ -107,13 +146,12 @@ export class OrderAdminComponent {
         "order_id":order_id,
         "order_status_before":order_status_before,
         "order_status_after":'CANCELED',
-        
       }
       console.log('Data to send:', dataToSend);
     }
+  
     
-    
-    
-    // Here you can add the logic to send dataToSend to your server.
   }
+  
+
 }

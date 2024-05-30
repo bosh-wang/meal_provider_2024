@@ -11,16 +11,32 @@
 <meta http-equiv="expires" content="0" />
 
 
-
 <div class="container mt-4">  
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">Order_Employee</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <form class="d-flex" [formGroup]="monthForm" (ngSubmit)="submit_month()">
+          <select class="form-select me-2" formControlName="month" aria-label="Month">
+            <option selected disabled>Month</option>
+            <option *ngFor="let month of months" [value]="month.value">{{ month.name }}</option>
+          </select>
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
   <table class="table  table-striped table-hover" style="width: 100%;">
       <thead>
         <tr>
           <th scope="col">Order ID</th>
           <th scope="col">Time</th>
-          <th scope="col">Person</th>
           <th scope="col">Food</th>
           <th scope="col">Total Payment</th>
+          <th scope="col">Payment Situation</th>
           <th scope="col">Status</th>
         </tr>
       </thead>
@@ -28,16 +44,16 @@
       <tbody>
         <tr *ngFor="let order of orders">
           <th scope="row">{{ order.order_id }}</th>
-          <td>{{ order.date }}</td>
-          <td>{{ order.user_id }}</td>
+          <td>{{ order.order_date }}</td>
           <td>
             <ul>
               <li *ngFor="let item of order.items">
-                {{ item.name }} (x{{ item.quantity }}) - ${{ item.price }}
+                {{ item. item_name }} (x{{ item.quantity }}) - ${{ item.unit_price }}
               </li>
             </ul>
           </td>
-          <td>${{ order.totalAmount }}</td>
+          <td>${{ order.total_price }}</td>
+          <td>${{ order.paid }}</td>
           <!-- --->
           <td>{{ order.order_status }}</td>
           <td>
@@ -53,7 +69,11 @@
                 type="button" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#orderModal-completed" (click)="selectOrder(order)"
                 >COMPLETED</button>
             <button *ngIf="order.order_status === 'COMPLETED'"
-            type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#RatingModal" (click)="selectOrder(order)">Rating</button>
+            type="button" class="btn btn-dark me-2" data-bs-toggle="modal" data-bs-target="#RatingModal" (click)="selectOrder(order)">Rating</button>
+
+            <button *ngIf="order.paid === false "
+                type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#orderModal-completed" (click)="selectOrder(order)"
+                >Payment</button>
           </td>
         </tr>
       </tbody>
@@ -73,9 +93,9 @@
         <p><strong>Person:</strong> {{ selectedOrder.user_id }}</p>
         <ul>
           <li *ngFor="let item of selectedOrder.items">
-            {{ item.name }} 
+            {{ item.item_name }} 
             <div>
-              <form class="d-flex" [formGroup]="OrderForm" (ngSubmit)="submit(selectedOrder.user_id,item.name)">
+              <form class="d-flex" [formGroup]="OrderForm" (ngSubmit)="submit(selectedOrder.user_id,item.item_id)">
                 
                 <select class="form-select me-2" formControlName="rating" aria-label="Rating">
                   <option selected disabled>Rating</option>
@@ -109,13 +129,13 @@
       </div>
       <div class="modal-body" *ngIf="selectedOrder">
         <p><strong>Order ID:</strong> {{ selectedOrder.order_id }}</p>
-        <p><strong>Time:</strong> {{ selectedOrder.date }}</p>
+        <p><strong>Time:</strong> {{ selectedOrder.order_date }}</p>
         <p><strong>Person:</strong> {{ selectedOrder.user_id }}</p>
-        <p><strong>Total Payment:</strong> ${{ selectedOrder.totalAmount }}</p>
+        <p><strong>Total Payment:</strong> ${{ selectedOrder.total_price }}</p>
         <p><strong>Status:</strong> {{ selectedOrder.order_status }}</p>
         <ul>
           <li *ngFor="let item of selectedOrder.items">
-            {{ item.name }} (x{{ item.quantity }}) - ${{ item.price }}
+            {{ item.item_name }} (x{{ item.quantity }}) 
           </li>
         </ul>
         <p> Status : {{ selectedOrder.order_status }} To COMPLETED</p>

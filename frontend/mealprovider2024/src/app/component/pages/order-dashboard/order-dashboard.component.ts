@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Order } from '../../../shared/model/Order';
+import { Order_employee } from '../../../shared/model/Order';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators,FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-order-dashboard',
@@ -10,74 +10,82 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators,FormsModule } f
   styleUrl: './order-dashboard.component.css'
 })
 export class OrderDashboardComponent {
-  orders: Order[] = [];
-  orderObj : Order=new Order();
+  orders: Order_employee[] = [];
+  orderObj : Order_employee=new Order_employee();
   ngOnInit() {
     // Example data
     this.orders = [
       {
-        "order_id": "1",
-        "orderNumber": 6,
-        "date": "5/26/2021, 3:06:21 AM",
-        "user_id": "u001",
-        "items": [
-          { "name": "Fruit Salad", "price": 165, "quantity": 1 },
-          { "name": "Spicy Beef Fry", "price": 580, "quantity": 1 }
-        ],
-        "totalAmount": 745,
-        "order_status": "COMPLETED"
+          order_id: '1',
+          order_date: '2024-05-01',
+          items: [
+              { item_id: '101', item_name: 'Burger', quantity: 2, unit_price: 5.99 },
+              { item_id: '102', item_name: 'Fries', quantity: 1, unit_price: 2.99 }
+          ],
+          total_price: 14.97,
+          order_status: 'COMPLETED',
+          paid: true
       },
       {
-        "order_id": "2",
-        "orderNumber": 5,
-        "date": "5/26/2021, 3:01:40 AM",
-        "user_id": "u002",
-        "items": [
-          { "name": "Chinese Salad", "price": 240, "quantity": 2 },
-          { "name": "Crispy Chilli Baby Corn", "price": 265, "quantity": 1 }
-        ],
-        "totalAmount": 745,
-        "order_status": "CONFIRMED"
+          order_id: '2',
+          order_date: '2024-05-02',
+          items: [
+              { item_id: '103', item_name: 'Pizza', quantity: 1, unit_price: 12.99 },
+              { item_id: '104', item_name: 'Soda', quantity: 2, unit_price: 1.99 }
+          ],
+          total_price: 16.97,
+          order_status: 'PENDING',
+          paid: false
       },
       {
-        "order_id": "3",
-        "orderNumber": 7,
-        "date": "5/27/2021, 12:15:30 PM",
-        "user_id": "u003",
-        "items": [
-          { "name": "Grilled Chicken", "price": 300, "quantity": 1 },
-          { "name": "Mango Smoothie", "price": 200, "quantity": 2 }
-        ],
-        "totalAmount": 700,
-        "order_status": "PREPARED"
+          order_id: '3',
+          order_date: '2024-05-03',
+          items: [
+              { item_id: '105', item_name: 'Pasta', quantity: 1, unit_price: 10.99 },
+              { item_id: '106', item_name: 'Salad', quantity: 1, unit_price: 6.99 }
+          ],
+          total_price: 17.98,
+          order_status: 'CONFIRMED',
+          paid: true
       },
       {
-        "order_id": "4",
-        "orderNumber": 8,
-        "date": "5/27/2021, 1:45:00 PM",
-        "user_id": "u004",
-        "items": [
-          { "name": "Caesar Salad", "price": 180, "quantity": 1 },
-          { "name": "Tomato Soup", "price": 150, "quantity": 2 }
-        ],
-        "totalAmount": 480,
-        "order_status": "PENDING"
+          order_id: '4',
+          order_date: '2024-05-04',
+          items: [
+              { item_id: '107', item_name: 'Steak', quantity: 1, unit_price: 19.99 },
+              { item_id: '108', item_name: 'Mashed Potatoes', quantity: 1, unit_price: 4.99 }
+          ],
+          total_price: 24.98,
+          order_status: 'PREPARED',
+          paid: true
       },
       {
-        "order_id": "5",
-        "orderNumber": 9,
-        "date": "5/27/2021, 2:30:15 PM",
-        "user_id": "u005",
-        "items": [
-          { "name": "Pasta Primavera", "price": 220, "quantity": 1 },
-          { "name": "Garlic Bread", "price": 120, "quantity": 2 }
-        ],
-        "totalAmount": 460,
-        "order_status": "CANCELLED"
+          order_id: '5',
+          order_date: '2024-05-05',
+          items: [
+              { item_id: '109', item_name: 'Sushi', quantity: 1, unit_price: 14.99 },
+              { item_id: '110', item_name: 'Miso Soup', quantity: 1, unit_price: 3.99 }
+          ],
+          total_price: 18.98,
+          order_status: 'CANCELED',
+          paid: false
       }
-    ]
-    ;
+  ];
   }
+  months = [
+    { name: 'January', value: 0 },
+    { name: 'February', value: 1 },
+    { name: 'March', value: 2 },
+    { name: 'April', value: 3 },
+    { name: 'May', value: 4 },
+    { name: 'June', value: 5 },
+    { name: 'July', value: 6 },
+    { name: 'August', value: 7 },
+    { name: 'September', value: 8 },
+    { name: 'October', value: 9 },
+    { name: 'November', value: 10 },
+    { name: 'December', value: 11 }
+  ];
 
   selectedOrder: any = null;
   selectOrder(order: any) {
@@ -150,12 +158,14 @@ export class OrderDashboardComponent {
         return 0;
     }
   }
-
+  monthForm: FormGroup;
   OrderForm: FormGroup;
   constructor(private fb: FormBuilder) {
     this.OrderForm = this.fb.group({
-      
       rating: ['', Validators.required]
+    });
+    this.monthForm = this.fb.group({
+      month: ['', Validators.required]
     });
   }
   submit(user_id:string,item_id:string) {
@@ -176,9 +186,26 @@ export class OrderDashboardComponent {
       "order_id":order_id,
       "order_status_before":order_status_before,
       "order_status_after":'COMPLETED',
-      
     }
     console.log('Data to send:', dataToSend);
+  }
+  submit_month() {
+    const formValue = this.monthForm.value;
+    const monthValue = Number(formValue.month);
+    const monthValue2 = monthValue +Number(1);
+    const year = new Date().getFullYear();
+    const firstDay = new Date(year, monthValue, 2);
+    const lastDay = new Date(year, monthValue2, 1);
     
+    const dataToSend = {
+      "start_date": firstDay.toISOString().split('T')[0],
+      "end_date": lastDay.toISOString().split('T')[0],
+      "customer_id":"user01"
+      //firstDay: firstDay,
+      //lastDay: lastDay
+    };
+    
+    console.log('Data to send:', dataToSend);
+    // Here you can add the logic to send dataToSend to your server.
   }
 }
