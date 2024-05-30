@@ -28,11 +28,16 @@ export const routes: Routes = [
   {path: 'header', component: HomeComponent},
   {path: 'dashboard', component: OrderDashboardComponent},
   {path: 'profile', component: HomeComponent},
-  //{path: 'order', component: OrderListComponent},
   {path: 'login', component: LoginComponent},
   {path: 'order', component: OrderDashboardComponent },
   {path: 'orderadmin', component: OrderAdminComponent },
   {path: 'orderhr', component: OrderHRComponent },
-  {path: 'logout', component: HomeComponent}
+  {path: 'feedback', component: HomeComponent},
+  {path: 'logout', component: HomeComponent},
+  {path: 'campus-menu', component: HomeComponent},
+
+  {path: 'campus/:campus-name', component: HomeComponent},
+
+  {path: 'campus/竹科龍潭園區', component: HomeComponent},
 
 ];

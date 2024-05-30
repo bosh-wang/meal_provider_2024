@@ -54,3 +54,19 @@ a span{
   width: 100%;
   min-width: 8rem;
 }
+.campus-menu-container{
+  position: relative;
+}
+.campus-menu{
+  position: absolute;
+  z-index: 1;
+  background: whitesmoke;
+  display: none;
+}
+.campus-menu-container:hover .campus-menu{
+  display: block;
+}
+.campus-menu a{
+  width: 100%;
+  min-width: 8rem;
+}

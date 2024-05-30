@@ -6,6 +6,18 @@
         <li>
           <a href=""routerLink="/login">登入</a>
         </li>
+        <li class="campus-menu-container">
+          <a routerLink="/campus-menu">廠區選單</a>
+            <div class="campus-menu">
+              <!--<a [routerLink]='"campus/"+item.name'>竹科龍潭園區 *ngFor="let item of campus_name"</a>-->
+              <a routerLink="/campus/竹科龍潭園區">竹科龍潭園區</a>
+              <a routerLink="/campus/竹科竹科園區">竹科竹科園區</a>
+              <a routerLink="/campus/竹科竹南園區">竹科竹南園區</a>
+              <a routerLink="/campus/中科台中園區">中科台中園區</a>
+              <a routerLink="/campus/南科嘉義園區">南科嘉義園區</a>
+              <a routerLink="/campus/南科台南園區">南科台南園區</a>
+            </div>
+        </li>
         <li class="menu-container">
           <a routerLink="/dashboard">選單</a>
           <div class="menu">
