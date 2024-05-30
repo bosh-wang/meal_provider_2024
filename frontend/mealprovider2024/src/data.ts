@@ -1,3 +1,4 @@
+import { Campus_name } from "./app/shared/model/Campus_name";
 import { Food } from "./app/shared/model/Food";
 import { Restaurant } from "./app/shared/model/Restaurant";
 import { Restaurant_Type } from "./app/shared/model/Restaurant_Type";
@@ -119,24 +120,28 @@ export const sample_restaurants:Restaurant[] = [
     name: 'QuickBite Haven',
     type: ['台式'],
     imageUrl: 'https://i0.wp.com/banbi.tw/wp-content/uploads/20211127184737_16.jpg',
+    campus: ['竹科龍潭園區'],
   },
   {
     id: '2',
     name: 'Speedy Snack Shack',
     type: ['中式'],
     imageUrl: 'https://hsinchu.lakeshore.com.tw/wp-content/uploads/sites/12/2020/08/hs_mwr_gallery_3.jpg',
+    campus: ['南科台南園區'],
   },
   {
     id: '3',
     name: 'FastFuel Bistro',
     type: ['中式'],
     imageUrl: 'https://hips.hearstapps.com/hmg-prod/images/12332323-1598782461.jpg?crop=0.492xw:0.984xh;0,0&resize=640:*',
+    campus: ['中科台中園區'],
   },
   {
     id: '4',
     name: 'Rapid Eats Express',
     type: ['台式'],
     imageUrl: 'https://res.klook.com/image/upload/q_85/c_fill,w_750/v1688985978/irsrlcroisgaaulpbfpa.jpg',
+    campus: ['竹科竹科園區'],
   }
 ]
 
@@ -176,5 +181,25 @@ export const restaurant_type:Restaurant_Type[] = [
   },
   {
     type: ['牛排'],
+  },
+]
+export const campus_name:Campus_name[] = [
+  {
+    name: ['竹科龍潭園區'],
+  },
+  {
+    name: ['竹科竹科園區'],
+  },
+  {
+    name: ['竹科竹南園區'],
+  },
+  {
+    name: ['中科台中園區'],
+  },
+  {
+    name: ['南科嘉義園區'],
+  },
+  {
+    name: ['南科台南園區'],
   },
 ]

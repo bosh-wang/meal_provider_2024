@@ -64,6 +64,19 @@ li a img{
   background-color: whitesmoke;
   border-radius: 2rem;
 }
+.campus{
+  flex: 9;
+}
+.campus span{
+  margin-top: 1.2rem;
+  padding: 0 0.5rem;
+  margin-right: 0.3rem;
+  color: gray;
+  font-size: 0.8rem;
+  display: inline-block;
+  background-color: whitesmoke;
+  border-radius: 2rem;
+}
 .cook-time{
   font-size: 0.9rem;
   flex: 3;

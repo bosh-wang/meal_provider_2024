@@ -22,9 +22,21 @@ export const routes: Routes = [
   {path: 'cart-page', component: CartPageComponent},
 
   {path: 'header', component: HomeComponent},
+
   {path: 'dashboard', component: HomeComponent},
+
   {path: 'profile', component: HomeComponent},
+
   {path: 'order', component: HomeComponent},
-  {path: 'logout', component: HomeComponent}
+
+  {path: 'feedback', component: HomeComponent},
+
+  {path: 'logout', component: HomeComponent},
+
+  {path: 'campus-menu', component: HomeComponent},
+
+  {path: 'campus/:campus-name', component: HomeComponent},
+
+  {path: 'campus/竹科龍潭園區', component: HomeComponent},
 
 ];

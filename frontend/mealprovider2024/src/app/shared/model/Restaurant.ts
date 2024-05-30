@@ -3,4 +3,5 @@ export class Restaurant{
   name!: string;  //restaurant_name
   type?: string[]; //restaurant_type
   imageUrl!: string;  //image_url
+  campus!: string[]; //campus
 }

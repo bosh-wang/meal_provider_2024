@@ -1,3 +1,4 @@
+import { campus_name } from './../../data';
 import { Injectable } from '@angular/core';
 import { Food } from '../shared/model/Food';
 import { restaurant_type, sample_foods, sample_restaurants, sample_tags } from '../../data';
@@ -30,6 +31,11 @@ export class RestaurantService {
     return tag === '全部'
       ? this.getAll()
       : this.getAll().filter((restaurant) => restaurant.type?.includes(tag));
+  }
+  getAllRestaurantByCampus(campus_name: string): Restaurant[] {
+    return campus_name === '全部'
+      ? this.getAll()
+      : this.getAll().filter((restaurant) => restaurant.campus?.includes(campus_name));
   }
   //Get Food by Id (type: Food)
   getFoodById(foodId:string){

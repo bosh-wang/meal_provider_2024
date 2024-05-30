@@ -10,6 +10,11 @@
           {{item.name}}
         </div>
         <div class="product-item-footer">
+          <div class="campus">
+            <span *ngFor="let campus of item.campus">
+              {{campus}}
+            </span>
+          </div>
           <div class="origins">
             <span *ngFor="let origin of item.type">
               {{origin}}
