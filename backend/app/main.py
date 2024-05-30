@@ -8,10 +8,21 @@ app = Flask(__name__)
 def index():
     return 'Hello, I am alive!'
 
-# get order history
-@app.route('/api/orderHistory', methods=['POST'])
-def get_order_history_service():
-    data = order_history_service.get_order_history_service(request.get_json())
+# get order history for employee
+@app.route('/api/orderHistoryEmployee', methods=['POST'])
+def get_order_history_employee():
+    data = order_history_service.get_order_history_service_for_employee(request.get_json())
+    return jsonify(data)
+
+# get order history for hr
+@app.route('/api/orderHistoryHR', methods=['POST'])
+def get_order_history_hr():
+    data = order_history_service.get_order_history_service_for_hr(request.get_json())
+    return jsonify(data)
+
+# get order history for restaurant
+def get_order_history_restaurant():
+    data = order_history_service.get_order_history_service_for_restaurant(request.get_json())
     return jsonify(data)
 
 # get rating
