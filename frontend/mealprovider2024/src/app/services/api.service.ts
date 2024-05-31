@@ -9,11 +9,14 @@ import { Login } from '../shared/model/Login';
 })
 export class ApiService {
   loginURL:string;
+  corsURL = 'https://cors-anywhere.herokuapp.com/';
   constructor(private http : HttpClient){
-    this.loginURL='http://35.224.128.24/api/signin';
+    this.loginURL=this.corsURL +'http://35.224.128.24/api/signin';
   }
 
   login(logindata:Login):Observable<Login>{
+
+    console.log(this.loginURL)
     return this.http.post<Login>(this.loginURL,logindata);
   }
 

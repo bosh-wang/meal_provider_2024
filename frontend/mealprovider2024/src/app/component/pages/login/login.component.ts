@@ -49,12 +49,13 @@ export class LoginComponent {
       "role": this.loginForm.value.role
     };
     // Process login
-    console.log('Login successful');
-    console.log(formValue);
+    //console.log('Login successful');
+    //console.log(formValue);
 
     this.loginObj.email=this.loginForm.value.email;
     this.loginObj.role=this.loginForm.value.role;
     this.loginObj.password_hash=this.loginForm.value.password;
+    console.log(123456)
     //this.loginObj.password_hash=passwordHash;
     this.apiService.login(this.loginObj).subscribe({
       next: res => {
