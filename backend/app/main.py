@@ -1,8 +1,19 @@
 from flask import Flask, jsonify, request
-
+from flask_cors import CORS
 from services import rating_service, order_history_service, payment_service, signin_service, order_service, get_menu_service, adjust_menu_service, get_restaurants_service,cart_service
 
 app = Flask(__name__)
+
+# 配置 CORS
+CORS(app, resources={
+    r"/api/*": {
+        "origins": "*",  # 允许的域名，可以根据需求修改
+        "methods": ["GET", "POST"],  # 允许的 HTTP 方法
+        "allow_headers": ["Content-Type", "Authorization"],  # 允许的请求头
+        "expose_headers": ["X-Custom-Header"],  # 允许暴露的响应头
+        "supports_credentials": True  # 是否支持凭据（如 cookies）
+    }
+})
 
 @app.route('/')
 def index():
