@@ -51,3 +51,12 @@ if __name__ == "__main__":
     # update_columns = ["category"]
     # condition_column = "item_name"
     # update_date(conn, update_table, update_json, update_columns, condition_column)
+
+
+    # update the column pwd value of for pwd
+    update_table = "users"
+    json_path = f"database/data/{update_table}_with_hashed_passwords.json"
+    update_json = read_json(json_path)
+    update_columns = ["password_hash"]
+    condition_column = "user_id"
+    update_date(conn, update_table, update_json, update_columns, condition_column)

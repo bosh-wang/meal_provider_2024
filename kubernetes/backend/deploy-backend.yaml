@@ -16,7 +16,8 @@ spec:
     spec:
       containers:
       - name: backend
-        image: ghcr.io/estheryang2000/meal_provider_2024-test:${{ github.sha }}
+        # image: ghcr.io/estheryang2000/meal_provider_2024-test:${{ github.sha }}
+        # image : ghcr.io/bosh-wang/flask-api-image:0.2.1
         ports:
         - containerPort: 5000
         resources:
