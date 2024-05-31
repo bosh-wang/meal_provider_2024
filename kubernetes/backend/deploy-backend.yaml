@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: backend
-        image: ghcr.io/bosh-wang/flask-api-image
+        image: ghcr.io/estheryang2000/meal_provider_2024-test:${{ github.sha }}
         ports:
         - containerPort: 5000
         resources:
@@ -43,6 +43,10 @@ spec:
             value: "wangbosh66@gmail.com"
           - name: SENDER_PASSWORD
             value: "nuys wgiz vyib wqbh"
+          - name: REDIS_HOST
+            value: "redis-service"
+          - name: REDIS_PORT
+            value: "6379"
         livenessProbe:
           httpGet:
             path: /
