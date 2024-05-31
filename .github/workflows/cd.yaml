@@ -1,36 +1,36 @@
-name: CD
+# name: CD
 
-on:
-  push:
-    # types: [closed]
-    branches:
-      - sys/deploy-k8s-db
+# on:
+#   push:
+#     # types: [closed]
+#     branches:
+#       - sys/deploy-k8s-db
 
-jobs:
-  deploy:
-    if: github.event.pull_request.merged == true
-    runs-on: ubuntu-latest
+# jobs:
+#   deploy:
+#     if: github.event.pull_request.merged == true
+#     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v2
       
-      - name: Log in to GitHub Container Registry
-        run: echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+#       - name: Log in to GitHub Container Registry
+#         run: echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Build Docker image
-        working-directory: ./backend
-        run: docker build -t ghcr.io/estheryang2000/meal_provider_2024-test:${{ github.sha }} .
+#       - name: Build Docker image
+#         working-directory: ./backend
+#         run: docker build -t ghcr.io/estheryang2000/meal_provider_2024-test:${{ github.sha }} .
 
-      - name: Push Docker image
-        working-directory: ./backend
-        run: docker push ghcr.io/estheryang2000/meal_provider_2024-test:${{ github.sha }}
+#       - name: Push Docker image
+#         working-directory: ./backend
+#         run: docker push ghcr.io/estheryang2000/meal_provider_2024-test:${{ github.sha }}
 
-      - name: Set up Kubernetes config
-        run: |
-          mkdir -p $HOME/.kube
-          echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > $HOME/.kube/config
-      - name: Deploy
-        run: |
-          kubectl apply -f k8s/backend/deploy-backend.yaml --validate=false
-          kubectl apply -f k8s/backend/svc-backend.yaml --validate=false
+#       - name: Set up Kubernetes config
+#         run: |
+#           mkdir -p $HOME/.kube
+#           echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > $HOME/.kube/config
+#       - name: Deploy
+#         run: |
+#           kubectl apply -f k8s/backend/deploy-backend.yaml --validate=false
+#           kubectl apply -f k8s/backend/svc-backend.yaml --validate=false

@@ -26,3 +26,25 @@ jobs:
             uses the [psf/black](https://github.com/psf/black) formatter to fix these issues.
           base: ${{ github.head_ref }} # Creates pull request onto pull request or commit branch
           branch: actions/black
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Log in to GitHub Container Registry
+        run: echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build Docker image
+        working-directory: ./backend
+        run: docker build -t ghcr.io/estheryang2000/meal_provider_2024-test:${{ github.sha }} .
+
+      - name: Push Docker image
+        working-directory: ./backend
+        run: docker push ghcr.io/estheryang2000/meal_provider_2024-test:${{ github.sha }}
+
+      - name: Set up Kubernetes config
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > $HOME/.kube/config
+      - name: Deploy
+        run: |
+          kubectl apply -f k8s/backend/deploy-backend.yaml --validate=false
+          kubectl apply -f k8s/backend/svc-backend.yaml --validate=false
