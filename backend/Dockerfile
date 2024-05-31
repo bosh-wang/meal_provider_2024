@@ -4,6 +4,7 @@ WORKDIR /app
  
 COPY . /app
  
-RUN pip install -r requirements.txt
- 
+RUN apk add --no-cache gcc musl-dev && \
+    pip install --upgrade pip && \
+    pip install -r requirements.txt 
 CMD python /app/app/main.py
