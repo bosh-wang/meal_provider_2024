@@ -17,6 +17,5 @@ spec:
       containers:
       - name: test
         image: ghcr.io/estheryang2000/meal_provider_2024-temp:${{ github.sha }}
-        # image : ghcr.io/bosh-wang/flask-api-image:0.2.1
         ports:
         - containerPort: 5001
