@@ -2,7 +2,7 @@ from flask import jsonify, request
 import psycopg2
 from psycopg2.extras import RealDictCursor
 import os
-
+import hashlib
 
 # 取得config內的資訊
 def get_db_connection():
@@ -12,13 +12,12 @@ def get_db_connection():
         user = os.getenv("DB_USER"),
         password = os.getenv("DB_PASSWORD"),
         port = os.getenv("DB_PORT")
-        # database=config['GCP']['database'],
-        # host=config['GCP']['host'],
-        # user=config['GCP']['user'],
-        # password=config['GCP']['password'],
-        # port=config['GCP']['port']
     )
 
+# 密碼加密
+def hash_password(password):
+    return hashlib.sha256(password.encode()).hexdigest()
+        
 def sign_in(r, cID, passw):
     try:
         conn = get_db_connection()
@@ -29,8 +28,8 @@ def sign_in(r, cID, passw):
         FROM users
         WHERE email = %s AND role = %s AND password_hash = %s;
         """
-
-        cur.execute(select_query, (cID, r, passw))
+        passw_hash = hash_password(passw)
+        cur.execute(select_query, (cID, r, passw_hash))
         result = cur.fetchone()
 
         if result:
@@ -55,7 +54,7 @@ def sign_in(r, cID, passw):
 def signin(data):
     r = data.get('role')
     cID = data.get('email')
-    passw = data.get('password_hash')
+    passw = data.get('password')
 
     if not (r and cID and passw):
         return jsonify({"error": "少了一些參數"}), 400

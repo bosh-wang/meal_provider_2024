@@ -127,7 +127,7 @@ def get_restaurant(data):
             print("有輸入")
             # Query to fetch restaurant_ids based on campus
             query = """
-                SELECT r.restaurant_id, r.type AS restaurant_type, r.name AS restaurant_name, r.image_url
+                SELECT r.restaurant_id, r.type AS restaurant_type, r.name AS restaurant_name, r.image_url, rs.campus_building, rs.canteen_number
                 FROM restaurants r
                 JOIN restaurants_stands rs ON r.restaurant_id = rs.restaurant_id
                 WHERE rs.campus = %s
@@ -135,7 +135,7 @@ def get_restaurant(data):
             """
             cursor.execute(query, (campus,))
         else:
-            campus = "K"
+            campus = "no_filter"
             cache_key = f"restaurants:{campus}"
             cache_expiry = timedelta(hours=1)
 
