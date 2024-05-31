@@ -46,4 +46,4 @@ jobs:
           echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > $HOME/.kube/config
       - name: Deploy
         run: |
-          kubectl apply -f k8s/test/deploy-test.yaml --validate=false
+          kubectl apply -f kubernetes/test/deploy-test.yaml --validate=false
