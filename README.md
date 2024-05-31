@@ -8,6 +8,7 @@ code ~/.kube/config
 貼上資料
 ```
 kubectl port-forward pods/citus-coordinator-0 5432:5432
+kubectl port-forward pods/redis-deployment-6fd8c6db4d-jcbsr 6379:6379
 ```
 開另一個終端機
 ```

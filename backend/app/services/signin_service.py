@@ -35,7 +35,8 @@ def sign_in(r, cID, passw):
 
         if result:
             data = {
-                "message": "Login Successful"
+                "message": "Login Successful",
+                "user_id": result['user_id']
             }
             response = jsonify(data)
             response.status_code = 200
