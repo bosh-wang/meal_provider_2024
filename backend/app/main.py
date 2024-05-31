@@ -21,6 +21,7 @@ def get_order_history_hr():
     return jsonify(data)
 
 # get order history for restaurant
+@app.route('/api/orderHistoryRestaurant', methods=['POST'])
 def get_order_history_restaurant():
     data = order_history_service.get_order_history_service_for_restaurant(request.get_json())
     return jsonify(data)

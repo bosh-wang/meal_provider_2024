@@ -25,6 +25,8 @@ def get_order_history_service_for_employee(data):
         query = '''SELECT 
                        orders.order_id,
                        orders.order_date,
+                       orders.order_status, 
+                       orders.paid,
                        orders.total_price FROM 
                        orders WHERE 
                        orders.user_id = %s AND 
@@ -33,7 +35,7 @@ def get_order_history_service_for_employee(data):
         orders = cursor.fetchall()
 
         order_history = []
-        for order_id, order_date, total_price in orders:
+        for order_id, order_date, order_status, paid, total_price in orders:
             cursor.execute('''SELECT 
                            item_id, 
                            quantity, 
@@ -55,7 +57,9 @@ def get_order_history_service_for_employee(data):
                 "order_id": order_id,
                 "order_date": order_date.strftime('%Y-%m-%dT%H:%M:%S'),
                 "items": item_list,
-                "total_price": total_price
+                "total_price": total_price, 
+                "order_status": order_status,
+                "paid": paid
             })
 
         cursor.close()
@@ -80,11 +84,11 @@ def get_order_history_service_for_hr(data):
         end_date = str(datetime.strptime(data['end_date'], "%Y-%m-%d"))#.strftime('%a, %d %b %Y %H:%M:%S GMT'))
 
         query = '''SELECT 
-                       order.user_id,
+                       orders.user_id,
                        orders.order_id,
                        orders.order_date,
                        orders.total_price,
-                       order.paid FROM 
+                       orders.paid FROM 
                        orders WHERE 
                        orders.order_date BETWEEN %s AND %s;'''
         cursor.execute(query, (start_date, end_date,))
@@ -92,8 +96,21 @@ def get_order_history_service_for_hr(data):
 
         order_history = []
         for user_id, order_id, order_date, total_price, paid in orders:
+            if user_id == "user01":
+                continue
+            cursor.execute('''SELECT
+                            employees.department, 
+                            employees.position FROM
+                            employees WHERE
+                            employees.user_id = %s;''', (user_id,))
+            employee_info = cursor.fetchall()
+            
+            department, position = employee_info[0][0], employee_info[0][1]
+
             order_history.append({
                 "customer_id": user_id,
+                "department": department,
+                "position": position,
                 "order_id": order_id,
                 "order_date": order_date.strftime('%Y-%m-%dT%H:%M:%S'),
                 "total_price": total_price, 
@@ -120,16 +137,17 @@ def get_order_history_service_for_restaurant(data):
     try:
         start_date = str(datetime.strptime(data['start_date'], "%Y-%m-%d"))#.strftime('%a, %d %b %Y %H:%M:%S GMT'))
         end_date = str(datetime.strptime(data['end_date'], "%Y-%m-%d"))#.strftime('%a, %d %b %Y %H:%M:%S GMT'))
-        restaurant_id = data['resturant_id']
+        restaurant_id = data['restaurant_id']
 
         query = '''SELECT 
                        orders.order_id,
+                       orders.user_id,
                        orders.order_date,
-                       order.confirmed_date, 
-                       order.prepared_date,
+                       orders.confirmed_date, 
+                       orders.prepared_date,
                        orders.completed_date,
-                       order.canceled_date,
-                       orders.total_price 
+                       orders.canceled_date,
+                       orders.total_price, 
                        orders.order_status, 
                        orders.paid FROM 
                        orders WHERE 
@@ -139,7 +157,7 @@ def get_order_history_service_for_restaurant(data):
         orders = cursor.fetchall()
 
         order_history = []
-        for order_id, order_date, confirmed_date, prepared_date, completed_date, canceled_date, total_price, order_status, paid in orders:
+        for order_id, user_id, order_date, confirmed_date, prepared_date, completed_date, canceled_date, total_price, order_status, paid in orders:
             cursor.execute('''SELECT 
                            item_id, 
                            quantity, 
@@ -160,11 +178,11 @@ def get_order_history_service_for_restaurant(data):
             order_history.append({
                 "customer_id": user_id,
                 "order_id": order_id,
-                "order_date": order_date.strftime('%Y-%m-%dT%H:%M:%S'),
-                "confirmed_date": confirmed_date.strftime('%Y-%m-%dT%H:%M:%S'),
-                "prepared_date": prepared_date.strftime('%Y-%m-%dT%H:%M:%S'),
-                "completed_date": completed_date.strftime('%Y-%m-%dT%H:%M:%S'),
-                "canceled_date": canceled_date.strftime('%Y-%m-%dT%H:%M:%S'),
+                "order_date": order_date.strftime('%Y-%m-%dT%H:%M:%S') if order_date else None,
+                "confirmed_date": confirmed_date.strftime('%Y-%m-%dT%H:%M:%S') if confirmed_date else None,
+                "prepared_date": prepared_date.strftime('%Y-%m-%dT%H:%M:%S') if prepared_date else None,
+                "completed_date": completed_date.strftime('%Y-%m-%dT%H:%M:%S') if completed_date else None,
+                "canceled_date": canceled_date.strftime('%Y-%m-%dT%H:%M:%S') if canceled_date else None,
                 "items": item_list,
                 "order_status": order_status,
                 "total_price": total_price,
@@ -192,7 +210,7 @@ def test():
     try:
 
         # cursor.execute('DELETE FROM meals_ratings WHERE rating_id = %s;' ,("0",))
-        cursor.execute('SELECT * FROM orders')
+        cursor.execute('SELECT * FROM employees')
         data = cursor.fetchall()
         # conn.commit()
         cursor.close()
