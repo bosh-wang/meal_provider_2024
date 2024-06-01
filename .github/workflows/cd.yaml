@@ -1,0 +1,35 @@
+name: CD
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+jobs:
+  deploy:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      
+      - name: Log in to GitHub Container Registry
+        run: echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build Docker image
+        working-directory: ./backend
+        run: docker build -t ghcr.io/estheryang2000/meal_provider_2024-backend:${{ github.sha }} .
+
+      - name: Push Docker image
+        working-directory: ./backend
+        run: docker push ghcr.io/estheryang2000/meal_provider_2024-backend:${{ github.sha }}
+
+      - name: Set up Kubernetes config
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > $HOME/.kube/config
+      - name: Deploy
+        run: |
+          kubectl apply -f kubernetes/backend/deploy-backend.yaml --validate=false

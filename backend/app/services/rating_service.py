@@ -3,8 +3,8 @@ import psycopg2
 from dotenv import load_dotenv
 import os
 
-def get_rating_service():#data
 
+def get_rating_service():  # data
     # host = os.getenv("DB_HOST")
     # dbname = os.getenv("DB_NAME")
     # user = os.getenv("DB_USER")
@@ -24,23 +24,18 @@ def get_rating_service():#data
     #     rating = None
     #     for r in ratings:
     #         rating += r
-        
+
     #     rating /= len(ratings)
 
     #     cursor.close()
-        # conn.close()
+    # conn.close()
     #     return ({"item_id": item_id, "rating": rating})
     # except Exception as e:
     #     return ({"error": str(e)}), 500
-    return(
-        {
-        "item_id": "A4564F4",
-        "rating": 4,
-        "review_date": "2024-03-15"
-        })
+    return {"item_id": "A4564F4", "rating": 4, "review_date": "2024-03-15"}
 
 
-def update_rating_service():#data
+def update_rating_service():  # data
     # host = os.getenv("DB_HOST")
     # dbname = os.getenv("DB_NAME")
     # user = os.getenv("DB_USER")
@@ -62,4 +57,4 @@ def update_rating_service():#data
     #     return ({"message" : "successfully inserted rating"})
     # except Exception as e:
     #     return ({"error": str(e)}), 500
-    return ({"message" : "successfully inserted rating"})
+    return {"message": "successfully inserted rating"}
