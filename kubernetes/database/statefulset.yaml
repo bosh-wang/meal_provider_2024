@@ -12,6 +12,10 @@ spec:
     metadata:
       labels:
         app: citus-coordinator
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/metrics"
+        prometheus.io/port: "5432"  
     spec:
       containers:
       - name: citus-coordinator
@@ -72,6 +76,10 @@ spec:
     metadata:
       labels:
         app: citus-worker
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/path: "/metrics"
+        prometheus.io/port: "5432"  
     spec:
       containers:
       - name: citus-worker

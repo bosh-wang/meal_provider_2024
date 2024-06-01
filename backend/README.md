@@ -19,5 +19,3 @@ cd backend/app
 python main.py
 ```
 #### api server will run on `localhost:5000`
-
-## test
