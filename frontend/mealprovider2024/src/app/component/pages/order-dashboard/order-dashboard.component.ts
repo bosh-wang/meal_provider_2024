@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Order_employee } from '../../../shared/model/Order';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators,FormsModule } from '@angular/forms';
+import { ApiService } from '../../../services/api.service';
 @Component({
   selector: 'app-order-dashboard',
   standalone: true,
@@ -161,7 +162,7 @@ export class OrderDashboardComponent {
   monthForm: FormGroup;
   OrderForm: FormGroup;
   payForm :FormGroup;
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private apiService:ApiService) {
     this.OrderForm = this.fb.group({
       rating: ['', Validators.required]
     });
@@ -176,14 +177,20 @@ export class OrderDashboardComponent {
     const formValue = this.OrderForm.value;
 
     const dataToSend = {
-      "user_id":user_id,
+      "user_id":"user01",
       "item_id":item_id,
       "rating": formValue.rating,
-      
     };
     
     console.log('Data to send:', dataToSend);
-    // Here you can add the logic to send dataToSend to your server.
+    this.apiService.order_Rating(dataToSend).subscribe({
+      next: res => {
+        console.log(res);
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
   }
   submit_completed(order_id:string,order_status_before:string) {
     const dataToSend = {
@@ -192,19 +199,31 @@ export class OrderDashboardComponent {
       "order_status_after":'COMPLETED',
     }
     console.log('Data to send:', dataToSend);
+    this.apiService.order_changestatus(dataToSend).subscribe({
+      next: res => {
+        console.log(res);
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
   }
   submit_payment(customer_id:string,order_id:string) {
     const formValue = this.payForm.value;
-
     const dataToSend = {
-      "customer_id":customer_id,
+      "customer_id":"user01",
       "order_id":order_id,
-      "payment_method": formValue.payment_method,
-      
+      "payment_method": formValue.payment_method, 
     };
-    
     console.log('Data to send:', dataToSend);
-    // Here you can add the logic to send dataToSend to your server.
+    this.apiService.order_pay(dataToSend).subscribe({
+      next: res => {
+        console.log(res);
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
   }
   submit_month() {
     const formValue = this.monthForm.value;
@@ -218,11 +237,15 @@ export class OrderDashboardComponent {
       "start_date": firstDay.toISOString().split('T')[0],
       "end_date": lastDay.toISOString().split('T')[0],
       "customer_id":"user01"
-      //firstDay: firstDay,
-      //lastDay: lastDay
     };
-    
     console.log('Data to send:', dataToSend);
-    // Here you can add the logic to send dataToSend to your server.
+    this.apiService.orderHistory_Employee(dataToSend).subscribe({
+      next: res => {
+        console.log(res);
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
   }
 }
