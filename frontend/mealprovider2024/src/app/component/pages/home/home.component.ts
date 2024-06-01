@@ -61,7 +61,6 @@ export class HomeComponent implements OnInit {
           params['tag-type']
         );
       } else if (params['campus-name']) {
-        /*
         this.campus_name = [{ name: [params['campus-name']] }];
         var name: campus_request = {
           campus: this.campus_name[0] ? this.campus_name[0].name[0] : '',
@@ -71,7 +70,7 @@ export class HomeComponent implements OnInit {
           console.log(res, 'response');
           this.restaurant = [res];
         });
-        */
+
         this.restaurant = this.restaurantService.getAllRestaurantByCampus(
           params['campus-name']
         );
