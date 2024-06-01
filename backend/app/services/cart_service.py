@@ -4,10 +4,12 @@ from psycopg2.extras import RealDictCursor
 import json
 from datetime import datetime
 import os
+
 # Call create_order from order_service
 from . import order_service
 
 # app = Flask(__name__)
+
 
 def get_db_connection():
     # config = load_config()
@@ -16,15 +18,16 @@ def get_db_connection():
         database=os.getenv("DB_NAME"),
         user=os.getenv("DB_USER"),
         password=os.getenv("DB_PASSWORD"),
-        port=os.getenv("DB_PORT")
+        port=os.getenv("DB_PORT"),
     )
-    conn.set_client_encoding('UTF8')
+    conn.set_client_encoding("UTF8")
     return conn
 
+
 def update_cart_item(data):
-    user_id = data['user_id']
-    item_id = data['item_id']
-    quantity = data['quantity']
+    user_id = data["user_id"]
+    item_id = data["item_id"]
+    quantity = data["quantity"]
     current_time = datetime.utcnow().isoformat()
 
     try:
@@ -44,7 +47,15 @@ def update_cart_item(data):
             cursor.close()
             conn.close()
             if removed_cart:
-                return jsonify({"message": "Item removed from cart", "cart_id": removed_cart['cart_id']}), 200
+                return (
+                    jsonify(
+                        {
+                            "message": "Item removed from cart",
+                            "cart_id": removed_cart["cart_id"],
+                        }
+                    ),
+                    200,
+                )
             else:
                 return jsonify({"error": "Item not found in cart"}), 404
         else:
@@ -64,36 +75,62 @@ def update_cart_item(data):
                     WHERE cart_id = %s
                     RETURNING cart_id;
                 """
-                cursor.execute(update_query, (quantity, current_time, existing_cart['cart_id']))
+                cursor.execute(
+                    update_query, (quantity, current_time, existing_cart["cart_id"])
+                )
                 updated_cart = cursor.fetchone()
                 conn.commit()
                 cursor.close()
                 conn.close()
-                return jsonify({"message": "Cart item updated", "cart_id": updated_cart['cart_id']}), 200
+                return (
+                    jsonify(
+                        {
+                            "message": "Cart item updated",
+                            "cart_id": updated_cart["cart_id"],
+                        }
+                    ),
+                    200,
+                )
             else:
                 # Add new item to cart
                 get_max_cart_id_query = "SELECT COALESCE(MAX(cart_id), 0) + 1 AS new_cart_id FROM shopping_cart"
                 cursor.execute(get_max_cart_id_query)
-                new_cart_id = cursor.fetchone()['new_cart_id']
+                new_cart_id = cursor.fetchone()["new_cart_id"]
 
                 insert_query = """
                     INSERT INTO shopping_cart (cart_id, user_id, item_id, quantity, status, added_at, updated_at)
                     VALUES (%s, %s, %s, %s, 'ACTIVE', %s, %s)
                     RETURNING cart_id;
                 """
-                cursor.execute(insert_query, (new_cart_id, user_id, item_id, quantity, current_time, current_time))
+                cursor.execute(
+                    insert_query,
+                    (
+                        new_cart_id,
+                        user_id,
+                        item_id,
+                        quantity,
+                        current_time,
+                        current_time,
+                    ),
+                )
                 new_cart = cursor.fetchone()
                 conn.commit()
                 cursor.close()
                 conn.close()
-                return jsonify({"message": "Cart item added", "cart_id": new_cart['cart_id']}), 201
+                return (
+                    jsonify(
+                        {"message": "Cart item added", "cart_id": new_cart["cart_id"]}
+                    ),
+                    201,
+                )
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
 def get_cart(data):
-    user_id = data['user_id']
-    
+    user_id = data["user_id"]
+
     try:
         conn = get_db_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
@@ -107,7 +144,7 @@ def get_cart(data):
         """
         cursor.execute(query, (user_id,))
         cart_items = cursor.fetchall()
-        
+
         cursor.close()
         conn.close()
 
@@ -116,24 +153,26 @@ def get_cart(data):
 
         result = {
             "user_id": user_id,
-            "restaurant_id": cart_items[0]['restaurant_id'],
+            "restaurant_id": cart_items[0]["restaurant_id"],
             "items": [
-                {"item_id": item['item_id'], "quantity": item['quantity']} for item in cart_items
-            ]
+                {"item_id": item["item_id"], "quantity": item["quantity"]}
+                for item in cart_items
+            ],
         }
-        
+
         return jsonify(result), 200
-    
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
 def purchased(data):
-    user_id = data['user_id']
-    
+    user_id = data["user_id"]
+
     try:
         conn = get_db_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
-        
+
         # Fetch all ACTIVE cart items for the user
         fetch_active_items_query = """
             SELECT sc.item_id, sc.quantity, r.restaurant_id
@@ -147,17 +186,20 @@ def purchased(data):
 
         if not active_items:
             return jsonify({"error": "No active items in cart"}), 404
-        
+
         # Construct the create_order payload
-        restaurant_id = active_items[0]['restaurant_id']
-        items = [{"item_id": item['item_id'], "quantity": item['quantity']} for item in active_items]
-        
+        restaurant_id = active_items[0]["restaurant_id"]
+        items = [
+            {"item_id": item["item_id"], "quantity": item["quantity"]}
+            for item in active_items
+        ]
+
         order_data = {
             "user_id": user_id,
             "restaurant_id": restaurant_id,
-            "items": items
+            "items": items,
         }
-        
+
         order_service.create_order(order_data)
 
         # Update the cart items to set them as PURCHASED
@@ -168,12 +210,12 @@ def purchased(data):
         """
         cursor.execute(update_query, (user_id,))
         conn.commit()
-        
+
         cursor.close()
         conn.close()
-        
+
         return jsonify({"message": "成功送出訂單"}), 200
-    
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -181,13 +223,13 @@ def purchased(data):
 def handle_cart(data):
     # data = request.json
     print(data)
-    cart_status = data.get('cart_status')
+    cart_status = data.get("cart_status")
     print(cart_status)
-    if cart_status == 'update':
+    if cart_status == "update":
         return update_cart_item(data)
-    elif cart_status == 'check':
+    elif cart_status == "check":
         return get_cart(data)
-    elif cart_status == 'submit':
+    elif cart_status == "submit":
         return purchased(data)
     else:
         return jsonify({"error": "Invalid cart_status"}), 400
