@@ -44,6 +44,7 @@ def get_additional_info(user_id, role):
     except Exception as e:
         return {"error": str(e)}
 
+
 def sign_in(role, email, password):
     try:
         conn = get_db_connection()
