@@ -21,7 +21,6 @@ pool = redis.ConnectionPool(
 redis_client = redis.Redis(connection_pool=pool)
 
 
-
 # Database connection configuration
 def get_db_connection():
     conn = psycopg2.connect(
@@ -29,10 +28,11 @@ def get_db_connection():
         database=os.getenv("DB_NAME"),
         user=os.getenv("DB_USER"),
         password=os.getenv("DB_PASSWORD"),
-        port=os.getenv("DB_PORT")
+        port=os.getenv("DB_PORT"),
     )
-    conn.set_client_encoding('UTF8')
+    conn.set_client_encoding("UTF8")
     return conn
+
 
 def custom_json_serializer(obj):
     if isinstance(obj, (datetime, date)):
@@ -41,11 +41,12 @@ def custom_json_serializer(obj):
         return float(obj)
     raise TypeError(f"Type {type(obj)} not serializable")
 
+
 def get_menu(data):
     # data = request.json
-    r_id = data.get('restaurant_id')
-    role = data.get('role')
-    
+    r_id = data.get("restaurant_id")
+    role = data.get("role")
+
     try:
         cache_key = f"menu:{r_id,role}"
         cache_expiry = timedelta(hours=1)
@@ -65,7 +66,7 @@ def get_menu(data):
         conn = get_db_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
 
-        if role == 'employee':
+        if role == "employee":
             query = """
                 SELECT 
                     m.item_id,
@@ -102,7 +103,7 @@ def get_menu(data):
                     m.item_id;
             """
             cursor.execute(query, (r_id,))
-        elif role == 'restaurant_staff':
+        elif role == "restaurant_staff":
             query = """
                 SELECT 
                     m.item_id,
@@ -149,16 +150,15 @@ def get_menu(data):
         db_time = time.time() - start_time  # Calculate DB query time
         print(f"Time taken with DB: {db_time:.6f} seconds")
 
-
-        json_result = json.dumps(menu_items, ensure_ascii=False, default=custom_json_serializer)
+        json_result = json.dumps(
+            menu_items, ensure_ascii=False, default=custom_json_serializer
+        )
         # Store the result in Redis cache
         redis_client.setex(cache_key, cache_expiry, json_result)
         response = app.response_class(
-            response=json_result,
-            status=200,
-            mimetype='application/json'
+            response=json_result, status=200, mimetype="application/json"
         )
-        response.headers['Content-Type'] = 'application/json; charset=utf-8'
+        response.headers["Content-Type"] = "application/json; charset=utf-8"
         return response
 
     except Exception as e:
@@ -195,15 +195,14 @@ def get_menu(data):
 #     raise TypeError(f"Type {type(obj)} not serializable")
 
 
-
 # def get_menu(data):
 #     r_id = data.get('restaurant_id')
 #     try:
 #         conn = get_db_connection()
 #         cursor = conn.cursor(cursor_factory=RealDictCursor)
-        
+
 #         query = """
-#             SELECT 
+#             SELECT
 #                 m.item_id,
 #                 m.restaurant_id,
 #                 r.type AS restaurant_type,
@@ -215,15 +214,15 @@ def get_menu(data):
 #                 m.availability,
 #                 m.image_url,
 #                 ROUND(AVG(rt.star_rating), 1) AS star_rating
-#             FROM 
+#             FROM
 #                 menus_items m
-#             LEFT JOIN 
+#             LEFT JOIN
 #                 meals_ratings rt ON m.item_id = rt.item_id
 #             INNER JOIN
 #                 restaurants r ON m.restaurant_id = r.restaurant_id
-#             WHERE 
+#             WHERE
 #                 m.restaurant_id = %s
-#             GROUP BY 
+#             GROUP BY
 #                 m.item_id,
 #                 m.restaurant_id,
 #                 r.type,
@@ -234,18 +233,18 @@ def get_menu(data):
 #                 m.price,
 #                 m.availability,
 #                 m.image_url
-#             ORDER BY 
+#             ORDER BY
 #                 m.item_id;
 #         """
-        
+
 #         cursor.execute(query, (r_id,))
 #         menu_items = cursor.fetchall()
-        
+
 #         cursor.close()
 #         conn.close()
-        
+
 #         json_result = json.dumps(menu_items, ensure_ascii=False, default=custom_json_serializer)
-        
+
 #         response = app.response_class(
 #             response=json_result,
 #             status=200,
@@ -253,6 +252,6 @@ def get_menu(data):
 #         )
 #         response.headers['Content-Type'] = 'application/json; charset=utf-8'
 #         return response
-    
+
 #     except Exception as e:
 #         return jsonify({"error": str(e)}), 500

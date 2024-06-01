@@ -32,28 +32,28 @@
 #     try:
 #         conn = get_db_connection()
 #         cursor = conn.cursor(cursor_factory=RealDictCursor)
-        
+
 #         query = """
-#             SELECT 
+#             SELECT
 #                 r.restaurant_id,
 #                 r.type AS restaurant_type,
 #                 r.name AS restaurant_name,
 #                 r.image_url
-#             FROM 
+#             FROM
 #                 restaurants r
-#             ORDER BY 
+#             ORDER BY
 #                 r.restaurant_id;
 #         """
-        
+
 #         cursor.execute(query)
 #         menu_items = cursor.fetchall()
-        
+
 #         cursor.close()
 #         conn.close()
-        
+
 #         # Convert the results to a JSON string with ensure_ascii=False
 #         json_result = json.dumps(menu_items, ensure_ascii=False, default=custom_json_serializer)
-        
+
 #         response = app.response_class(
 #             response=json_result,
 #             status=200,
@@ -61,7 +61,7 @@
 #         )
 #         response.headers['Content-Type'] = 'application/json; charset=utf-8'
 #         return response
-    
+
 #     except Exception as e:
 #         return jsonify({"error": str(e)}), 500
 
@@ -85,16 +85,19 @@ pool = redis.ConnectionPool(
     decode_responses=True,
 )
 redis_client = redis.Redis(connection_pool=pool)
+
+
 def get_db_connection():
     conn = psycopg2.connect(
         host=os.getenv("DB_HOST"),
         database=os.getenv("DB_NAME"),
         user=os.getenv("DB_USER"),
         password=os.getenv("DB_PASSWORD"),
-        port=os.getenv("DB_PORT")
+        port=os.getenv("DB_PORT"),
     )
-    conn.set_client_encoding('UTF8')
+    conn.set_client_encoding("UTF8")
     return conn
+
 
 def custom_json_serializer(obj):
     if isinstance(obj, (datetime, date)):
@@ -103,9 +106,10 @@ def custom_json_serializer(obj):
         return float(obj)
     raise TypeError(f"Type {type(obj)} not serializable")
 
+
 def get_restaurant(data):
     print(data)
-    campus = data.get('campus')
+    campus = data.get("campus")
     try:
         if campus:
             cache_key = f"restaurants:{campus}"
@@ -166,17 +170,17 @@ def get_restaurant(data):
         conn.close()
         db_time = time.time() - start_time  # Calculate DB query time
         print(f"Time taken with DB: {db_time:.6f} seconds")
-        json_result = json.dumps(restaurants, ensure_ascii=False, default=custom_json_serializer)
+        json_result = json.dumps(
+            restaurants, ensure_ascii=False, default=custom_json_serializer
+        )
 
         # Store the result in Redis cache
         redis_client.setex(cache_key, cache_expiry, json_result)
 
         response = app.response_class(
-            response=json_result,
-            status=200,
-            mimetype='application/json'
+            response=json_result, status=200, mimetype="application/json"
         )
-        response.headers['Content-Type'] = 'application/json; charset=utf-8'
+        response.headers["Content-Type"] = "application/json; charset=utf-8"
         return response
 
     except Exception as e:
