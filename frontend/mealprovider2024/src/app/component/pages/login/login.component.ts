@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule } from '@angular/common';
 import { Login } from '../../../shared/model/Login';
 import { ApiService } from '../../../services/api.service';
-import { HttpClient,HttpClientModule } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import CryptoJS from 'crypto-js';
 
 @Component({
@@ -18,7 +18,6 @@ export class LoginComponent {
   loginForm: FormGroup;
   submitted = false;
   loginObj:Login=new Login();
-  //constructor(private formBuilder: FormBuilder,private apiService:ApiService,private http: HttpClient) {
   constructor(private formBuilder: FormBuilder,private apiService:ApiService) {  
     const formModel = new Login();
 

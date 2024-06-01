@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Order_HR } from '../../../shared/model/Order';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-
+import { ApiService } from '../../../services/api.service';
 @Component({
   selector: 'app-order-hr',
   standalone: true,
@@ -23,7 +23,7 @@ export class OrderHRComponent {
         paid: true
       },
       {
-        customer_id: 'C002',
+        customer_id: 'user03',
         order_id: 'O1002',
         order_date: '2024-05-02',
         total_price: 89.99,
@@ -37,14 +37,14 @@ export class OrderHRComponent {
         paid: true
       },
       {
-        customer_id: 'C004',
+        customer_id: 'user01',
         order_id: 'O1004',
         order_date: '2024-05-04',
         total_price: 75.00,
         paid: true
       },
       {
-        customer_id: 'C005',
+        customer_id: 'user02',
         order_id: 'O1005',
         order_date: '2024-05-05',
         total_price: 120.20,
@@ -71,7 +71,7 @@ export class OrderHRComponent {
 
   searchForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private apiService:ApiService) {
     this.searchForm = this.fb.group({
       department: ['', Validators.required],
       position: ['', Validators.required],
@@ -90,14 +90,19 @@ export class OrderHRComponent {
     const dataToSend = {
       "department": formValue.department,
       "position": formValue.position,
-      "firstDay": firstDay.toISOString().split('T')[0],
-      "lastDay": lastDay.toISOString().split('T')[0]
+      "start_date": firstDay.toISOString().split('T')[0],
+      "end_date": lastDay.toISOString().split('T')[0]
       //firstDay: firstDay,
       //lastDay: lastDay
     };
-    
-    console.log('Data to send:', dataToSend);
-    // Here you can add the logic to send dataToSend to your server.
+    this.apiService.orderHistory_HR(dataToSend).subscribe({
+      next: res => {
+        console.log(res);
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
   }
   
   
@@ -114,7 +119,14 @@ export class OrderHRComponent {
   }
   onClick() {
     const unpaidCustomerIds = this.getUnpaidCustomerIds(this.orders);
-    console.log(unpaidCustomerIds);
+    this.apiService.order_HRpaymentNotification({user_id:unpaidCustomerIds}).subscribe({
+      next: res => {
+        console.log(res);
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
   }
   getUnpaidCustomerIds(orders: Order_HR[]): string[] {
     return orders
