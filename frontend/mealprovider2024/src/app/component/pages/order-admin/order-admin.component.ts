@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Order_Kitchen } from '../../../shared/model/Order';
 import { CommonModule } from '@angular/common';
 import { FormGroup,FormBuilder,FormControl,ReactiveFormsModule, Validators} from '@angular/forms';
-
+import { ApiService } from '../../../services/api.service';
 @Component({
   selector: 'app-order-admin',
   standalone: true,
@@ -17,7 +17,7 @@ export class OrderAdminComponent {
     this.orders = [
       {
         customer_id: 'C001',
-        order_id: 'O1001',
+        order_id: "1",
         order_date: '2024-05-01',
         confirmed_date: '2024-05-01',
         prepared_date: '2024-05-02',
@@ -33,7 +33,7 @@ export class OrderAdminComponent {
       },
       {
         customer_id: 'C002',
-        order_id: 'O1002',
+        order_id: "2",
         order_date: '2024-05-02',
         confirmed_date: '2024-05-02',
         prepared_date: '2024-05-03',
@@ -49,7 +49,7 @@ export class OrderAdminComponent {
       },
       {
         customer_id: 'C003',
-        order_id: 'O1003',
+        order_id: "3",
         order_date: '2024-05-03',
         confirmed_date: '2024-05-03',
         prepared_date: '',
@@ -65,7 +65,7 @@ export class OrderAdminComponent {
       },
       {
         customer_id: 'C004',
-        order_id: 'O1004',
+        order_id: "4",
         order_date: '2024-05-04',
         confirmed_date: '2024-05-04',
         prepared_date: '',
@@ -81,7 +81,7 @@ export class OrderAdminComponent {
       },
       {
         customer_id: 'C005',
-        order_id: 'O1005',
+        order_id: "5",
         order_date: '2024-05-05',
         confirmed_date: '2024-05-05',
         prepared_date: '2024-05-06',
@@ -112,7 +112,7 @@ export class OrderAdminComponent {
     { name: 'December', value: 11 }
   ];
   monthForm:FormGroup;
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,private apiService:ApiService) {
     this.monthForm = this.fb.group({
       month: ['', Validators.required]
     });
@@ -129,19 +129,23 @@ export class OrderAdminComponent {
       "start_date": firstDay.toISOString().split('T')[0],
       "end_date": lastDay.toISOString().split('T')[0],
       "restaurant_id":"C46"
-      //firstDay: firstDay,
-      //lastDay: lastDay
     };
     
     console.log('Data to send:', dataToSend);
-    // Here you can add the logic to send dataToSend to your server.
+    this.apiService.orderHistory_Kitchen(dataToSend).subscribe({
+      next: res => {
+        console.log(res);
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
   }
   selectedOrder: any = null;
-  selectOrder(order: any) {
+  selectOrder(order: Order_Kitchen) {
     this.selectedOrder = order;
   }
   submit(order_id:string,order_status_before:string,flag:Number) {
-    
     if(flag===0){
       const dataToSend = {
         "order_id":order_id,
@@ -150,6 +154,14 @@ export class OrderAdminComponent {
         
       }
       console.log('Data to send:', dataToSend);
+      this.apiService.order_changestatus(dataToSend).subscribe({
+        next: res => {
+          console.log(res);
+        },
+        error: err => {
+          console.log(err);
+        }
+      });
     }
     else if(flag===1){
       const dataToSend = {
@@ -159,6 +171,14 @@ export class OrderAdminComponent {
         
       }
       console.log('Data to send:', dataToSend);
+      this.apiService.order_changestatus(dataToSend).subscribe({
+        next: res => {
+          console.log(res);
+        },
+        error: err => {
+          console.log(err);
+        }
+      });
     }
     else if(flag===2){
       const dataToSend = {
@@ -167,8 +187,16 @@ export class OrderAdminComponent {
         "order_status_after":'CANCELED',
       }
       console.log('Data to send:', dataToSend);
+      this.apiService.order_changestatus(dataToSend).subscribe({
+        next: res => {
+          console.log(res);
+        },
+        error: err => {
+          console.log(err);
+        }
+      });
     }
-  
+    
     
   }
   

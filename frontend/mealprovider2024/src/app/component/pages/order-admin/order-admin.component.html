@@ -22,7 +22,7 @@
             <option selected disabled>Month</option>
             <option *ngFor="let month of months" [value]="month.value">{{ month.name }}</option>
           </select>
-          
+          <button class="btn btn-outline-success me-2" type="submit">Search</button>
         </form>
       </div>
     </div>
@@ -55,8 +55,8 @@
         <td>{{ order.order_status }}</td>
         <td class="text-center">
           <button *ngIf="order.order_status === 'PENDING'"
-                type="button" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#orderModal-comfirm" (click)="selectOrder(order)"
-                >COMFIRMED</button>
+                type="button" class="btn btn-success me-2" data-bs-toggle="modal" data-bs-target="#orderModal-confirm" (click)="selectOrder(order)"
+                >CONFIRMED</button>
           <button *ngIf="order.order_status === 'CONFIRMED' "
                 type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#orderModal-prepared" (click)="selectOrder(order)"
                 >PREPARED</button>
@@ -97,7 +97,7 @@
   </div>
 </div>  
 <!-- Order Modal comfirm -->
-<div class="modal fade" id="orderModal-comfirm" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
+<div class="modal fade" id="orderModal-confirm" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -106,16 +106,16 @@
       </div>
       <div class="modal-body" *ngIf="selectedOrder">
         <p><strong>Order ID:</strong> {{ selectedOrder.order_id }}</p>
-        <p><strong>Time:</strong> {{ selectedOrder.date }}</p>
-        <p><strong>Person:</strong> {{ selectedOrder.user_id }}</p>
-        <p><strong>Total Payment:</strong> ${{ selectedOrder.totalAmount }}</p>
+        <p><strong>Time:</strong> {{ selectedOrder.order_date }}</p>
+        <p><strong>Person:</strong> {{ selectedOrder.customer_id }}</p>
+        <p><strong>Total Payment:</strong> ${{ selectedOrder.total_price }}</p>
         <p><strong>Status:</strong> {{ selectedOrder.order_status }}</p>
         <ul>
           <li *ngFor="let item of selectedOrder.items">
-            {{ item.name }} (x{{ item.quantity }}) - ${{ item.price }}
+            {{ item.item_name }} (x{{ item.quantity }}) 
           </li>
         </ul>
-        <p>Change Order Status  {{ selectedOrder.order_status }} to COMFIRMED</p>
+        <p>Order Status  {{ selectedOrder.order_status }} to COMFIRMED</p>
         <button type="button" class="btn btn-primary me-2" (click)=submit(selectedOrder.order_id,selectedOrder.order_status,1)>Sure</button>
       </div>
       <div class="modal-footer">
@@ -123,7 +123,7 @@
       </div>
     </div>
   </div>
-</div>
+</div>  
 
 <!-- Order Modal canceled -->
 <div class="modal fade" id="orderModal-canceled" tabindex="-1" aria-labelledby="orderModalLabel" aria-hidden="true">
@@ -135,16 +135,16 @@
       </div>
       <div class="modal-body" *ngIf="selectedOrder">
         <p><strong>Order ID:</strong> {{ selectedOrder.order_id }}</p>
-        <p><strong>Time:</strong> {{ selectedOrder.date }}</p>
-        <p><strong>Person:</strong> {{ selectedOrder.user_id }}</p>
-        <p><strong>Total Payment:</strong> ${{ selectedOrder.totalAmount }}</p>
+        <p><strong>Time:</strong> {{ selectedOrder.order_date }}</p>
+        <p><strong>Person:</strong> {{ selectedOrder.customer_id }}</p>
+        <p><strong>Total Payment:</strong> ${{ selectedOrder.total_price }}</p>
         <p><strong>Status:</strong> {{ selectedOrder.order_status }}</p>
         <ul>
           <li *ngFor="let item of selectedOrder.items">
-            {{ item.name }} (x{{ item.quantity }}) - ${{ item.price }}
+            {{ item.item_name }} (x{{ item.quantity }}) 
           </li>
         </ul>
-        <p>Change Order Status  {{ selectedOrder.order_status }} to CANCELED</p>
+        <p>Order Status  {{ selectedOrder.order_status }} to CANCELED</p>
         <button type="button" class="btn btn-primary me-2" (click)=submit(selectedOrder.order_id,selectedOrder.order_status,2)>Sure</button>
       </div>
       <div class="modal-footer">
@@ -152,4 +152,4 @@
       </div>
     </div>
   </div>
-</div>
+</div>  
