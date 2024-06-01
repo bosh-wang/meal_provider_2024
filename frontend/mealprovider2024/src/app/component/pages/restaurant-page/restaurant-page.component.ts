@@ -16,7 +16,7 @@ import { RestaurantTypeComponent } from '../restaurant-type/restaurant-type.comp
 import { FoodSearchComponent } from '../food-search/food-search.component';
 import { FormGroup,FormBuilder,FormControl,ReactiveFormsModule } from '@angular/forms';
 import { NewFood } from '../../../shared/model/addfood';
-import { ApiService } from '../../../services/api.service';import { Campus_name } from '../../../shared/model/Campus_name';
+import { Campus_name } from '../../../shared/model/Campus_name';
 import { ApiService } from '../../../services/api.service';
 
 @Component({
@@ -44,8 +44,7 @@ export class RestaurantPageComponent implements OnInit {
   newfoodObj:NewFood=new NewFood()
   constructor(
     private foodService: FoodService,
-    private activateRoute: ActivatedRoute,private formBuilder:FormBuilder,private apiService:ApiService,
-    private apiService: ApiService
+    private activateRoute: ActivatedRoute,private formBuilder:FormBuilder,private apiService:ApiService
   ) {
     this.activateRoute.params.subscribe((params) => {
       if (params['food-searchTerm']) {
