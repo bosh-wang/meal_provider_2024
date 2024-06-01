@@ -123,7 +123,6 @@ def update_cart():
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
-=======
 
 from services import rating_service, order_history_service, payment_service
 
