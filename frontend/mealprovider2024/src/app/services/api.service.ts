@@ -1,7 +1,10 @@
+import { campus_name } from './../../data';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
+import { Restaurant } from '../shared/model/Restaurant';
+import { Campus_name, campus_request } from '../shared/model/Campus_name';
 import { Login } from '../shared/model/Login';
 import { Order_HR ,Order_Kitchen,Order_employee} from '../shared/model/Order';
 import { NewFood } from '../shared/model/addfood';
@@ -9,6 +12,7 @@ import { NewFood } from '../shared/model/addfood';
   providedIn: 'root',
 })
 export class ApiService {
+  getresaurantURL:string;
   loginURL:string;
   orderHR:string;
   order_paymentNotification:string;
@@ -18,7 +22,9 @@ export class ApiService {
   order_payment:string;
   order_rating:string;
   change_menu:string;
+  corsURL = 'https://cors-anywhere.herokuapp.com/';
   constructor(private http : HttpClient){
+    this.getresaurantURL='https://cors-anywhere.herokuapp.com/http://35.224.128.24:80/api/restaurants';
     this.loginURL='http://35.224.128.24/api/signin';
     this.orderHR='http://35.224.128.24/api/orderHistoryHR';
     this.order_paymentNotification='http://35.224.128.24/api/paymentNotification';
@@ -29,7 +35,9 @@ export class ApiService {
     this.order_rating='http://35.224.128.24/api/updateRating';
     this.change_menu='http://35.224.128.24/api/change_menu_item';
   }
-
+  getRestaurants(campus_name:campus_request):Observable<Restaurant>{
+    return this.http.post<Restaurant>(this.getresaurantURL,campus_name);
+  }
   login(logindata:Login):Observable<Login>{
     console.log(this.loginURL)
     return this.http.post<Login>(this.loginURL,logindata);

@@ -22,11 +22,13 @@ li a:hover{
   cursor: pointer;
 }
 li a img{
+  aspect-ratio: 1 / 0.7;
+  width: 300px; /* 也可以換成任何你想要的寬度 */
   object-fit: cover;
-  height: 14.5rem;
+  object-position: center;
 }
 .content{
-  height: 7rem;
+  height: 13rem;
   position: relative;
   padding: 0.5rem 1rem;
   margin-top: 0.3rem;
@@ -68,6 +70,32 @@ li a img{
   flex: 9;
 }
 .campus span{
+  margin-top: 1.2rem;
+  padding: 0 0.5rem;
+  margin-right: 0.3rem;
+  color: gray;
+  font-size: 0.8rem;
+  display: inline-block;
+  background-color: whitesmoke;
+  border-radius: 2rem;
+}
+.fab{
+  flex: 9;
+}
+.fab span{
+  margin-top: 1.2rem;
+  padding: 0 0.5rem;
+  margin-right: 0.3rem;
+  color: gray;
+  font-size: 0.8rem;
+  display: inline-block;
+  background-color: whitesmoke;
+  border-radius: 2rem;
+}
+.canteen{
+  flex: 9;
+}
+.canteen span{
   margin-top: 1.2rem;
   padding: 0 0.5rem;
   margin-right: 0.3rem;
