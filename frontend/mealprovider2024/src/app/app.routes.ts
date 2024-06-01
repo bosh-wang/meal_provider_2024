@@ -37,6 +37,4 @@ export const routes: Routes = [
 
   {path: 'campus/:campus-name', component: HomeComponent},
 
-  {path: 'campus/竹科龍潭園區', component: HomeComponent},
-
 ];
