@@ -8,7 +8,7 @@ on:
 
 jobs:
   deploy:
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request.merged == true && github.event.pull_request.head.ref == 'backend_sharon'
     runs-on: ubuntu-latest
 
     steps:
@@ -25,7 +25,7 @@ jobs:
       - name: Push Docker image
         working-directory: ./backend
         run: docker push ghcr.io/estheryang2000/meal_provider_2024-backend:${{ github.sha }}
-        
+
       - name: Replace image in deployment yaml
         run: |
           sed -i "s|<IMAGE_TAG>|${{ github.sha }}|g" kubernetes/backend/deploy-backend.yaml
