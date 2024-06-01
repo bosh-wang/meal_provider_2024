@@ -1,6 +1,10 @@
 <header>
   <div class="container">
     <a routerLink="/" class="home">餐廳點餐系統</a>
+    <div *ngIf="userRole === 'restaurant_staff'">
+      <!-- HR Header Content -->
+      <a>restaurant_staff</a>
+    </div>
     <nav>
       <ul>
         <li>
@@ -24,7 +28,7 @@
             <a routerLink="/profile">個人資料</a>
             <a routerLink="/order">訂單</a>
             <a routerLink="/orderadmin">意見回饋</a>
-            <a routerLink="/orderhr">登出</a>
+            <a routerLink="/login" (click)="logout()">登出</a>
           </div>
         </li>
         <li>

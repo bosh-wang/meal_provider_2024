@@ -39,4 +39,6 @@
   small {
     color: red;
   }
-  
+  mat-form-field {
+    margin-right: 12px;
+  }
