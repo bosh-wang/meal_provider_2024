@@ -16,7 +16,7 @@ print("Home endpoint response:", response.text)
 # response = requests.post(f"{base_url}/api/signin", json=post_data)
 # print("POST /api/data response:", response.json())
 
-# # get restaurant 
+# # get restaurant
 # post_data = {
 #     "campus": "南科嘉義園區"
 # }
@@ -32,17 +32,11 @@ print("Home endpoint response:", response.text)
 #     "restaurant_id": "restaurant003"
 # }
 ## 員工
-post_data = {
-    "role": "employee",
-    "restaurant_id": "restaurant003"
-}
+post_data = {"role": "employee", "restaurant_id": "restaurant003"}
 response = requests.post(f"{base_url}/api/menu", json=post_data)
 print("POST /api/data response:", response.json())
 
-post_data = {
-    "role": "restaurant_staff",
-    "restaurant_id": "restaurant007"
-}
+post_data = {"role": "restaurant_staff", "restaurant_id": "restaurant007"}
 response = requests.post(f"{base_url}/api/menu", json=post_data)
 print("POST /api/data response:", response.json())
 # # adjust menu-add
@@ -104,13 +98,12 @@ print("POST /api/data response:", response.json())
 # print("POST /api/data response:", response.json())
 
 
-
 ## 購物車部分
 # # 更新購物車
 # post_data ={
 #    "cart_status": "update",
 #    "user_id": "user03",
-#    "item_id": "item003", 
+#    "item_id": "item003",
 #    "quantity": 2
 # }
 # response = requests.post(f"{base_url}/api/update_cart", json=post_data)
