@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { Login } from '../shared/model/Login';
 import { Order_HR ,Order_Kitchen,Order_employee} from '../shared/model/Order';
+import { NewFood } from '../shared/model/addfood';
 @Injectable({
   providedIn: 'root',
 })
@@ -16,6 +17,7 @@ export class ApiService {
   orderEmployee:string;
   order_payment:string;
   order_rating:string;
+  change_menu:string;
   constructor(private http : HttpClient){
     this.loginURL='http://35.224.128.24/api/signin';
     this.orderHR='http://35.224.128.24/api/orderHistoryHR';
@@ -25,6 +27,7 @@ export class ApiService {
     this.orderEmployee='http://35.224.128.24/api/orderHistoryEmployee';
     this.order_payment='http://35.224.128.24/api/payment';
     this.order_rating='http://35.224.128.24/api/updateRating';
+    this.change_menu='http://35.224.128.24/api/change_menu_item';
   }
 
   login(logindata:Login):Observable<Login>{
@@ -59,5 +62,9 @@ export class ApiService {
   order_Rating(order:any):Observable<any>{
     console.log(order)
     return this.http.post<any>(this.order_rating,order);
+  }
+  Change_menu(menu_item:any):Observable<any>{
+    console.log(menu_item)
+    return this.http.post<any>(this.change_menu,menu_item);
   }
 }

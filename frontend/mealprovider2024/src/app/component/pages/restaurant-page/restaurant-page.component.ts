@@ -10,6 +10,7 @@ import { RestaurantTypeComponent } from '../restaurant-type/restaurant-type.comp
 import { FoodSearchComponent } from '../food-search/food-search.component';
 import { FormGroup,FormBuilder,FormControl,ReactiveFormsModule } from '@angular/forms';
 import { NewFood } from '../../../shared/model/addfood';
+import { ApiService } from '../../../services/api.service';
 @Component({
   selector: 'app-restaurant-page',
   standalone: true,
@@ -22,7 +23,7 @@ export class RestaurantPageComponent {
   restaurant_id:string='';
   newfood !:FormGroup;
   newfoodObj:NewFood=new NewFood()
-  constructor(private foodService: FoodService, private activateRoute: ActivatedRoute,private formBuilder:FormBuilder) {
+  constructor(private foodService: FoodService, private activateRoute: ActivatedRoute,private formBuilder:FormBuilder,private apiService:ApiService) {
     this.activateRoute.params.subscribe((params) => {
       if (params['food-searchTerm']) {
         this.food = this.foodService.getAllFoodBySearchTerm(params['food-searchTerm']);
@@ -53,5 +54,13 @@ export class RestaurantPageComponent {
     this.newfoodObj.change_status="ADD";
     this.newfoodObj.restaurant_id=this.restaurant_id;
     console.log(this.newfoodObj);
+    this.apiService.Change_menu(this.newfoodObj).subscribe({
+      next: res => {
+        console.log(res);
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
   }
 }
