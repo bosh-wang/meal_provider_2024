@@ -19,12 +19,12 @@ export class LoginComponent {
   submitted = false;
   loginObj:Login=new Login();
   //constructor(private formBuilder: FormBuilder,private apiService:ApiService,private http: HttpClient) {
-  constructor(private formBuilder: FormBuilder,private apiService:ApiService,private http: HttpClient) {  
+  constructor(private formBuilder: FormBuilder,private apiService:ApiService) {  
     const formModel = new Login();
 
     this.loginForm = this.formBuilder.group({
       email: [formModel.email, [Validators.required, Validators.email]],
-      password: [formModel.password_hash, [Validators.required, Validators.minLength(6)]],
+      password: [formModel.password, [Validators.required, Validators.minLength(6)]],
       role: [formModel.role, Validators.required]
     });
   }
@@ -54,9 +54,10 @@ export class LoginComponent {
 
     this.loginObj.email=this.loginForm.value.email;
     this.loginObj.role=this.loginForm.value.role;
-    this.loginObj.password_hash=this.loginForm.value.password;
+    this.loginObj.password=this.loginForm.value.password;
     console.log(123456)
     //this.loginObj.password_hash=passwordHash;
+
     this.apiService.login(this.loginObj).subscribe({
       next: res => {
         console.log(res);
