@@ -8,3 +8,6 @@ data/
 #config
 credential.yaml
 config/meal_provider_system.json
+
+.angular
+node_modules
