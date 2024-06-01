@@ -1,0 +1,10 @@
+{
+    "change_status": "ADD",
+    "restaurant_id": "restaurant003",
+    "category": "主食",
+    "item_name": "超級爆炸好吃牛肉丸",
+    "description": "吃四年都吃不膩",
+    "price": 160,
+    "availability": false,
+    "image_url": "https://images.app.goo.gl/q4aVdPB83r7kHM1d7"
+}
