@@ -25,10 +25,10 @@ spec:
         resources:
           requests:
             cpu: "500m"
-            memory: "1Gi"
+            memory: "2Gi"
           limits:
             cpu: "1000m"
-            memory: "2Gi"
+            memory: "3Gi"
         env:
         - name: POSTGRES_DB
           value: "meal-planner-system"
@@ -87,10 +87,10 @@ spec:
         resources:
           requests:
             cpu: "500m"
-            memory: "1Gi"
+            memory: "2Gi"
           limits:
             cpu: "1000m"
-            memory: "2Gi"
+            memory: "3Gi"
         ports:
         - containerPort: 5432
         env:
