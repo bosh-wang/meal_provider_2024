@@ -3,13 +3,16 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { CommonModule } from '@angular/common';
 import { Login } from '../../../shared/model/Login';
 import { ApiService } from '../../../services/api.service';
+import { UserService } from '../../../services/user.service';
 import { HttpClientModule } from '@angular/common/http';
+import { MatSnackBarModule ,MatSnackBar} from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import CryptoJS from 'crypto-js';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule,HttpClientModule ],
+  imports: [CommonModule, ReactiveFormsModule,HttpClientModule,MatSnackBarModule  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -18,7 +21,14 @@ export class LoginComponent {
   loginForm: FormGroup;
   submitted = false;
   loginObj:Login=new Login();
-  constructor(private formBuilder: FormBuilder,private apiService:ApiService) {  
+  private snackBar!: MatSnackBar;
+  constructor(
+    private formBuilder: FormBuilder,
+    private apiService:ApiService,
+    private _snackBar: MatSnackBar,
+    private router: Router,
+    private userService: UserService 
+  ) {  
     const formModel = new Login();
 
     this.loginForm = this.formBuilder.group({
@@ -39,7 +49,6 @@ export class LoginComponent {
       return;
     }
     // Hash the password
-    const passwordHash = CryptoJS.SHA256(this.loginForm.value.password).toString();
 
     // Create the final form value object
     const formValue = {
@@ -54,18 +63,30 @@ export class LoginComponent {
     this.loginObj.email=this.loginForm.value.email;
     this.loginObj.role=this.loginForm.value.role;
     this.loginObj.password=this.loginForm.value.password;
-    console.log(123456)
     //this.loginObj.password_hash=passwordHash;
 
     this.apiService.login(this.loginObj).subscribe({
       next: res => {
         console.log(res);
+        this.userService.setUserRole(this.loginObj.role);  // 使用 this.loginObj.role 設置用戶角色
+        this.navigateByRole(this.loginObj.role);  // 使用 this.loginObj.role 進行導航
       },
       error: err => {
         console.log(err);
+        this.openSnackBar("登入失敗", "關閉",);
       }
     });
-
-    
+  }
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
+  }
+  navigateByRole(role: string) {
+    if (role === 'kitchen_staff') {
+      this.router.navigate(['']);
+    } else if (role === 'HR') {
+      this.router.navigate(['']);
+    } else {
+      this.router.navigate(['']);
+    }
   }
 }

@@ -19,7 +19,10 @@
   <div class="container-fluid" style="width: 95%;">
     <div class="d-flex justify-content-between align-items-center py-2">
       <img src="https://storage.googleapis.com/meal_provider_system/logo3.jpg" alt="Fingerlicker Logo" class="home" routerLink="/" />
-
+      <div *ngIf="userRole === 'restaurant_staff'">
+        <!-- HR Header Content -->
+        <a>restaurant_staff</a>
+      </div>
       <!-- <a routerLink="/" class="home">餐廳點餐系統</a> -->
       <nav>
         <ul>
@@ -44,11 +47,10 @@
               <a routerLink="/profile">個人資料</a>
               <a routerLink="/order">訂單</a>
               <a routerLink="/orderadmin">意見回饋</a>
-              <a routerLink="/orderhr">登出</a>
+              <a routerLink="/login" (click)="logout()">登出</a>
             </div>
           </li>
           <li class="nav-item">
-            
             <a routerLink="/cart-page">購物車<span *ngIf="cartQuantity">{{cartQuantity}}</span></a>
           </li>
         </ul>

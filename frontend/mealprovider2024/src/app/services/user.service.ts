@@ -6,16 +6,28 @@ import { Injectable } from '@angular/core';
 export class UserService {
   constructor() {}
   
-  private userRole: string | null = null;
+  private userRoleKey = '';
 
   setUserRole(role: string) {
-    this.userRole = role;
+    if (this.isBrowser()) {
+      console.log(role);
+      localStorage.setItem(this.userRoleKey, role);
+    }
   }
 
   getUserRole(): string | null {
-    return this.userRole;
+    if (this.isBrowser()) {
+      return localStorage.getItem(this.userRoleKey);
+    }
+    return null;
   }
+
   clearUserRole() {
-    this.userRole = null;
+    if (this.isBrowser()) {
+      localStorage.removeItem(this.userRoleKey);
+    }
+  }
+  private isBrowser(): boolean {
+    return typeof window !== 'undefined' && typeof localStorage !== 'undefined';
   }
 }

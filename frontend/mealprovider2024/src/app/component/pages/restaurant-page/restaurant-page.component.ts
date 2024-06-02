@@ -1,8 +1,14 @@
+import { Restaurant } from './../../../shared/model/Restaurant';
 import { Component, OnInit } from '@angular/core';
 import { FoodService } from '../../../services/food.service';
 import { Food } from '../../../shared/model/Food';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import {
+  ActivatedRoute,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+} from '@angular/router';
 import { SearchComponent } from '../search/search.component';
 import { TagComponent } from '../tag/tag.component';
 import { NotFoundComponent } from '../not-found/not-found.component';
@@ -10,22 +16,41 @@ import { RestaurantTypeComponent } from '../restaurant-type/restaurant-type.comp
 import { FoodSearchComponent } from '../food-search/food-search.component';
 import { FormGroup,FormBuilder,FormControl,ReactiveFormsModule } from '@angular/forms';
 import { NewFood } from '../../../shared/model/addfood';
+import { Campus_name } from '../../../shared/model/Campus_name';
+import { ApiService } from '../../../services/api.service';
+
 @Component({
   selector: 'app-restaurant-page',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive, SearchComponent, TagComponent, NotFoundComponent, RestaurantTypeComponent, FoodSearchComponent,ReactiveFormsModule],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+    SearchComponent,
+    TagComponent,
+    NotFoundComponent,
+    RestaurantTypeComponent,
+    FoodSearchComponent,ReactiveFormsModule,
+  ],
   templateUrl: './restaurant-page.component.html',
-  styleUrl: './restaurant-page.component.css'
+  styleUrl: './restaurant-page.component.css',
 })
-export class RestaurantPageComponent {
+export class RestaurantPageComponent implements OnInit {
+  campus_name: Campus_name[] = [];
   food: Food[] = [];
   restaurant_id:string='';
   newfood !:FormGroup;
   newfoodObj:NewFood=new NewFood()
-  constructor(private foodService: FoodService, private activateRoute: ActivatedRoute,private formBuilder:FormBuilder) {
+  constructor(
+    private foodService: FoodService,
+    private activateRoute: ActivatedRoute,private formBuilder:FormBuilder,private apiService:ApiService
+  ) {
     this.activateRoute.params.subscribe((params) => {
       if (params['food-searchTerm']) {
-        this.food = this.foodService.getAllFoodBySearchTerm(params['food-searchTerm']);
+        this.food = this.foodService.getAllFoodBySearchTerm(
+          params['food-searchTerm']
+        );
       } else if (params['tag']) {
         this.food = this.foodService.getAllFoodByTag(params['tag']);
       } else {
@@ -53,5 +78,13 @@ export class RestaurantPageComponent {
     this.newfoodObj.change_status="ADD";
     this.newfoodObj.restaurant_id=this.restaurant_id;
     console.log(this.newfoodObj);
+    this.apiService.Change_menu(this.newfoodObj).subscribe({
+      next: res => {
+        console.log(res);
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
   }
 }
