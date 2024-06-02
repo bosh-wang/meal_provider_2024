@@ -19,21 +19,31 @@ body {
     margin-top: 50px;
     margin-bottom: 50px;
 }
+
 /* Custom styles for the navbar brand */
 .navbar-brand {
-    font-family: 'Roboto', sans-serif; /* Use Roboto font, or change to your preferred font */
-    font-size: 1.5rem; /* Increase font size */
-    font-weight: 700; /* Make the font bold */
-    color: #404040; /* White color for the text */
-    text-transform: uppercase; /* Transform text to uppercase */
-    letter-spacing: 1px; /* Add some spacing between letters */
-    transition: color 0.3s ease; /* Smooth transition for color changes */
+    font-family: 'Roboto', sans-serif;
+    /* Use Roboto font, or change to your preferred font */
+    font-size: 1.5rem;
+    /* Increase font size */
+    font-weight: 700;
+    /* Make the font bold */
+    color: #404040;
+    /* White color for the text */
+    text-transform: uppercase;
+    /* Transform text to uppercase */
+    letter-spacing: 1px;
+    /* Add some spacing between letters */
+    transition: color 0.3s ease;
+    /* Smooth transition for color changes */
 }
-  
+
 .navbar-custom .form-label {
-    color: #ffffff; /* White color for the label */
-    font-size: 1rem; /* Adjust the font size */
-  }
+    color: #ffffff;
+    /* White color for the label */
+    font-size: 1rem;
+    /* Adjust the font size */
+}
 
 /* Additional CSS for order dashboard */
 
@@ -83,6 +93,7 @@ body {
     color: #fff;
     font-weight: 600;
 }
+
 .btn-primary:hover,
 .btn-secondary:hover,
 .btn-success:hover,
@@ -92,12 +103,13 @@ body {
     background-color: #EE5B57;
     border-color: #EE5B57;
 }
-.btn-outline-danger{
+
+.btn-outline-danger {
     border-color: #EE5B57;
 
 }
 
-.btn-outline-danger:hover{
+.btn-outline-danger:hover {
     background-color: #EE5B57;
 
 }
@@ -128,39 +140,44 @@ body {
 .progress-bar {
     background-color: #EE5B57;
 }
-/* Custom styles for progress bars */
+
 /* Custom styles for progress bars */
 .bg-warning {
-    background-color: #ffefc1 !important; /* PENDING */
-    color: #6E2C00; /* Ensure text color is readable on yellow */
+    background-color: #ffefc1 !important;
+    /* PENDING */
+    color: #6E2C00;
+    /* Ensure text color is readable on yellow */
     font-weight: 600
-  }
-  
-  .bg-info {
-    background-color: #cce5ff !important; /* CONFIRMED */
+}
+
+.bg-info {
+    background-color: #cce5ff !important;
+    /* CONFIRMED */
     color: #004085;
     font-weight: 600
-  }
-  
-  .bg-primary {
-    background-color: #73C6B6 !important; /* PREPARED */
+}
+
+.bg-primary {
+    background-color: #73C6B6 !important;
+    /* PREPARED */
     color: #0B5345;
     font-weight: 600
-  }
-  
-  .bg-success {
-    background-color: #EE5B57 !important; /* Completed */
+}
+
+.bg-success {
+    background-color: #EE5B57 !important;
+    /* Completed */
     color: #fff;
     font-weight: 600
-  }
-  
-  .bg-secondary {
-    background-color: #E2E3E5 !important; /* Cancel */
+}
+
+.bg-secondary {
+    background-color: #E2E3E5 !important;
+    /* Cancel */
     color: #6c757d;
     font-weight: 600
+}
 
-  }
-  
 
 .form-select {
     width: auto;
@@ -179,59 +196,62 @@ body {
     vertical-align: baseline;
     border-radius: 0.375rem;
     margin: 2px 0;
-    width: 120px; /* Set a fixed width for consistency */
+    width: 120px;
+    /* Set a fixed width for consistency */
     word-wrap: break-word;
-  }
-  
-  /* Adjustments for different statuses */
-  .badge-pending {
+}
+
+/* Adjustments for different statuses */
+.badge-pending {
     background-color: #ffefc1;
     color: #856404;
-  }
-  
-  .badge-confirmed {
+}
+
+.badge-confirmed {
     background-color: #cce5ff;
     color: #004085;
-  }
-  
-  .badge-prepared {
+}
+
+.badge-prepared {
     background-color: #73C6B6;
     color: #0B5345;
-  }
-  
-  .badge-completed {
+}
+
+.badge-completed {
     background-color: #EE5B57;
     color: #fff;
-  }
-  
-  .badge-canceled {
+}
+
+.badge-canceled {
     background-color: #f8d7da;
     color: #721c24;
-  }
-  
-  .badge-default {
+}
+
+.badge-default {
     background-color: #e2e3e5;
     color: #6c757d;
-  }
-  
-  /* Responsive adjustments */
-  @media (max-width: 768px) {
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
     .badge-status {
-      font-size: 0.75rem;
-      padding: 0.3em 0.6em;
-      width: 100px; /* Adjust width for smaller screens */
+        font-size: 0.75rem;
+        padding: 0.3em 0.6em;
+        width: 100px;
+        /* Adjust width for smaller screens */
     }
-  }
-  
-  @media (max-width: 576px) {
+}
+
+@media (max-width: 576px) {
     .badge-status {
-      font-size: 0.7rem;
-      padding: 0.25em 0.5em;
-      width: 90px; /* Adjust width for even smaller screens */
+        font-size: 0.7rem;
+        padding: 0.25em 0.5em;
+        width: 90px;
+        /* Adjust width for even smaller screens */
     }
-  }
-  
-  
+}
+
+
 
 .modal-header,
 .modal-footer {
@@ -358,6 +378,7 @@ body {
     background-color: #fff;
     z-index: 0
 }
+
 /* Additional CSS for order order summary */
 
 .order-summary {
@@ -366,28 +387,27 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
-  }
+}
 
 
-  
-  .order-summary-item {
+
+.order-summary-item {
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
-  }
-  
-  .order-summary-title {
+}
+
+.order-summary-title {
     font-weight: 700;
     color: #333;
     margin-right: 10px;
-  }
-  
-  .order-summary-detail {
+}
+
+.order-summary-detail {
     font-weight: 400;
     color: #666;
-  }
-  
-  .order-summary-item:last-child {
+}
+
+.order-summary-item:last-child {
     margin-bottom: 0;
-  }
-  
+}
