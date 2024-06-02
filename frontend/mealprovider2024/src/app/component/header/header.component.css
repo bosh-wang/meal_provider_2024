@@ -1,72 +1,96 @@
-header{
-  position: relative;
-  background: white;
+/* Importing Google Fonts */
+/* @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap'); */
+
+body {
+  font-family: '蘋果儷中黑', sans-serif;
+  font-optical-sizing: auto;
+  margin: 0;
   padding: 0;
-  border: 1px solid #e72929;
-}
-a{
-  color: #af1313;
-}
-a.hover{
-  background: #e72929;
-  color: white;
-  cursor: pointer;
+  box-sizing: border-box;
 }
 
-.container{
-  margin: 0 auto;
+header {
+  background: #ffffff;
+  padding: 0.5rem 1rem;
+  border-bottom: 2px solid #EE5B57;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+a {
+  color: #EE5B57;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover {
+  color: #BF360C;
+}
+
+.container {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
-a.home{
-  font-weight: 900;
-  padding: 1rem;
+
+
+.home {
+  width: 6.9rem; 
+  height: 2.9rem; 
+  /* margin-right: 5px; */
+  
 }
-ul{
-  list-style-type: none;
-  margin: 0;
+
+.nav-item {
   display: flex;
+  align-items: center;
 }
-ul a{
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 1rem;
+}
+
+nav ul li {
+  position: relative;
+}
+
+nav ul li a {
   padding: 1rem;
-  display: inline-block;
-}
-a span{
-  background: #ff4d4d;
-  color: white;
-  padding: 0.1rem 0.45rem;
-  border-radius: 100rem;
-  font-size: 0.9rem;
-}
-.menu-container{
-  position: relative;
-}
-.menu{
-  position: absolute;
-  z-index: 1;
-  background: whitesmoke;
-  display: none;
-}
-.menu-container:hover .menu{
   display: block;
 }
-.menu a{
-  width: 100%;
-  min-width: 8rem;
-}
-.campus-menu-container{
-  position: relative;
-}
-.campus-menu{
-  position: absolute;
-  z-index: 1;
-  background: whitesmoke;
+
+
+.campus-menu, .menu {
   display: none;
+  position: absolute;
+  background-color: #ffffff;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  min-width: 10rem;
+  padding: 0.5rem 0;
 }
-.campus-menu-container:hover .campus-menu{
+
+.campus-menu a, .menu a {
+  padding: 0.5rem 1rem;
+  display: block;
+  white-space: nowrap;
+  color: #333;
+}
+
+.campus-menu-container:hover .campus-menu, .menu-container:hover .menu {
   display: block;
 }
-.campus-menu a{
-  width: 100%;
-  min-width: 8rem;
+
+
+
+.cart-quantity {
+  background: #EE5B57;
+  color: #ffffff;
+  padding: 0.2rem 0.5rem;
+  border-radius: 1rem;
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
 }

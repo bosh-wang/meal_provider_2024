@@ -13,6 +13,9 @@ import { ApiService } from '../../../services/api.service';
 export class OrderDashboardComponent {
   orders: Order_employee[] = [];
   orderObj : Order_employee=new Order_employee();
+  filteredOrders: Order_employee[] = [];
+  filterForm: FormGroup;
+
   ngOnInit() {
     // Example data
     this.orders = [
@@ -72,7 +75,9 @@ export class OrderDashboardComponent {
           paid: false
       }
   ];
+  this.filteredOrders = this.orders;
   }
+ 
   months = [
     { name: 'January', value: 0 },
     { name: 'February', value: 1 },
@@ -87,10 +92,34 @@ export class OrderDashboardComponent {
     { name: 'November', value: 10 },
     { name: 'December', value: 11 }
   ];
+  statuses = [
+    { value: 'PENDING', name: 'Pending' },
+    { value: 'CONFIRMED', name: 'Confirmed' },
+    { value: 'PREPARED', name: 'Prepared' },
+    { value: 'COMPLETED', name: 'Completed' },
+    { value: 'CANCELED', name: 'Canceled' }
+  ];
 
   selectedOrder: any = null;
   selectOrder(order: any) {
     this.selectedOrder = order;
+  }
+  applyFilters() {
+    const { month, status } = this.filterForm.value;
+    console.log('Selected month:', month);
+    console.log('Selected status:', status);
+    this.filteredOrders = this.orders.filter(order => {
+      const orderDate = new Date(order.order_date);
+      const orderMonth = orderDate.getMonth();
+      console.log('Order month:', orderMonth, orderDate.toString());
+
+      return (!month || orderMonth === parseInt(month)) && (!status || order.order_status === status);
+    });
+  }
+
+  clearFilters() {
+    this.filterForm.reset();
+    this.filteredOrders = this.orders;
   }
   getProgressWidth(status: string): string {
     switch (status) {
@@ -159,6 +188,21 @@ export class OrderDashboardComponent {
         return 0;
     }
   }
+  getOrderStatusClass(status: string): string {
+    switch (status) {
+      case 'PENDING':
+        return 'badge-status badge-pending';
+      case 'CONFIRMED':
+        return 'badge-status badge-confirmed';
+      case 'PREPARED':
+        return 'badge-status badge-prepared';
+      case 'COMPLETED':
+        return 'badge-status badge-completed';
+      default:
+        return 'badge-status badge-default';
+    }
+  }
+  
   monthForm: FormGroup;
   OrderForm: FormGroup;
   payForm :FormGroup;
@@ -171,6 +215,10 @@ export class OrderDashboardComponent {
     });
     this.payForm = this.fb.group({
       payment_method: ['', Validators.required]
+    });
+    this.filterForm = this.fb.group({
+      month: [''],
+      status: ['']
     });
   }
   submit(user_id:string,item_id:string) {
