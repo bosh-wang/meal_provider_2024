@@ -43,25 +43,25 @@ export class ApiService {
     return this.http.post<any>(this.loginURL,logindata);
   }
 
-  orderHistory_HR(order_HR:any):Observable<Order_HR>{
+  orderHistory_HR(order_HR:any):Observable<any>{
     
-    return this.http.post<Order_HR>(this.orderHR,order_HR);
+    return this.http.post<any>(this.orderHR,order_HR);
   }
   order_HRpaymentNotification(user_id:any):Observable<any>{
     
     return this.http.post<any>(this.order_paymentNotification,user_id);
   }
-  orderHistory_Kitchen(Order_Kitchen:any):Observable<Order_Kitchen>{
+  orderHistory_Kitchen(Order_Kitchen:any):Observable<any>{
     
-    return this.http.post<Order_Kitchen>(this.orderKitchen,Order_Kitchen);
+    return this.http.post<any>(this.orderKitchen,Order_Kitchen);
   }
   order_changestatus(Order_status:any):Observable<any>{
     
     return this.http.post<any>(this.orderstatus,Order_status);
   }
-  orderHistory_Employee(Order_Employee:any):Observable<Order_employee>{
+  orderHistory_Employee(Order_Employee:any):Observable<any>{
     
-    return this.http.post<Order_employee>(this.orderEmployee,Order_Employee);
+    return this.http.post<any>(this.orderEmployee,Order_Employee);
   }
   order_pay(order:any):Observable<any>{
     

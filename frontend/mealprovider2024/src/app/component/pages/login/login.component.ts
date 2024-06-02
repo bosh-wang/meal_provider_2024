@@ -70,6 +70,10 @@ export class LoginComponent {
         console.log(res);
         this.userService.setUserRole(this.loginObj.role);  // 使用 this.loginObj.role 設置用戶角色
         this.userService.setUserId(res.user_id); // 設置 user_id
+        if(this.loginObj.role==='restaurant_staff'){
+          this.userService.setrestaurantId(res.restaurant_id);
+        }
+        console.log(this.userService.getrestaurantId());
         this.navigateByRole(this.loginObj.role);  // 使用 this.loginObj.role 進行導航
       },
       error: err => {

@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component,Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Order_employee } from '../../../shared/model/Order';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators,FormsModule } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
+import { UserService } from '../../../services/user.service';
 @Component({
   selector: 'app-order-dashboard',
   standalone: true,
@@ -17,8 +18,10 @@ export class OrderDashboardComponent {
   filterForm: FormGroup;
 
   ngOnInit() {
+
     // Example data
-    this.orders = [
+    this.orders=[];
+    /*this.orders = [
       {
           order_id: '1',
           order_date: '2024-05-01',
@@ -74,7 +77,22 @@ export class OrderDashboardComponent {
           order_status: 'CANCELED',
           paid: false
       }
-  ];
+  ];*/
+  const dataToSend = {
+    "start_date": "2024-01-01",
+    "end_date": "2024-12-31",
+    "customer_id":this.userid
+  };
+  console.log(dataToSend);
+  this.apiService.orderHistory_Employee(dataToSend).subscribe({
+    next: res => {
+      console.log(res);
+      this.orders=res.orders;
+    },
+    error: err => {
+      console.log(err);
+    }
+  });
   this.filteredOrders = this.orders;
   }
  
@@ -116,7 +134,29 @@ export class OrderDashboardComponent {
       return (!month || orderMonth === parseInt(month)) && (!status || order.order_status === status);
     });
   }
-
+  submit_month() {
+    const formValue = this.monthForm.value;
+    const monthValue = Number(formValue.month);
+    const monthValue2 = monthValue +Number(1);
+    const year = new Date().getFullYear();
+    const firstDay = new Date(year, monthValue, 2);
+    const lastDay = new Date(year, monthValue2, 1);
+    
+    const dataToSend = {
+      "start_date": firstDay.toISOString().split('T')[0],
+      "end_date": lastDay.toISOString().split('T')[0],
+      "customer_id":this.userid
+    };
+    console.log('Data to send:', dataToSend);
+    this.apiService.orderHistory_Employee(dataToSend).subscribe({
+      next: res => {
+        console.log(res);
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
+  }
   clearFilters() {
     this.filterForm.reset();
     this.filteredOrders = this.orders;
@@ -206,7 +246,8 @@ export class OrderDashboardComponent {
   monthForm: FormGroup;
   OrderForm: FormGroup;
   payForm :FormGroup;
-  constructor(private fb: FormBuilder,private apiService:ApiService) {
+  @Input() userid: string | null = null;
+  constructor(private fb: FormBuilder,private apiService:ApiService,private userService: UserService) {
     this.OrderForm = this.fb.group({
       rating: ['', Validators.required]
     });
@@ -220,12 +261,13 @@ export class OrderDashboardComponent {
       month: [''],
       status: ['']
     });
+    this.userid=this.userService.getUserId();
   }
   submit(user_id:string,item_id:string) {
     const formValue = this.OrderForm.value;
 
     const dataToSend = {
-      "user_id":"user01",
+      "user_id":this.userid,
       "item_id":item_id,
       "rating": formValue.rating,
     };
@@ -259,7 +301,7 @@ export class OrderDashboardComponent {
   submit_payment(customer_id:string,order_id:string) {
     const formValue = this.payForm.value;
     const dataToSend = {
-      "customer_id":"user01",
+      "customer_id":this.userid,
       "order_id":order_id,
       "payment_method": formValue.payment_method, 
     };
@@ -273,27 +315,5 @@ export class OrderDashboardComponent {
       }
     });
   }
-  submit_month() {
-    const formValue = this.monthForm.value;
-    const monthValue = Number(formValue.month);
-    const monthValue2 = monthValue +Number(1);
-    const year = new Date().getFullYear();
-    const firstDay = new Date(year, monthValue, 2);
-    const lastDay = new Date(year, monthValue2, 1);
-    
-    const dataToSend = {
-      "start_date": firstDay.toISOString().split('T')[0],
-      "end_date": lastDay.toISOString().split('T')[0],
-      "customer_id":"user01"
-    };
-    console.log('Data to send:', dataToSend);
-    this.apiService.orderHistory_Employee(dataToSend).subscribe({
-      next: res => {
-        console.log(res);
-      },
-      error: err => {
-        console.log(err);
-      }
-    });
-  }
+  
 }

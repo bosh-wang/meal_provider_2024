@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component ,Input} from '@angular/core';
 import { Order_HR } from '../../../shared/model/Order';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
+import { UserService } from '../../../services/user.service'; 
 @Component({
   selector: 'app-order-hr',
   standalone: true,
@@ -14,7 +15,8 @@ export class OrderHRComponent {
   orders: Order_HR[] = [];
   ngOnInit() {
     // Example data
-    this.orders = [
+    this.orders=[];
+    /*this.orders = [
       {
         customer_id: 'C001',
         order_id: 'O1001',
@@ -50,7 +52,7 @@ export class OrderHRComponent {
         total_price: 120.20,
         paid: false
       }
-    ];
+    ];*/
   }
   departments = ['Human Resources','Administration','Technology'];
   positions = ['HR Manager','Engineer','Administrator'];
@@ -92,12 +94,11 @@ export class OrderHRComponent {
       "position": formValue.position,
       "start_date": firstDay.toISOString().split('T')[0],
       "end_date": lastDay.toISOString().split('T')[0]
-      //firstDay: firstDay,
-      //lastDay: lastDay
     };
     this.apiService.orderHistory_HR(dataToSend).subscribe({
       next: res => {
         console.log(res);
+        this.orders=res.orders;
       },
       error: err => {
         console.log(err);
@@ -119,9 +120,11 @@ export class OrderHRComponent {
   }
   onClick() {
     const unpaidCustomerIds = this.getUnpaidCustomerIds(this.orders);
+    console.log(unpaidCustomerIds);
     this.apiService.order_HRpaymentNotification({user_id:unpaidCustomerIds}).subscribe({
       next: res => {
         console.log(res);
+        this.submit();
       },
       error: err => {
         console.log(err);
@@ -129,9 +132,11 @@ export class OrderHRComponent {
     });
   }
   getUnpaidCustomerIds(orders: Order_HR[]): string[] {
-    return orders
-      .filter(order => !order.paid)
-      .map(order => order.customer_id);
+    return Array.from(new Set(
+      orders
+        .filter(order => !order.paid)
+        .map(order => order.customer_id)
+    ));
   }
   
   // 调用函数并输出结果

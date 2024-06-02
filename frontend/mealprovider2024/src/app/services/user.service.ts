@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 export class UserService {
   private userRoleKey = 'userRole';
   private userIdKey = 'userId';
-
+  private restaurantIdKey = 'restaurantId';
   constructor() {}
 
   setUserRole(role: string) {
@@ -36,6 +36,19 @@ export class UserService {
     }
     return null;
   }
+  setrestaurantId(restaurantId: string) {
+    if (this.isBrowser()) {
+      console.log('Setting restaurantId:', restaurantId);
+      localStorage.setItem(this.restaurantIdKey, restaurantId);
+    }
+  }
+
+  getrestaurantId(): string | null {
+    if (this.isBrowser()) {
+      return localStorage.getItem(this.restaurantIdKey);
+    }
+    return null;
+  }
 
   clearUserRole() {
     if (this.isBrowser()) {
@@ -50,10 +63,17 @@ export class UserService {
       console.log('Cleared userId:', this.userIdKey);
     }
   }
+  clearrestaurantId() {
+    if (this.isBrowser()) {
+      localStorage.removeItem(this.restaurantIdKey);
+      console.log('Cleared userId:', this.restaurantIdKey);
+    }
+  }
 
   clearUser() {
     this.clearUserRole();
     this.clearUserId();
+    this.clearrestaurantId();
   }
 
   private isBrowser(): boolean {
