@@ -62,6 +62,7 @@
         <tr>
           <th scope="col">Order ID</th>
           <th scope="col">Time</th>
+          <th scope="col">Restaurant</th>
           <!-- <th scope="col">Food</th> -->
           <th scope="col">Total Payment</th>
           <th scope="col">Payment Situation</th>
@@ -76,6 +77,7 @@
         <tr *ngFor="let order of filteredOrders">
           <th scope="row">{{ order.order_id }}</th>
           <td>{{ order.order_date }}</td>
+          <td></td> <!-- Restaurant -->
           <!-- <td>
             <ul>
               <li *ngFor="let item of order.items">
@@ -137,7 +139,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="orderModalLabel">Order Details</h5>
+        <h2 class="modal-title" id="orderModalLabel">Rating Details</h2>
         <button type="button" class="btn-close" data-bs-dismiss="modal"
           aria-label="Close"></button>
       </div>
@@ -181,7 +183,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="orderModalLabel">Order Details</h5>
+        <h2 class="modal-title" id="orderModalLabel">Order Confirm Details</h2>
         <button type="button" class="btn-close" data-bs-dismiss="modal"
           aria-label="Close"></button>
       </div>
@@ -264,9 +266,10 @@
             <span class="order-summary-detail">Status : {{ selectedOrder.order_status }} To COMPLETED</span>
           </div>
         </div>
+        <br>
         
         <div class="text-end">
-          <button type="button" class="btn btn-primary me-2" (click)="submit_completed(selectedOrder.order_id, selectedOrder.order_status)">Sure</button>
+          <button type="button" class="btn btn-primary me-2" (click)="submit_completed(selectedOrder.order_id, selectedOrder.order_status)">CONFIRM</button>
         </div>
         
         <!-- <p><strong>Order ID:</strong> {{ selectedOrder.order_id }}</p>
@@ -288,7 +291,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="orderModalLabel">Order Payment</h5>
+        <h2 class="modal-title" id="orderModalLabel">Order Payment</h2>
         <button type="button" class="btn-close" data-bs-dismiss="modal"
           aria-label="Close"></button>
       </div>
@@ -321,7 +324,7 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="orderModalLabel">Order Details</h5>
+        <h2 class="modal-title" id="orderModalLabel">Order Details</h2>
         <button type="button" class="btn-close" data-bs-dismiss="modal"
           aria-label="Close"></button>
       </div>
@@ -406,7 +409,7 @@
         </div>
         
         <div class="text-end">
-          <button type="button" class="btn btn-primary me-2" (click)="submit_completed(selectedOrder.order_id, selectedOrder.order_status)">Sure</button>
+          <!-- <button type="button" class="btn btn-primary me-2" (click)="submit_completed(selectedOrder.order_id, selectedOrder.order_status)">Sure</button> -->
         </div>
       </div>
     </div>

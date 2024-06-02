@@ -34,10 +34,10 @@ a:hover {
 
 
 .home {
-  width: 6.9rem; 
-  height: 2.9rem; 
+  width: 6.9rem;
+  height: 2.9rem;
   /* margin-right: 5px; */
-  
+
 }
 
 .nav-item {
@@ -63,7 +63,8 @@ nav ul li a {
 }
 
 
-.campus-menu, .menu {
+.campus-menu,
+.menu {
   display: none;
   position: absolute;
   background-color: #ffffff;
@@ -73,24 +74,49 @@ nav ul li a {
   padding: 0.5rem 0;
 }
 
-.campus-menu a, .menu a {
+.campus-menu a,
+.menu a {
   padding: 0.5rem 1rem;
   display: block;
   white-space: nowrap;
   color: #333;
 }
 
-.campus-menu-container:hover .campus-menu, .menu-container:hover .menu {
+.campus-menu-container:hover .campus-menu,
+.menu-container:hover .menu {
   display: block;
 }
 
 
 
+/* Adding styles for the cart link */
+.cart-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: #EE5B57;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.cart-link:hover {
+  color: #BF360C;
+}
+
+/* Styles for the shopping cart icon */
+.cart-link i {
+  margin-left: 0.5rem;
+}
+
+/* Styles for the cart quantity */
 .cart-quantity {
   background: #EE5B57;
   color: #ffffff;
   padding: 0.2rem 0.5rem;
-  border-radius: 1rem;
+  border-radius: 50%;
   font-size: 0.8rem;
   margin-left: 0.5rem;
+  position: absolute;
+  top: -5px;
+  right: -10px;
 }
