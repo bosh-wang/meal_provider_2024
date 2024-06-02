@@ -6,7 +6,7 @@
 <!--<app-tag></app-tag>-->
 <app-not-found [visible]="!food || !food.length" notFoundMessage="查無此餐點!" resetLinkText="返回首頁"></app-not-found>
 <div class="container">
-  <button  data-bs-toggle="modal" data-bs-target="#exampleModal">Add Food</button>
+  <button  data-bs-toggle="modal" data-bs-target="#exampleModal" *ngIf="userRole === 'restaurant_staff'">Add Food</button>
 </div>
 <ul>
   <li *ngFor="let item of food">
@@ -48,7 +48,7 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header" >
         <h1 class="modal-title fs-5" id="exampleModalLabel">Add Food</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>

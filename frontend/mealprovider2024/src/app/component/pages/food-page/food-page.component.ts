@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import { Food } from '../../../shared/model/Food';
 import { FoodService } from '../../../services/food.service';
 import { CommonModule } from '@angular/common';
@@ -8,6 +8,7 @@ import { NotFoundComponent } from '../not-found/not-found.component';
 import { MenuManipulateService } from '../../../services/menu-manipulate.service';
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
+import { UserService } from '../../../services/user.service'; 
 @Component({
   selector: 'app-food-page',
   standalone: true,
@@ -19,19 +20,25 @@ export class FoodPageComponent implements OnInit {
   food!: Food;
   newFood: Food = new Food();
   newPrice!: number;
+  @Input() userRole: string | null = null;
+  @Input() userid: string | null = null;
   constructor(
     private activatedRoute: ActivatedRoute,
     private foodService: FoodService,
     private cartService: CartService,
     private menuService: MenuManipulateService,
     private router: Router,
-    private apiService:ApiService
+    private apiService:ApiService,
+    private userService: UserService
   ) {
     this.activatedRoute.params.subscribe((params) => {
       if (params['food-id']) {
         this.food = this.foodService.getFoodById(params['food-id']);
       }
     });
+    this.userRole = this.userService.getUserRole();
+    
+    this.userid = this.userService.getUserId();
   }
 
   ngOnInit(): void {}

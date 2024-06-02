@@ -69,6 +69,7 @@ export class LoginComponent {
       next: res => {
         console.log(res);
         this.userService.setUserRole(this.loginObj.role);  // 使用 this.loginObj.role 設置用戶角色
+        this.userService.setUserId(res.user_id); // 設置 user_id
         this.navigateByRole(this.loginObj.role);  // 使用 this.loginObj.role 進行導航
       },
       error: err => {
