@@ -38,9 +38,9 @@ export class ApiService {
   getRestaurants(campus_name:campus_request):Observable<Restaurant>{
     return this.http.post<Restaurant>(this.getresaurantURL,campus_name);
   }
-  login(logindata:Login):Observable<Login>{
+  login(logindata:Login):Observable<any>{
     console.log(this.loginURL)
-    return this.http.post<Login>(this.loginURL,logindata);
+    return this.http.post<any>(this.loginURL,logindata);
   }
 
   orderHistory_HR(order_HR:any):Observable<Order_HR>{

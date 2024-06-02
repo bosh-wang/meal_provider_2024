@@ -1,2 +1,2 @@
-<app-header></app-header>
-<router-outlet></router-outlet>
+<app-header [userRole]="userRole" [userId]="userId"></app-header>
+<router-outlet (activate)="updateUserState()"></router-outlet>

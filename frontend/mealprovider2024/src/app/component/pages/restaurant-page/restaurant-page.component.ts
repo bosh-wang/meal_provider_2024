@@ -1,5 +1,5 @@
 import { Restaurant } from './../../../shared/model/Restaurant';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit,Input } from '@angular/core';
 import { FoodService } from '../../../services/food.service';
 import { Food } from '../../../shared/model/Food';
 import { CommonModule } from '@angular/common';
@@ -18,7 +18,7 @@ import { FormGroup,FormBuilder,FormControl,ReactiveFormsModule } from '@angular/
 import { NewFood } from '../../../shared/model/addfood';
 import { Campus_name } from '../../../shared/model/Campus_name';
 import { ApiService } from '../../../services/api.service';
-
+import { UserService } from '../../../services/user.service'; 
 @Component({
   selector: 'app-restaurant-page',
   standalone: true,
@@ -41,10 +41,15 @@ export class RestaurantPageComponent implements OnInit {
   food: Food[] = [];
   restaurant_id:string='';
   newfood !:FormGroup;
-  newfoodObj:NewFood=new NewFood()
+  newfoodObj:NewFood=new NewFood();
+  @Input() userRole: string | null = null;
+  @Input() userid: string | null = null;
   constructor(
     private foodService: FoodService,
-    private activateRoute: ActivatedRoute,private formBuilder:FormBuilder,private apiService:ApiService
+    private activateRoute: ActivatedRoute,
+    private formBuilder:FormBuilder,
+    private apiService:ApiService,
+    private userService: UserService
   ) {
     this.activateRoute.params.subscribe((params) => {
       if (params['food-searchTerm']) {
@@ -65,6 +70,11 @@ export class RestaurantPageComponent implements OnInit {
       "price": [''],
       "image_url":['']
     });
+    this.userRole = this.userService.getUserRole();
+    
+    this.userid = this.userService.getUserId();
+    
+    console.log('header',this.userRole,this.userid);
   }
   
   ngOnInit(): void {}
