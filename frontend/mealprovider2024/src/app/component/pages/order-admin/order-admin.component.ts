@@ -1,9 +1,9 @@
-import { Component ,Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { Order_Kitchen } from '../../../shared/model/Order';
 import { CommonModule } from '@angular/common';
 import { FormGroup, FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
-import { UserService } from '../../../services/user.service'; 
+import { UserService } from '../../../services/user.service';
 @Component({
   selector: 'app-order-admin',
   standalone: true,
@@ -18,9 +18,10 @@ export class OrderAdminComponent {
   ngOnInit() {
     // Example data
     this.orders = [
-      
+
     ]
   }
+
   months = [
     { name: 'January', value: 0 },
     { name: 'February', value: 1 },
@@ -36,12 +37,13 @@ export class OrderAdminComponent {
     { name: 'December', value: 11 }
   ];
   monthForm: FormGroup;
-  constructor(private fb: FormBuilder, private apiService: ApiService,private userService: UserService) {
+  constructor(private fb: FormBuilder, private apiService: ApiService, private userService: UserService) {
     this.monthForm = this.fb.group({
       month: ['', Validators.required]
     });
-    this.restaurantid=this.userService.getrestaurantId();
+    this.restaurantid = this.userService.getrestaurantId();
   }
+
   submit_month() {
     const formValue = this.monthForm.value;
     const monthValue = Number(formValue.month);
@@ -53,14 +55,14 @@ export class OrderAdminComponent {
     const dataToSend = {
       "start_date": firstDay.toISOString().split('T')[0],
       "end_date": lastDay.toISOString().split('T')[0],
-      "restaurant_id":this.restaurantid
+      "restaurant_id": this.restaurantid
     };
 
     console.log('Data to send:', dataToSend);
     this.apiService.orderHistory_Kitchen(dataToSend).subscribe({
       next: res => {
         console.log(res);
-        this.orders=res.orders;
+        this.orders = res.orders;
       },
       error: err => {
         console.log(err);
@@ -83,7 +85,7 @@ export class OrderAdminComponent {
         break;
       case 2:
         order_status_after = 'CANCELED';
-          this.submit_month();
+        this.submit_month();
         break;
       default:
         console.error('Invalid flag value');
