@@ -25,6 +25,7 @@ export class UserService {
   clearUserRole() {
     if (this.isBrowser()) {
       localStorage.removeItem(this.userRoleKey);
+      console.log('new role',this.userRoleKey,"null");
     }
   }
   private isBrowser(): boolean {

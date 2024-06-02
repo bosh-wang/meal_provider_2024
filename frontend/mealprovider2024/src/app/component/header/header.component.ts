@@ -20,8 +20,10 @@ export class HeaderComponent implements OnInit{
   constructor(cartService:CartService, restaurantService:RestaurantService,private userService: UserService, private router: Router){
     cartService.getCartObservable().subscribe((newCart) => {
       this.cartQuantity = newCart.totalCount;
+      this.userRole = this.userService.getUserRole();
+      console.log('header',this.userRole);
     })
-    this.userRole = this.userService.getUserRole();
+    
   }
 
   ngOnInit(): void {
