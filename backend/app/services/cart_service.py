@@ -154,6 +154,7 @@ def get_cart(data):
         result = {
             "user_id": user_id,
             "restaurant_id": cart_items[0]["restaurant_id"],
+            "restaurant_name": cart_items[0]["restaurant_name"],
             "items": [
                 {"item_id": item["item_id"], "quantity": item["quantity"]}
                 for item in cart_items
