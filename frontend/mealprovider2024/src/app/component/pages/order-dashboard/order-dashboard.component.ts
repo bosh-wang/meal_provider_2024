@@ -4,10 +4,11 @@ import { Order_employee } from '../../../shared/model/Order';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators,FormsModule } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
 import { UserService } from '../../../services/user.service';
+import { MatSnackBarModule ,MatSnackBar} from '@angular/material/snack-bar';
 @Component({
   selector: 'app-order-dashboard',
   standalone: true,
-  imports: [CommonModule,FormsModule,ReactiveFormsModule],
+  imports: [CommonModule,FormsModule,ReactiveFormsModule,MatSnackBarModule],
   templateUrl: './order-dashboard.component.html',
   styleUrl: './order-dashboard.component.css'
 })
@@ -21,63 +22,6 @@ export class OrderDashboardComponent {
 
     // Example data
     this.orders=[];
-    /*this.orders = [
-      {
-          order_id: '1',
-          order_date: '2024-05-01',
-          items: [
-              { item_id: '101', item_name: 'Burger', quantity: 2, unit_price: 5.99 },
-              { item_id: '102', item_name: 'Fries', quantity: 1, unit_price: 2.99 }
-          ],
-          total_price: 14.97,
-          order_status: 'COMPLETED',
-          paid: true
-      },
-      {
-          order_id: '2',
-          order_date: '2024-05-02',
-          items: [
-              { item_id: '103', item_name: 'Pizza', quantity: 1, unit_price: 12.99 },
-              { item_id: '104', item_name: 'Soda', quantity: 2, unit_price: 1.99 }
-          ],
-          total_price: 16.97,
-          order_status: 'PENDING',
-          paid: false
-      },
-      {
-          order_id: '3',
-          order_date: '2024-05-03',
-          items: [
-              { item_id: '105', item_name: 'Pasta', quantity: 1, unit_price: 10.99 },
-              { item_id: '106', item_name: 'Salad', quantity: 1, unit_price: 6.99 }
-          ],
-          total_price: 17.98,
-          order_status: 'CONFIRMED',
-          paid: true
-      },
-      {
-          order_id: '4',
-          order_date: '2024-05-04',
-          items: [
-              { item_id: '107', item_name: 'Steak', quantity: 1, unit_price: 19.99 },
-              { item_id: '108', item_name: 'Mashed Potatoes', quantity: 1, unit_price: 4.99 }
-          ],
-          total_price: 24.98,
-          order_status: 'PREPARED',
-          paid: true
-      },
-      {
-          order_id: '5',
-          order_date: '2024-05-05',
-          items: [
-              { item_id: '109', item_name: 'Sushi', quantity: 1, unit_price: 14.99 },
-              { item_id: '110', item_name: 'Miso Soup', quantity: 1, unit_price: 3.99 }
-          ],
-          total_price: 18.98,
-          order_status: 'CANCELED',
-          paid: false
-      }
-  ];*/
   const dataToSend = {
     "start_date": "2024-01-01",
     "end_date": "2024-12-31",
@@ -129,7 +73,7 @@ export class OrderDashboardComponent {
     this.filteredOrders = this.orders.filter(order => {
       const orderDate = new Date(order.order_date);
       const orderMonth = orderDate.getMonth();
-      console.log('Order month:', orderMonth, orderDate.toString());
+      //console.log('Order month:', orderMonth, orderDate.toString());
 
       return (!month || orderMonth === parseInt(month)) && (!status || order.order_status === status);
     });
@@ -247,7 +191,7 @@ export class OrderDashboardComponent {
   OrderForm: FormGroup;
   payForm :FormGroup;
   @Input() userid: string | null = null;
-  constructor(private fb: FormBuilder,private apiService:ApiService,private userService: UserService) {
+  constructor(private fb: FormBuilder,private apiService:ApiService,private userService: UserService,private _snackBar: MatSnackBar) {
     this.OrderForm = this.fb.group({
       rating: ['', Validators.required]
     });
@@ -276,11 +220,16 @@ export class OrderDashboardComponent {
     this.apiService.order_Rating(dataToSend).subscribe({
       next: res => {
         console.log(res);
+        this.openSnackBar("評分成功", "關閉",);
       },
       error: err => {
         console.log(err);
+        this.openSnackBar("評分失敗", "關閉",);
       }
     });
+  }
+  openSnackBar(message: string, action: string) {
+    this._snackBar.open(message, action);
   }
   submit_completed(order_id:string,order_status_before:string) {
     const dataToSend = {
@@ -292,6 +241,7 @@ export class OrderDashboardComponent {
     this.apiService.order_changestatus(dataToSend).subscribe({
       next: res => {
         console.log(res);
+        this.submit_month();
       },
       error: err => {
         console.log(err);

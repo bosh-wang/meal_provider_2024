@@ -3,11 +3,12 @@ import { Order_HR } from '../../../shared/model/Order';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ApiService } from '../../../services/api.service';
-import { UserService } from '../../../services/user.service'; 
+import { MatSnackBarModule ,MatSnackBar} from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-order-hr',
   standalone: true,
-  imports: [CommonModule,ReactiveFormsModule],
+  imports: [CommonModule,ReactiveFormsModule,MatSnackBarModule],
   templateUrl: './order-hr.component.html',
   styleUrl: './order-hr.component.css'
 })
@@ -16,43 +17,7 @@ export class OrderHRComponent {
   ngOnInit() {
     // Example data
     this.orders=[];
-    /*this.orders = [
-      {
-        customer_id: 'C001',
-        order_id: 'O1001',
-        order_date: '2024-05-01',
-        total_price: 150.75,
-        paid: true
-      },
-      {
-        customer_id: 'user03',
-        order_id: 'O1002',
-        order_date: '2024-05-02',
-        total_price: 89.99,
-        paid: false
-      },
-      {
-        customer_id: 'C003',
-        order_id: 'O1003',
-        order_date: '2024-05-03',
-        total_price: 200.50,
-        paid: true
-      },
-      {
-        customer_id: 'user01',
-        order_id: 'O1004',
-        order_date: '2024-05-04',
-        total_price: 75.00,
-        paid: true
-      },
-      {
-        customer_id: 'user02',
-        order_id: 'O1005',
-        order_date: '2024-05-05',
-        total_price: 120.20,
-        paid: false
-      }
-    ];*/
+    
   }
   departments = ['Human Resources','Administration','Technology'];
   positions = ['HR Manager','Engineer','Administrator'];
@@ -73,7 +38,7 @@ export class OrderHRComponent {
 
   searchForm: FormGroup;
 
-  constructor(private fb: FormBuilder,private apiService:ApiService) {
+  constructor(private fb: FormBuilder,private apiService:ApiService,private _snackBar: MatSnackBar) {
     this.searchForm = this.fb.group({
       department: ['', Validators.required],
       position: ['', Validators.required],
@@ -95,6 +60,7 @@ export class OrderHRComponent {
       "start_date": firstDay.toISOString().split('T')[0],
       "end_date": lastDay.toISOString().split('T')[0]
     };
+    console.log(dataToSend);
     this.apiService.orderHistory_HR(dataToSend).subscribe({
       next: res => {
         console.log(res);
