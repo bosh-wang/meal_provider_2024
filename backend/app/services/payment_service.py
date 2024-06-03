@@ -32,11 +32,11 @@ def payment_notification_service(data):
         total_amount = []
         for each_user_id in data["user_id"]:
             cursor.execute(
-                '''SELECT 
+                """SELECT 
                 orders.total_price FROM 
                 orders WHERE 
                 orders.paid = false AND
-                orders.user_id = %s''',
+                orders.user_id = %s""",
                 (each_user_id,),
             )
             price = cursor.fetchall()
