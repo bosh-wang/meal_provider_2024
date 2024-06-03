@@ -10,6 +10,7 @@ from services import (
     adjust_menu_service,
     get_restaurants_service,
     cart_service,
+    createPDF,
 )
 
 app = Flask(__name__)
@@ -33,6 +34,12 @@ CORS(
 def index():
     return "Hello, I am alive!"
 
+
+# generate pdf
+@app.route("/api/generatePDF", methods=["GET"])
+def createPDF_service():
+    data = createPDF.pdf_service()
+    return jsonify(data)
 
 # get order history for employee
 @app.route("/api/orderHistoryEmployee", methods=["POST"])
