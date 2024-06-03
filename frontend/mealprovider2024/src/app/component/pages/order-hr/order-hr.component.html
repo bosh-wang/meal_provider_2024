@@ -39,21 +39,29 @@
   <table class="table  table-striped table-hover" style="width: 100%;">
     <thead>
       <tr>
-        <th scope="col">Order ID</th>
+        <th scope="col">User-id</th>
         <th scope="col">Time</th>
-        <th scope="col">Person</th>
+        <th scope="col">DEPT</th>
+        <th scope="col">Position</th>
         <th scope="col">Paid</th>
         <th scope="col">Total Payment</th>
+        <th scope="col">Details</th>
       </tr>
     </thead>
 
     <tbody>
       <tr *ngFor="let Employee of orders">
-        <th scope="row">{{ Employee.order_id }}</th>
-        <td>{{ Employee.order_date }}</td>
-        <td>{{ Employee.customer_id }}</td>
-        <td>{{ Employee.paid }}</td>
-        <td>${{ Employee.total_price }}</td>
+        <th scope="row">{{ Employee.customer_id }}</th>
+        <td>{{ order_time }}</td>
+        <td>{{ Employee.department }}</td>
+        <td>{{ Employee.position }}</td>
+        <td>{{ Employee.paid}}</td>
+        <td>${{ user_payment[Employee.customer_id] }}</td>
+        <td class="text-center">
+          <button type="button" class="btn btn-outline-dark"
+            data-bs-toggle="modal" data-bs-target="#orderDetailModal"(click)="selectUser(Employee.customer_id)"
+            >DETAILS</button>
+        </td>
       </tr>
     </tbody>
   </table>
@@ -72,6 +80,46 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Order Detail Modal -->
+<div class="modal fade" id="orderDetailModal" tabindex="-1" aria-labelledby="orderDetailModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="orderDetailModalLabel">Order Details</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngIf="selectedUser">
+        <!-- Order Details Table -->
+        <table class="table table-striped table-hover" style="width: 100%;">
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">customer_id</th>
+              <th scope="col">order_date</th>
+              <th scope="col">order_id</th>
+              <th scope="col">paid</th>
+              <th scope="col">total_price</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let order of selectedUser">
+              <td>{{ order.customer_id}}</td>
+              <td>{{ order.order_date }}</td>
+              <td>{{ order.order_id}}</td>
+              <td>{{ order.paid }}</td>
+              <td>{{ order.total_price}}</td>
+            </tr>
+          </tbody>
+        </table>
+        
+        <br>
+        <div class="text-end">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
       </div>
     </div>
   </div>

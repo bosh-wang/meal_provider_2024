@@ -27,6 +27,8 @@ export class Order_HR {
   order_date!: string;
   total_price!: number;
   paid !: boolean;
+  department!:string;
+  position !:string;
 };
 export class Order_Kitchen {
   customer_id !:string;
