@@ -143,6 +143,7 @@ export class OrderHRComponent {
   onClick() {
     const unpaidCustomerIds = this.getUnpaidCustomerIds(this.orders);
     console.log(unpaidCustomerIds);
+
     this.apiService.order_HRpaymentNotification({user_id:unpaidCustomerIds}).subscribe({
       next: res => {
         console.log(res);
@@ -152,6 +153,19 @@ export class OrderHRComponent {
         console.log(err);
       }
     });
+    
+  }
+  onClickforPDF() {
+
+    this.apiService.Get_PDF().subscribe({
+      next: res => {
+        console.log(res);
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
+
   }
   getUnpaidCustomerIds(orders: Order_HR[]): string[] {
     return Array.from(new Set(

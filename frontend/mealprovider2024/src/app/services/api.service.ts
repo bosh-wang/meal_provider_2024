@@ -22,6 +22,7 @@ export class ApiService {
   order_payment:string;
   order_rating:string;
   change_menu:string;
+  getpdfURL:string;
   apiURL:string;
   //corsURL = 'https://cors-anywhere.herokuapp.com/';
   constructor(private http : HttpClient){
@@ -37,6 +38,7 @@ export class ApiService {
     this.order_payment=this.apiURL+'api/payment';
     this.order_rating=this.apiURL+'updateRating';
     this.change_menu=this.apiURL+'change_menu_item';
+    this.getpdfURL=this.apiURL+'generatePDF';
   }
   getRestaurants(campus_name:campus_request):Observable<Restaurant>{
     return this.http.post<Restaurant>(this.getresaurantURL,campus_name);
@@ -77,5 +79,8 @@ export class ApiService {
   Change_menu(menu_item:any):Observable<any>{
     
     return this.http.post<any>(this.change_menu,menu_item);
+  }
+  Get_PDF():Observable<any>{
+    return this.http.get<any>(this.getpdfURL);
   }
 }
