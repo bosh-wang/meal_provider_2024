@@ -113,7 +113,7 @@ def get_restaurant(data):
     try:
         if campus:
             cache_key = f"restaurants:{campus}"
-            cache_expiry = timedelta(seconds=1)
+            cache_expiry = timedelta(hours=1)
 
             start_time = time.time()  # Start timing for Redis
 
@@ -150,7 +150,7 @@ def get_restaurant(data):
             """
             cursor.execute(query, (campus,))
         else:
-            campus = "no_filters"
+            campus = "no_filterss"
             cache_key = f"restaurants:{campus}"
             cache_expiry = timedelta(hours=1)
 
@@ -171,19 +171,13 @@ def get_restaurant(data):
             # Query to fetch all restaurants
             query = """
                 SELECT 
-                    rs.stand_id,
                     rs.restaurant_id,
-                    rs.name,
                     rs.type,
-                    rs.address,
-                    rs.phone,
+                    rs.name,
+                    r.image_url,
                     rs.campus_building,
                     rs.canteen_number,
-                    rs.floor,
-                    rs.meal_types,
-                    rs.operating_hours,
-                    rs.campus,
-                    r.image_url
+                    rs.campus
                 FROM 
                     restaurants_stands rs
                 JOIN 
@@ -213,3 +207,6 @@ def get_restaurant(data):
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
+
