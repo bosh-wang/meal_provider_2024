@@ -159,9 +159,8 @@ def get_restaurant(data):
             print("沒輸入")
             # Query to fetch all restaurants
             query = """
-                SELECT restaurant_id, type AS restaurant_type, name AS restaurant_name, image_url
-                FROM restaurants
-                ORDER BY restaurant_id;
+                select * from restaurants_stands
+                ORDER BY restaurants_stands.restaurant_id;
             """
             cursor.execute(query)
 
