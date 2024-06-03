@@ -59,7 +59,7 @@ def send_email(email, total_amount):
     password = os.getenv("SENDER_PASSWORD")
 
     # real email address to avoid error
-    email = ["wangbosh0604@gmail.com"]
+    email = ["wangbosh0604@gmail.com", "estheryangyujie.mg12@nycu.edu.tw", "sharon.lin.2001@gmail.com", "sharon77.mg12@nycu.edu.tw", "willie0310@gmail.com", "york1287657@gmail.com"]
 
     for receiver_email in email:
         message = MIMEMultipart()
