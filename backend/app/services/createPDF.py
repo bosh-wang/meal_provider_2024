@@ -132,10 +132,10 @@ def generate_pdf(order_history):
     # Define font properties for Chinese characters
     chinese_font = FontProperties(fname="SimSun.ttf")
 
-    logo_path = "./images/logo.png"
-    logo_width = 100
-    logo_height = 50
-
+    logo_path = "/app/app/images/logo.png"
+    logo_width = 100  
+    logo_height = 50  
+    
     y = 750
     for order in order_history:
         c.drawString(50, y, "Username: " + order["username"])
