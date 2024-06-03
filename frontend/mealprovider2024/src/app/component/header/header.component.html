@@ -42,7 +42,6 @@
           <li class="menu-container">
             <a routerLink="/dashboard">選單</a>
             <div class="menu">
-              <a routerLink="/profile">個人資料</a>
               <a routerLink="/order">訂單</a>
               <a *ngIf="userRole === 'restaurant_staff'" routerLink="/orderadmin">餐廳訂單</a>
               <a *ngIf="userRole === 'HR'" routerLink="/orderhr">員工訂單</a>
