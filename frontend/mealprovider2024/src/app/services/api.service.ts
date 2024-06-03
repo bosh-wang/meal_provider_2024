@@ -22,18 +22,21 @@ export class ApiService {
   order_payment:string;
   order_rating:string;
   change_menu:string;
-  corsURL = 'https://cors-anywhere.herokuapp.com/';
+  apiURL:string;
+  //corsURL = 'https://cors-anywhere.herokuapp.com/';
   constructor(private http : HttpClient){
     this.getresaurantURL='https://cors-anywhere.herokuapp.com/http://35.224.128.24:80/api/restaurants';
-    this.loginURL='http://35.224.128.24/api/signin';
-    this.orderHR='http://35.224.128.24/api/orderHistoryHR';
-    this.order_paymentNotification='http://35.224.128.24/api/paymentNotification';
-    this.orderKitchen='http://35.224.128.24/api/orderHistoryRestaurant';
-    this.orderstatus='http://35.224.128.24/api/change_order_status';
-    this.orderEmployee='http://35.224.128.24/api/orderHistoryEmployee';
-    this.order_payment='http://35.224.128.24/api/payment';
-    this.order_rating='http://35.224.128.24/api/updateRating';
-    this.change_menu='http://35.224.128.24/api/change_menu_item';
+    this.apiURL='http://35.224.128.24/api/';
+    this.loginURL=this.apiURL+'signin';
+    this.orderHR=this.apiURL+'orderHistoryHR';
+    this.order_paymentNotification=this.apiURL+'paymentNotification';
+    this.orderKitchen=this.apiURL+'orderHistoryRestaurant';
+    this.orderstatus=this.apiURL+'change_order_status';
+    this.orderEmployee=this.apiURL+'orderHistoryEmployee';
+    this.order_payment=this.apiURL+'api/payment';
+    this.order_payment=this.apiURL+'api/payment';
+    this.order_rating=this.apiURL+'updateRating';
+    this.change_menu=this.apiURL+'change_menu_item';
   }
   getRestaurants(campus_name:campus_request):Observable<Restaurant>{
     return this.http.post<Restaurant>(this.getresaurantURL,campus_name);
