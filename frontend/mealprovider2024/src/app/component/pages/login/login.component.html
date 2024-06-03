@@ -1,37 +1,50 @@
-<div class="login-container">
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <div>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<div class="login-page">
+  <div class="login-container">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <h2 class="login-header">Login Here...</h2>
+      <div class="form-group">
         <label for="email">Email:</label>
-        <input type="email" id="email" formControlName="email">
-        <div *ngIf="submitted && formControls.email.errors">
+        <div class="input-container">
+          <i class="fas fa-envelope icon"></i>
+          <input type="email" id="email" formControlName="email" class="form-control">
+        </div>
+        <div *ngIf="submitted && formControls.email.errors" class="error-messages">
           <small *ngIf="formControls.email.errors.required">Email is required</small>
           <small *ngIf="formControls.email.errors.email">Email must be valid</small>
         </div>
       </div>
-  
-      <div>
+
+      <div class="form-group">
         <label for="password">Password:</label>
-        <input type="password" id="password" formControlName="password">
-        <div *ngIf="submitted && formControls.password.errors">
+        <div class="input-container">
+          <i class="fas fa-lock icon"></i>
+          <input type="password" id="password" formControlName="password" class="form-control">
+        </div>
+        <div *ngIf="submitted && formControls.password.errors" class="error-messages">
           <small *ngIf="formControls.password.errors.required">Password is required</small>
           <small *ngIf="formControls.password.errors.minlength">Password must be at least 6 characters</small>
         </div>
       </div>
-  
-      <div>
+
+      <div class="form-group">
         <label for="role">Role:</label>
-        <select id="role" formControlName="role">
-          <option value="" disabled selected>Select your role</option>
-          <option value="employee">employee</option>
-          <option value="restaurant_staff">restaurant_staff</option>
-          <option value="HR">HR</option>
-        </select>
-        <div *ngIf="submitted && formControls.role.errors">
+        <div class="input-container">
+          <i class="fas fa-user-tag icon"></i>
+          <select id="role" formControlName="role" class="form-control">
+            <option value="" disabled selected>Select your role</option>
+            <option value="employee">Employee</option>
+            <option value="restaurant_staff">Restaurant Staff</option>
+            <option value="HR">HR</option>
+          </select>
+        </div>
+        <div *ngIf="submitted && formControls.role.errors" class="error-messages">
           <small *ngIf="formControls.role.errors.required">Role is required</small>
         </div>
       </div>
-  
-      <button type="submit">Login</button>
+
+      <button type="submit" class="btn btn-outline-danger">Login</button>
     </form>
   </div>
-  
+</div>

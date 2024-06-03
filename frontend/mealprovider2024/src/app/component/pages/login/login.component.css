@@ -1,44 +1,164 @@
+.login-page {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: flex-start;
+  /* Aligns content to the left */
+  align-items: center;
+  background-image: url('https://storage.googleapis.com/meal_provider_system/banner.jpeg');
+  /* Use the actual path to the image */
+  background-size: cover;
+  background-position: center;
+  padding-left: 20%;
+  /* Adds some padding to the left */
+}
+
 .login-container {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #f9f9f9;
+  background-color: rgba(255, 255, 255, 0.9);
+  /* Slight transparency to blend with background */
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  animation: fadeInUp 1s ease-in-out;
+}
+
+.login-form h2.login-header {
+  text-align: center;
+  color: #a0003b;
+  margin-bottom: 20px;
+  animation: fadeInDown 1s ease-in-out;
+  font-size: 2rem;
+  font-weight: bold;
+  position: relative;
+}
+
+.login-form h2.login-header::after {
+  content: '';
+  display: block;
+  width: 50px;
+  height: 4px;
+  background: #a0003b;
+  margin: 10px auto 0;
+  border-radius: 2px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #555;
+}
+
+.input-container {
+  position: relative;
+}
+
+.icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #a0003b;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px 10px 10px 35px;
+  /* Adjust padding for icons */
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-control:focus {
+  border-color: #a0003b;
+  box-shadow: 0 0 5px rgba(160, 0, 59, 0.5);
+}
+
+.error-messages {
+  color: #a0003b;
+  margin-top: 5px;
+  font-size: 0.875em;
+}
+
+.btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #EE5B57;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn:hover {
+  background-color: #b53833;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
   }
-  
-  .login-container div {
-    margin-bottom: 1rem;
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .login-container label {
-    display: block;
-    margin-bottom: 0.5rem;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
   }
-  
-  .login-container input {
-    width: 100%;
-    padding: 0.5rem;
-    box-sizing: border-box;
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .login-container button {
-    width: 100%;
-    padding: 0.5rem;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .login-page {
+    justify-content: center;
+    /* Center content on smaller screens */
+    padding-left: 5%;
+    /* Reduce left padding */
+    padding-right: 5%;
+    /* Add some right padding */
   }
-  
-  .login-container button:hover {
-    background-color: #0056b3;
+
+  .login-container {
+    max-width: 90%;
+    /* Reduce max width on smaller screens */
+    padding: 20px;
+    /* Reduce padding on smaller screens */
   }
-  
-  small {
-    color: red;
+
+  .login-form h2.login-header {
+    font-size: 1.5rem;
+    /* Reduce font size on smaller screens */
   }
-  mat-form-field {
-    margin-right: 12px;
+}
+
+@media (max-width: 480px) {
+  .login-container {
+    padding: 15px;
+    /* Further reduce padding on very small screens */
   }
+
+  .login-form h2.login-header {
+    font-size: 1.25rem;
+    /* Further reduce font size */
+  }
+}
