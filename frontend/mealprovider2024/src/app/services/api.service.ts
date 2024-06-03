@@ -26,7 +26,7 @@ export class ApiService {
   getpdfURL:string;
   apiURL:string;
   updatecartURL:string;
-  //corsURL = 'https://cors-anywhere.herokuapp.com/';
+  
   constructor(private http : HttpClient){
     this.getresaurantURL='http://35.224.128.24:80/api/restaurants';
     this.apiURL='http://35.224.128.24/api/';
