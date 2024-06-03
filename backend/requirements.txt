@@ -7,3 +7,6 @@ pyyaml==6.0.1
 pytz==2024.1
 redis==5.0.4
 flask_cors==4.0.1
+reportlab==4.2.0
+matplotlib==3.8.4
+matplotlib-inline==0.1.7

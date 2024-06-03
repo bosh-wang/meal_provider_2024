@@ -151,6 +151,12 @@ def get_order(data):
         if not order_data:
             return make_response(jsonify({"error": "Order not found"}), 404)
 
+        # Convert order_date to UTC+8
+        utc = pytz.utc
+        utc8 = pytz.timezone("Asia/Shanghai")
+        order_date_utc = order_data["order_date"].replace(tzinfo=utc)
+        order_date_utc8 = order_date_utc.astimezone(utc8)
+
         # Fetch order items
         cursor.execute(
             "SELECT item_id, quantity, price FROM orders_items WHERE order_id = %s",
@@ -165,7 +171,7 @@ def get_order(data):
                 "restaurant_id": order_data["restaurant_id"],
                 "order_status": order_data["order_status"],
                 "total_price": order_data["total_price"],
-                "order_date": order_data["order_date"],
+                "order_date": order_date_utc8.strftime("%Y-%m-%d %H:%M:%S %Z%z"),
                 "items": items_data,
             }
         )
