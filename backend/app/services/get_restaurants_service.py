@@ -113,7 +113,7 @@ def get_restaurant(data):
     try:
         if campus:
             cache_key = f"restaurants:{campus}"
-            cache_expiry = timedelta(hours=1)
+            cache_expiry = timedelta(seconds=1)
 
             start_time = time.time()  # Start timing for Redis
 
@@ -131,15 +131,26 @@ def get_restaurant(data):
             print("有輸入")
             # Query to fetch restaurant_ids based on campus
             query = """
-                SELECT r.restaurant_id, r.type AS restaurant_type, r.name AS restaurant_name, r.image_url, rs.campus_building, rs.canteen_number
-                FROM restaurants r
-                JOIN restaurants_stands rs ON r.restaurant_id = rs.restaurant_id
-                WHERE rs.campus = %s
-                ORDER BY r.restaurant_id;
+                SELECT 
+                    r.restaurant_id, 
+                    r.type AS restaurant_type, 
+                    r.name AS restaurant_name, 
+                    r.image_url, 
+                    rs.campus_building, 
+                    rs.canteen_number, 
+                    rs.campus
+                FROM 
+                    restaurants r
+                JOIN 
+                    restaurants_stands rs ON r.restaurant_id = rs.restaurant_id
+                WHERE 
+                    rs.campus = %s
+                ORDER BY 
+                    r.restaurant_id;
             """
             cursor.execute(query, (campus,))
         else:
-            campus = "no_filter"
+            campus = "no_filters"
             cache_key = f"restaurants:{campus}"
             cache_expiry = timedelta(hours=1)
 
@@ -159,8 +170,26 @@ def get_restaurant(data):
             print("沒輸入")
             # Query to fetch all restaurants
             query = """
-                select * from restaurants_stands
-                ORDER BY restaurants_stands.restaurant_id;
+                SELECT 
+                    rs.stand_id,
+                    rs.restaurant_id,
+                    rs.name,
+                    rs.type,
+                    rs.address,
+                    rs.phone,
+                    rs.campus_building,
+                    rs.canteen_number,
+                    rs.floor,
+                    rs.meal_types,
+                    rs.operating_hours,
+                    rs.campus,
+                    r.image_url
+                FROM 
+                    restaurants_stands rs
+                JOIN 
+                    restaurants r ON rs.restaurant_id = r.restaurant_id
+                ORDER BY 
+                    rs.restaurant_id;
             """
             cursor.execute(query)
 

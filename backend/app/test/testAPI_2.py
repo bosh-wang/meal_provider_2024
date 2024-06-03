@@ -7,10 +7,10 @@ base_url = "http://127.0.0.1:5000"
 response = requests.get(f"{base_url}/")
 print("Home endpoint response:", response.text)
 
-# # sign in
-post_data = {"password": "~j@;_R,.qD=|", "role": "HR", "email": "hughjackman@tsmc.com"}
-response = requests.post(f"{base_url}/api/signin", json=post_data)
-print("POST /api/data response:", response.json())
+# # # sign in
+# post_data = {"password": "~j@;_R,.qD=|", "role": "HR", "email": "hughjackman@tsmc.com"}
+# response = requests.post(f"{base_url}/api/signin", json=post_data)
+# print("POST /api/data response:", response.json())
 
 
 # "role": "restaurant_staff",
@@ -24,13 +24,15 @@ print("POST /api/data response:", response.json())
 
 
 # # get restaurant
-# post_data = {
-#     "campus": "南科嘉義園區"
-# }
-# post_data = {
-# }
+post_data = {"campus": "竹科竹科園區"}
+
 # response = requests.post(f"{base_url}/api/restaurants", json=post_data)
 # print("POST /api/data response:", response.json())
+# post_data = {
+# }
+response = requests.post(f"{base_url}/api/restaurants", json=post_data)
+print("POST /api/data response:", response.json())
+
 
 # # get menu
 ## 餐廳管理員
@@ -107,23 +109,23 @@ print("POST /api/data response:", response.json())
 
 ## 購物車部分
 # # 更新購物車
-post_data = {
-    "cart_status": "update",
-    "user_id": "user03",
-    "item_id": "item023",
-    "quantity": 2,
-}
-response = requests.post(f"{base_url}/api/update_cart", json=post_data)
-print("POST /api/data response:", response.json())
+# post_data = {
+#     "cart_status": "update",
+#     "user_id": "user03",
+#     "item_id": "item023",
+#     "quantity": 2,
+# }
+# response = requests.post(f"{base_url}/api/update_cart", json=post_data)
+# print("POST /api/data response:", response.json())
 
 
 # # 查看購物車
-post_data = {"cart_status": "check", "user_id": "user03"}
+# post_data = {"cart_status": "check", "user_id": "user03"}
 
 # #送出訂單
 # post_data ={
 #    "cart_status": "submit",
 #    "user_id": "user03"
 # }
-response = requests.post(f"{base_url}/api/update_cart", json=post_data)
-print("POST /api/data response:", response.json())
+# response = requests.post(f"{base_url}/api/update_cart", json=post_data)
+# print("POST /api/data response:", response.json())
