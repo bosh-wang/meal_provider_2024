@@ -1,4 +1,3 @@
-
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -8,38 +7,39 @@
 <meta http-equiv="pragma" content="no-cache" />
 <meta http-equiv="expires" content="0" />
 
-<app-not-found [visible]="!food.id" notFoundMessage="查無此餐點!" resetLinkText="返回首頁"></app-not-found>
-<div *ngIf="food.id" class="container">
-  <img [src]="food.imageUrl" [alt]="food.name">
+<app-not-found [visible]="!food" notFoundMessage="查無此餐點!" resetLinkText="返回首頁"></app-not-found>
+<div *ngIf="food" class="container">
+  <img [src]="food[0]?.image_url??''" [alt]="food[0]?.item_name??''">
   <div class="details">
     <div class="header">
       <span class="name">
-        {{food.name}}
+        {{food[0].item_name}}
       </span>
     </div>
 
     <div class="restaurant_name">
-      <p class="Restaurant"> {{food.restaurant_name}}</p>
+      <p class="Restaurant"> {{food[0].restaurant_name}}</p>
     </div>
+    <!--
     <div class="rating">
       <p class="star-rating"> {{food.stars}}★</p>
-    </div>
+    </div>-->
 
     <div class="tags">
-      <a *ngFor="let tag of food.tags" routerLink="/tag/{{tag}}">
+      <a *ngFor="let tag of food[0].category" routerLink="/tag/{{tag}}">
         {{tag}}
       </a>
     </div>
 
     <div class="description">
       <div>
-        <a>{{food.description}}</a>
+        <a>{{food[0].description}}</a>
       </div>
     </div>
 
     <div class="price">
       <span>
-        {{food.price | currency}}
+        {{food[0].price | currency}}
       </span>
     </div>
 
@@ -61,11 +61,11 @@
         <h1 class="modal-title fs-5" id="exampleModalLabel">Delete Food</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body" *ngIf="food.id">
-        Are you sure you want to delete <strong>{{food.name}}</strong>?
+      <div class="modal-body" *ngIf="food">
+        Are you sure you want to delete <strong>{{food[0].item_name}}</strong>?
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" (click)="deleteFood()" >Delete</button>
+        <button type="button" class="btn btn-primary" (click)="deleteFood()">Delete</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
       </div>
     </div>
@@ -81,8 +81,8 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="modal-body" *ngIf="food.id">
-          <p>Are you sure you want to adjust the price of <strong>{{food.name}}</strong>?</p>
+        <div class="modal-body" *ngIf="food">
+          <p>Are you sure you want to adjust the price of <strong>{{food[0].item_name}}</strong>?</p>
         </div>
         <div class="mb-3">
           <label for="newPrice" class="form-label">New Price</label>

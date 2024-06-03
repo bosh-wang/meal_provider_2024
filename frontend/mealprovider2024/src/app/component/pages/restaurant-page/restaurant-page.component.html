@@ -6,24 +6,26 @@
 <!--<app-tag></app-tag>-->
 <app-not-found [visible]="!food || !food.length" notFoundMessage="查無此餐點!" resetLinkText="返回首頁"></app-not-found>
 <div class="container">
-  <button  data-bs-toggle="modal" data-bs-target="#exampleModal" *ngIf="userRole === 'restaurant_staff'">Add Food</button>
+  <button data-bs-toggle="modal" data-bs-target="#exampleModal" *ngIf="userRole === 'restaurant_staff'">Add
+    Food</button>
 </div>
 <ul>
   <li *ngFor="let item of food">
-    <a routerLink="/food/{{item.id}}">
-      <img [src]="item.imageUrl" [alt]="item.name">
+    <a routerLink="/food/{{item.item_id}}">
+      <img [src]="item.image_url" [alt]="item.item_name">
       <div class="content">
         <div class="name">
-          {{item.name}}
+          {{item.item_name}}
         </div>
         <!--<span class="favorite {{item.favorite?'':'not'}}">❤</span>-->
+
         <div class="stars">
-          <p class="star-rating">評分: {{item.stars}}★</p>
+          <p class="star-rating">評分: {{item.star_rating}}★</p>
         </div>
         <div class="product-item-footer">
           <div class="origins">
-            <span *ngFor="let origin of item.tags">
-              {{origin}}
+            <span>
+              {{item.category}}
             </span>
           </div>
 
@@ -48,7 +50,7 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header" >
+      <div class="modal-header">
         <h1 class="modal-title fs-5" id="exampleModalLabel">Add Food</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
@@ -56,25 +58,26 @@
         <form [formGroup]="newfood">
           <div class="mb-3">
             <label for="Category" class="form-label">Category</label>
-            <input type="text" formControlName="category" class="form-control" id="category" aria-describedby="emailHelp">
+            <input type="text" formControlName="category" class="form-control" id="category"
+              aria-describedby="emailHelp">
           </div>
           <div class="mb-3">
             <label for="item_name" class="form-label">item_name</label>
-            <input type="text"  formControlName="item_name" class="form-control" id="item_name">
+            <input type="text" formControlName="item_name" class="form-control" id="item_name">
           </div>
           <div class="mb-3">
             <label for="description" class="form-label">description</label>
-            <input type="text"  formControlName="description" class="form-control" id="description">
+            <input type="text" formControlName="description" class="form-control" id="description">
           </div>
           <div class="mb-3">
             <label for="price" class="form-label">price</label>
-            <input type="number"  formControlName="price" class="form-control" id="price">
+            <input type="number" formControlName="price" class="form-control" id="price">
           </div>
           <div class="mb-3">
             <label for="image_url" class="form-label">image_url</label>
-            <input type="text"  formControlName="image_url" class="form-control" id="image_url">
+            <input type="text" formControlName="image_url" class="form-control" id="image_url">
           </div>
-          
+
         </form>
 
       </div>

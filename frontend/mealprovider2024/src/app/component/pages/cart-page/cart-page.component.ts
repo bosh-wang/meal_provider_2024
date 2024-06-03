@@ -10,27 +10,32 @@ import { NotFoundComponent } from '../not-found/not-found.component';
 @Component({
   selector: 'app-cart-page',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink, RouterLinkActive, TitleComponent, NotFoundComponent],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+    TitleComponent,
+    NotFoundComponent,
+  ],
   templateUrl: './cart-page.component.html',
-  styleUrl: './cart-page.component.css'
+  styleUrl: './cart-page.component.css',
 })
-export class CartPageComponent implements OnInit{
+export class CartPageComponent implements OnInit {
   cart!: Cart;
-  constructor(private cartService:CartService){
+  constructor(private cartService: CartService) {
     this.cartService.getCartObservable().subscribe((cart) => {
       this.cart = cart;
-    })
+    });
   }
 
-  ngOnInit(): void {
-
-  }
-  removeFromCart(cartItem:CartItem){
-    this.cartService.removeFromCart(cartItem.food.id);
+  ngOnInit(): void {}
+  removeFromCart(cartItem: CartItem) {
+    this.cartService.removeFromCart(cartItem.food.item_id);
   }
 
-  changeQuantity(cartItem:CartItem, quantityInString:string){
+  changeQuantity(cartItem: CartItem, quantityInString: string) {
     const quantity = parseInt(quantityInString);
-    this.cartService.changeQuantity(cartItem.food.id, quantity);
+    this.cartService.changeQuantity(cartItem.food.item_id, quantity);
   }
 }
