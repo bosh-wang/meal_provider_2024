@@ -23,12 +23,11 @@ c2e = {
     "花生湯": "Peanut Soup",
     "控肉飯": "Braised Pork Rice",
     "雞腿飯": "Chicken Drumstick Rice",
-    "紅絲絨蛋糕": "Red Velvet Cake"
+    "紅絲絨蛋糕": "Red Velvet Cake",
 }
 
 
 def fetch_order_data():
-
     host = os.getenv("DB_HOST")
     dbname = os.getenv("DB_NAME")
     user = os.getenv("DB_USER")
@@ -54,7 +53,13 @@ def fetch_order_data():
                        orders.total_price FROM 
                        orders WHERE 
                        orders.order_date BETWEEN %s AND %s;"""
-        cursor.execute(query, (start_date, end_date,))
+        cursor.execute(
+            query,
+            (
+                start_date,
+                end_date,
+            ),
+        )
         orders = cursor.fetchall()
 
         order_history = []
@@ -84,15 +89,20 @@ def fetch_order_data():
                     }
                 )
 
-            cursor.execute('''SELECT username FROM users WHERE user_id = %s''', (user_id,))
+            cursor.execute(
+                """SELECT username FROM users WHERE user_id = %s""", (user_id,)
+            )
             username = cursor.fetchone()[0]
-            
-            cursor.execute('''SELECT department, position FROM employees WHERE user_id = %s''', (user_id,))
+
+            cursor.execute(
+                """SELECT department, position FROM employees WHERE user_id = %s""",
+                (user_id,),
+            )
             employee_info = cursor.fetchall()
             department, position = "", ""
             if employee_info != []:
                 department, position = employee_info[0][0], employee_info[0][1]
-            
+
             order_history.append(
                 {
                     "username": username,
@@ -113,6 +123,7 @@ def fetch_order_data():
     except Exception as e:
         return str(e)
 
+
 def generate_pdf(order_history):
     pdf_filename = "order_history.pdf"
     c = canvas.Canvas(pdf_filename, pagesize=letter)
@@ -122,9 +133,9 @@ def generate_pdf(order_history):
     chinese_font = FontProperties(fname="SimSun.ttf")
 
     logo_path = "./images/logo.png"
-    logo_width = 100  
-    logo_height = 50  
-    
+    logo_width = 100
+    logo_height = 50
+
     y = 750
     for order in order_history:
         c.drawString(50, y, "Username: " + order["username"])
@@ -132,11 +143,17 @@ def generate_pdf(order_history):
         c.drawString(50, y - 30, "Position: " + order["position"])
         c.drawString(50, y - 45, "Order ID: " + str(order["order_id"]))
         c.drawString(50, y - 60, "Order Date: " + order["order_date"])
-        
+
         y -= 75
 
-        c.drawImage(logo_path, letter[0] - inch - logo_width, letter[1] - inch, width=logo_width, height=logo_height)
-        
+        c.drawImage(
+            logo_path,
+            letter[0] - inch - logo_width,
+            letter[1] - inch,
+            width=logo_width,
+            height=logo_height,
+        )
+
         # Draw items
         for item in order["items"]:
             item_name = item["item_name"][0][0] if item["item_name"] else ""
@@ -145,11 +162,15 @@ def generate_pdf(order_history):
             c.drawString(90, y, "Quantity: " + str(item["quantity"]))
             c.drawString(200, y, "Unit Price: $" + str(item["unit_price"]))
             y -= 15
-        
+
         c.drawString(50, y, "Total Price: $" + str(order["total_price"]))
         c.drawString(50, y - 15, "Order Status: " + order["order_status"])
         c.drawString(50, y - 30, "Paid: " + str(order["paid"]))
-        c.drawString(50, y - 45, "===============================================================")
+        c.drawString(
+            50,
+            y - 45,
+            "===============================================================",
+        )
         y -= 60
 
         if y < 50:
@@ -158,6 +179,7 @@ def generate_pdf(order_history):
 
     c.save()
     print("PDF generated successfully.")
+
 
 def send_email():
     smtp_server = "smtp.gmail.com"
@@ -181,9 +203,7 @@ def send_email():
         message["To"] = receiver_email
         message["Subject"] = "[Notification from Meal Provider] Order Report"
 
-        body = (
-            "Hi there!\n\nWe're pleased to inform you that your order report is now available. Please find the attached order report for your reference.\n\nThank you!\n\nBest,\nMeal Provider Team"
-        )
+        body = "Hi there!\n\nWe're pleased to inform you that your order report is now available. Please find the attached order report for your reference.\n\nThank you!\n\nBest,\nMeal Provider Team"
         message.attach(MIMEText(body, "plain"))
 
         with open("order_history.pdf", "rb") as attachment:
@@ -207,10 +227,9 @@ def send_email():
             except Exception as e:
                 print(f"Failed to send email. Error: {e}")
 
+
 def pdf_service():
     orders = fetch_order_data()
     generate_pdf(orders)
     send_email()
     return {"message": "PDF generated and email sent successfully."}
-
-
