@@ -132,7 +132,7 @@ def generate_pdf(order_history):
     # Define font properties for Chinese characters
     chinese_font = FontProperties(fname="SimSun.ttf")
 
-    logo_path = "./images/logo.png"
+    logo_path = "/app/app/images/logo.png"
     logo_width = 100
     logo_height = 50
 
