@@ -32,7 +32,11 @@ def payment_notification_service(data):
         total_amount = []
         for each_user_id in data["user_id"]:
             cursor.execute(
-                "SELECT orders.total_price FROM orders WHERE orders.user_id = %s",
+                """SELECT 
+                orders.total_price FROM 
+                orders WHERE 
+                orders.paid = false AND
+                orders.user_id = %s""",
                 (each_user_id,),
             )
             price = cursor.fetchall()
@@ -44,6 +48,7 @@ def payment_notification_service(data):
         for i in range(len(emails)):
             print(f"Sending email to {emails[i][0]} for payment of {total_amount[i]}")
             send_email(emails[i][0], total_amount[i])
+            print(total_amount[i])
 
         cursor.close()
         conn.close()
@@ -59,7 +64,14 @@ def send_email(email, total_amount):
     password = os.getenv("SENDER_PASSWORD")
 
     # real email address to avoid error
-    email = ["wangbosh0604@gmail.com", "estheryangyujie.mg12@nycu.edu.tw", "sharon.lin.2001@gmail.com", "sharon77.mg12@nycu.edu.tw", "willie0310@gmail.com", "york1287657@gmail.com"]
+    email = [
+        "wangbosh0604@gmail.com",
+        "estheryangyujie.mg12@nycu.edu.tw",
+        "sharon.lin.2001@gmail.com",
+        "sharon77.mg12@nycu.edu.tw",
+        "willie0310@gmail.com",
+        "york1287657@gmail.com",
+    ]
 
     for receiver_email in email:
         message = MIMEMultipart()
