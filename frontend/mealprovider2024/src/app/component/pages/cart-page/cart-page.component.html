@@ -25,7 +25,9 @@
       <div>
         {{cartItem.price | currency}}
       </div>
-
+      <div>
+        <button class="remove-button" (click)="UpdateItemQuantity(cartItem,quantitySelect.value)">Update</button>
+      </div>
       <div>
         <button class="remove-button" (click)="removeFromCart(cartItem)">Remove</button>
       </div>
@@ -38,6 +40,6 @@
       <div class="foods-count">{{cart.totalCount}}</div>
       <div class="total-price">{{cart.totalPrice}}</div>
     </div>
-    <a routerLink="/checkout">Proceed To Checkout</a>
+    <a routerLink="/cart-page" (click)="clearcart()">Proceed To Checkout</a>
   </div>
 </div>
