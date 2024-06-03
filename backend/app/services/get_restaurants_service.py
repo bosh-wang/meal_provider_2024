@@ -207,6 +207,3 @@ def get_restaurant(data):
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
-
-
