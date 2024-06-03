@@ -39,10 +39,10 @@
                 <a routerLink="/campus/南科台南園區">南科台南園區</a>
               </div>
           </li>
-          <li class="menu-container">
+          <li class="menu-container" *ngIf="userRole !== null">
             <a routerLink="/dashboard">選單</a>
             <div class="menu">
-              <a routerLink="/order">訂單</a>
+              <a routerLink="/order">個人訂單</a>
               <a *ngIf="userRole === 'restaurant_staff'" routerLink="/orderadmin">餐廳訂單</a>
               <a *ngIf="userRole === 'HR'" routerLink="/orderhr">員工訂單</a>
               <a routerLink="/login" *ngIf="userRole !== null"(click)="logout()">登出</a>
