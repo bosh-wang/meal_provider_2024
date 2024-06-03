@@ -1,5 +1,9 @@
+import {
+  RestaurantInfo,
+  AllRestaurant,
+  Restaurantinfomation,
+} from './../../../shared/model/Restaurant';
 import { campus_request } from './../../../shared/model/Campus_name';
-import { campus_name } from './../../../../data';
 import { Observable, filter } from 'rxjs';
 import { Component, OnInit, inject } from '@angular/core';
 import { FoodService } from '../../../services/food.service';
@@ -41,7 +45,7 @@ import { Campus_name } from '../../../shared/model/Campus_name';
 })
 export class HomeComponent implements OnInit {
   food: Food[] = [];
-  restaurant: Restaurant[] = [];
+  restaurant: Restaurantinfomation[] = [];
   data: any[] = [];
   campus_name: Campus_name[] = [];
   private apiUrl = 'http://35.224.128.24:80';
@@ -52,31 +56,31 @@ export class HomeComponent implements OnInit {
     private apiService: ApiService
   ) {
     this.activateRoute.params.subscribe((params) => {
-      if (params['searchTerm']) {
-        this.restaurant = this.restaurantService.getAllRestaurantBySearchTerm(
-          params['searchTerm']
-        );
-      } else if (params['tag-type']) {
-        this.restaurant = this.restaurantService.getAllRestaurantByTag(
-          params['tag-type']
-        );
-      } else if (params['campus-name']) {
-        this.campus_name = [{ name: [params['campus-name']] }];
-        var name: campus_request = {
-          campus: this.campus_name[0] ? this.campus_name[0].name[0] : '',
-        };
+      this.campus_name = [{ name: [params['campus-name']] }];
+      var name: campus_request = params['campus-name']
+        ? {
+            campus: this.campus_name[0] ? this.campus_name[0].name[0] : '',
+          }
+        : { campus: '' };
+      this.apiService.getRestaurants(name).subscribe((res) => {
+        this.restaurant = res;
+        if (params['searchTerm']) {
+          this.restaurant = this.restaurantService.getAllRestaurantBySearchTerm(
+            this.restaurant,
+            params['searchTerm']
+          );
+        }
+        if (params['tag-type']) {
+          this.restaurant = this.restaurantService.getAllRestaurantByTag(
+            this.restaurant,
+            params['tag-type']
+          );
+        }
+      });
 
-        this.apiService.getRestaurants(name).subscribe((res) => {
-          console.log(res, 'response');
-          this.restaurant = [res];
-        });
-
-        this.restaurant = this.restaurantService.getAllRestaurantByCampus(
-          params['campus-name']
-        );
-      } else {
-        this.restaurant = this.restaurantService.getAll();
-      }
+      // this.restaurant = this.restaurantService.getAllRestaurantByCampus(
+      //   params['campus-name']
+      // );
     });
   }
 
