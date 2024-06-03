@@ -107,21 +107,18 @@ print("POST /api/data response:", response.json())
 
 ## 購物車部分
 # # 更新購物車
-post_data ={
-   "cart_status": "update",
-   "user_id": "user03",
-   "item_id": "item023",
-   "quantity": 2
+post_data = {
+    "cart_status": "update",
+    "user_id": "user03",
+    "item_id": "item023",
+    "quantity": 2,
 }
 response = requests.post(f"{base_url}/api/update_cart", json=post_data)
 print("POST /api/data response:", response.json())
 
 
 # # 查看購物車
-post_data ={
-   "cart_status": "check",
-   "user_id": "user03"
-}
+post_data = {"cart_status": "check", "user_id": "user03"}
 
 # #送出訂單
 # post_data ={

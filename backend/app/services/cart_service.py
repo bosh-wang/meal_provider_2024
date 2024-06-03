@@ -7,6 +7,7 @@ import os
 # Call create_order from order_service
 from . import order_service
 
+
 def get_db_connection():
     conn = psycopg2.connect(
         host=os.getenv("DB_HOST"),
@@ -17,6 +18,7 @@ def get_db_connection():
     )
     conn.set_client_encoding("UTF8")
     return conn
+
 
 def update_cart_item(data):
     user_id = data["user_id"]
@@ -37,10 +39,10 @@ def update_cart_item(data):
         """
         cursor.execute(restaurant_check_query, (item_id,))
         item_restaurant = cursor.fetchone()
-        
+
         if not item_restaurant:
             return jsonify({"error": "Item not found"}), 404
-        
+
         item_restaurant_id = item_restaurant["restaurant_id"]
 
         # Check if there are existing items in the cart from a different restaurant
@@ -54,8 +56,13 @@ def update_cart_item(data):
         cursor.execute(existing_restaurant_query, (user_id,))
         existing_restaurants = cursor.fetchall()
 
-        if existing_restaurants and any(r["restaurant_id"] != item_restaurant_id for r in existing_restaurants):
-            return jsonify({"error": "Cannot add items from different restaurants"}), 400
+        if existing_restaurants and any(
+            r["restaurant_id"] != item_restaurant_id for r in existing_restaurants
+        ):
+            return (
+                jsonify({"error": "Cannot add items from different restaurants"}),
+                400,
+            )
 
         if quantity == 0:
             # Remove item from cart
@@ -214,7 +221,12 @@ def purchased(data):
         # Check if all items are from the same restaurant
         restaurant_ids = {item["restaurant_id"] for item in active_items}
         if len(restaurant_ids) > 1:
-            return jsonify({"error": "All items in the cart must be from the same restaurant"}), 400
+            return (
+                jsonify(
+                    {"error": "All items in the cart must be from the same restaurant"}
+                ),
+                400,
+            )
 
         # Construct the create_order payload
         restaurant_id = active_items[0]["restaurant_id"]
@@ -264,7 +276,6 @@ def handle_cart(data):
         return jsonify({"error": "Invalid cart_status"}), 400
 
 
-
 # from flask import Flask, request, jsonify
 # import psycopg2
 # from psycopg2.extras import RealDictCursor
@@ -304,7 +315,7 @@ def handle_cart(data):
 #         if quantity == 0:
 #             # Remove item from cart
 #             delete_query = """
-#                 DELETE FROM shopping_cart 
+#                 DELETE FROM shopping_cart
 #                 WHERE user_id = %s AND item_id = %s AND status = 'ACTIVE'
 #                 RETURNING cart_id;
 #             """
@@ -328,7 +339,7 @@ def handle_cart(data):
 #         else:
 #             # Check if item already exists in cart
 #             check_query = """
-#                 SELECT cart_id FROM shopping_cart 
+#                 SELECT cart_id FROM shopping_cart
 #                 WHERE user_id = %s AND item_id = %s AND status = 'ACTIVE'
 #             """
 #             cursor.execute(check_query, (user_id, item_id))
