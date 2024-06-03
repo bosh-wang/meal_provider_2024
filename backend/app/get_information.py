@@ -28,10 +28,10 @@ def get_users():
         conn = get_db_connection()
         cur = conn.cursor(cursor_factory=RealDictCursor)
 
-        select_query = "SELECT * FROM restaurants_stands;"
+        select_query = "SELECT * FROM menus_items;"
         # 取得各個table的資料:menus_items meals_ratings users orders_items items
         cur.execute(select_query)
-        users = cur.fetchall()
+        users = cur.fetchmany(20)
 
         cur.close()
         conn.close()
