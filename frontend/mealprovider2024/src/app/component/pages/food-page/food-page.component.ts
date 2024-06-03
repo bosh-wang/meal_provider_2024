@@ -45,6 +45,21 @@ export class FoodPageComponent implements OnInit {
 
   addToCart() {
     this.cartService.addToCart(this.food);
+    const dataToSend = {
+      "cart_status": "update",
+      "user_id": this.userid,
+      "item_id": this.food.id, 
+      "quantity": 1
+    }
+    console.log('Data to send:', dataToSend);
+    this.apiService.updateCart(dataToSend).subscribe({
+      next: res => {
+        console.log(res);
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
     this.router.navigateByUrl('/cart-page');
   }
 

@@ -8,6 +8,7 @@ import { Campus_name, campus_request } from '../shared/model/Campus_name';
 import { Login } from '../shared/model/Login';
 import { Order_HR ,Order_Kitchen,Order_employee} from '../shared/model/Order';
 import { NewFood } from '../shared/model/addfood';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -24,9 +25,10 @@ export class ApiService {
   change_menu:string;
   getpdfURL:string;
   apiURL:string;
+  updatecartURL:string;
   //corsURL = 'https://cors-anywhere.herokuapp.com/';
   constructor(private http : HttpClient){
-    this.getresaurantURL='https://cors-anywhere.herokuapp.com/http://35.224.128.24:80/api/restaurants';
+    this.getresaurantURL='http://35.224.128.24:80/api/restaurants';
     this.apiURL='http://35.224.128.24/api/';
     this.loginURL=this.apiURL+'signin';
     this.orderHR=this.apiURL+'orderHistoryHR';
@@ -39,15 +41,18 @@ export class ApiService {
     this.order_rating=this.apiURL+'updateRating';
     this.change_menu=this.apiURL+'change_menu_item';
     this.getpdfURL=this.apiURL+'generatePDF';
+    this.updatecartURL=this.apiURL+'update_cart';
   }
-  getRestaurants(campus_name:campus_request):Observable<Restaurant>{
-    return this.http.post<Restaurant>(this.getresaurantURL,campus_name);
+  getRestaurants(campus_name:any):Observable<any>{
+    return this.http.post<any>(this.getresaurantURL,campus_name);
+  }
+  updateCart(cart_data:any):Observable<any>{
+    return this.http.post<any>(this.updatecartURL,cart_data);
   }
   login(logindata:Login):Observable<any>{
     console.log(this.loginURL)
     return this.http.post<any>(this.loginURL,logindata);
   }
-
   orderHistory_HR(order_HR:any):Observable<any>{
     
     return this.http.post<any>(this.orderHR,order_HR);

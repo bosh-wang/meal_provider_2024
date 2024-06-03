@@ -5,17 +5,19 @@ import { restaurant_type, sample_foods, sample_restaurants, sample_tags } from '
 import { Tag } from '../shared/model/Tag';
 import { Restaurant } from '../shared/model/Restaurant';
 import { Restaurant_Type } from '../shared/model/Restaurant_Type';
+import { ApiService } from './api.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class RestaurantService {
   sample_restaurants: any;
-  constructor() {}
+  constructor(private apiService:ApiService) {}
 
   getAll(): Restaurant[] {
     return sample_restaurants;
   }
+  
   getAllRestaurantBySearchTerm(searchterm: string) {
     return this.getAll().filter((restaurant) =>
       restaurant.name.toLowerCase().includes(searchterm.toLowerCase())
