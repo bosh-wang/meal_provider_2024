@@ -4,6 +4,7 @@ __pycache__
 .env
 #data
 data/
+temp/
 
 #config
 credential.yaml

@@ -49,7 +49,7 @@ spec:
             value: "6379"
         livenessProbe:
           httpGet:
-            path: /
+            path: /backend
             port: 5000
           initialDelaySeconds: 180
           timeoutSeconds: 10
@@ -57,7 +57,7 @@ spec:
           failureThreshold: 3
         readinessProbe:
           httpGet:
-            path: /
+            path: /backend
             port: 5000
           initialDelaySeconds: 30
           timeoutSeconds: 10

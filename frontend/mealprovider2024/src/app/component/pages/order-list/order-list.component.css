@@ -1,0 +1,33 @@
+.orders-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h2 {
+    margin-bottom: 20px;
+  }
+  
+  .order-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    background-color: #e0f7fa;
+    padding: 10px;
+  }
+  
+  .order-header {
+    background-color: #80deea;
+    padding: 10px;
+    border-radius: 10px 10px 0 0;
+    font-weight: bold;
+  }
+  
+  .order-body {
+    padding: 10px;
+  }
+  
+  .order-body p {
+    margin: 5px 0;
+  }
+  

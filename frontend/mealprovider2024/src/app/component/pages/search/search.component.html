@@ -1,0 +1,7 @@
+<div>
+  <input #s type="text" placeholder="🔍搜尋關鍵字 !"
+   (keyup.enter)="search(s.value)"
+   [value]="searchTerm">
+  <!--search func. for routing-->
+  <button (click)="search(s.value)">搜尋</button>
+</div>

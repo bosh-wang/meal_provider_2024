@@ -1,0 +1,411 @@
+body {
+    font-family: '蘋果儷中黑', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f8f9fa;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.navbar {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+/* Custom styles for the navbar brand */
+.navbar-brand {
+    font-family: 'Roboto', sans-serif;
+    /* Use Roboto font, or change to your preferred font */
+    font-size: 1.5rem;
+    /* Increase font size */
+    font-weight: 700;
+    /* Make the font bold */
+    color: #404040;
+    /* White color for the text */
+    text-transform: uppercase;
+    /* Transform text to uppercase */
+    letter-spacing: 1px;
+    /* Add some spacing between letters */
+    transition: color 0.3s ease;
+    /* Smooth transition for color changes */
+}
+
+.navbar-custom .form-label {
+    color: #ffffff;
+    /* White color for the label */
+    font-size: 1rem;
+    /* Adjust the font size */
+}
+
+/* Additional CSS for order dashboard */
+.table-container {
+    width: 100%;
+    margin: auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.table th,
+.table td {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.table-bordered th,
+.table-bordered td {
+    border: 1px solid #dee2e6;
+}
+
+.table-dark th {
+    background-color: #343a40;
+    color: #fff;
+}
+
+/* additional css for button */
+.btn {
+    width: 125px;
+    text-align: center;
+    font-weight: 600;
+}
+
+.btn-primary,
+.btn-secondary,
+.btn-success,
+.btn-danger,
+.btn-dark,
+.btn-info {
+    background-color: #EE5B57;
+    border-color: #EE5B57;
+    color: #fff;
+    font-weight: 600;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover,
+.btn-success:hover,
+.btn-danger:hover,
+.btn-dark:hover,
+.btn-info:hover {
+    background-color: #EE5B57;
+    border-color: #EE5B57;
+}
+
+.btn-outline-danger {
+    border-color: #EE5B57;
+
+}
+
+.btn-outline-danger:hover {
+    background-color: #ffefc1;
+
+}
+
+.btn-outline-dark {
+    border-color: #EE5B57;
+    color: #EE5B57;
+}
+
+.btn-outline-dark:hover {
+    background-color: #EE5B57;
+    color: #fff;
+}
+
+.text-center button {
+    display: inline-block;
+    margin: 5px;
+}
+
+/* Additional CSS for the Prepared */
+
+.modal-content {
+    border-radius: 8px;
+}
+
+.modal-header,
+.modal-footer {
+    border: none;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-title {
+    font-weight: 500;
+}
+
+
+/* Additional CSS for modal table */
+.modal-lg {
+    max-width: 80%;
+}
+
+.img-thumbnail {
+    width: 100px;
+    height: auto;
+}
+
+.table thead th {
+    vertical-align: middle;
+    text-align: center;
+}
+
+.table tbody td {
+    vertical-align: middle;
+}
+
+.d-flex {
+    display: flex;
+    align-items: center;
+}
+
+.me-2 {
+    margin-right: 0.5rem;
+}
+
+.progress {
+    height: 20px;
+}
+
+.progress-bar {
+    background-color: #EE5B57;
+}
+
+/* Custom styles for progress bars */
+/* Custom styles for progress bars */
+.bg-warning {
+    background-color: #ffefc1 !important;
+    /* PENDING */
+    color: #6E2C00;
+    /* Ensure text color is readable on yellow */
+    font-weight: 600
+}
+
+.bg-info {
+    background-color: #cce5ff !important;
+    /* CONFIRMED */
+    color: #004085;
+    font-weight: 600
+}
+
+.bg-primary {
+    background-color: #73C6B6 !important;
+    /* PREPARED */
+    color: #0B5345;
+    font-weight: 600
+}
+
+.bg-success {
+    background-color: #EE5B57 !important;
+    /* Completed */
+    color: #fff;
+    font-weight: 600
+}
+
+.bg-secondary {
+    background-color: #E2E3E5 !important;
+    /* Cancel */
+    color: #6c757d;
+    font-weight: 600
+}
+
+
+.form-select {
+    width: auto;
+    display: inline-block;
+}
+
+/* Additional CSS for order order summary */
+
+.order-summary {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+}
+
+
+
+.order-summary-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.order-summary-title {
+    font-weight: 700;
+    color: #333;
+    margin-right: 10px;
+}
+
+.order-summary-detail {
+    font-weight: 400;
+    color: #666;
+}
+
+.order-summary-item:last-child {
+    margin-bottom: 0;
+}
+
+/* Additional CSS for order tracking */
+
+.bs4-order-tracking {
+    margin-bottom: 30px;
+    overflow: hidden;
+    color: #878788;
+    padding-left: 0px;
+    margin-top: 30px
+}
+
+.bs4-order-tracking li {
+    list-style-type: none;
+    font-size: 13px;
+    width: 25%;
+    float: left;
+    position: relative;
+    font-weight: 400;
+    color: #878788;
+    text-align: center
+}
+
+.bs4-order-tracking li:first-child:before {
+    margin-left: 15px !important;
+    padding-left: 11px !important;
+    text-align: left !important
+}
+
+.bs4-order-tracking li:last-child:before {
+    margin-right: 5px !important;
+    padding-right: 11px !important;
+    text-align: right !important
+}
+
+.bs4-order-tracking li>div {
+    color: #fff;
+    width: 29px;
+    text-align: center;
+    line-height: 29px;
+    display: block;
+    font-size: 12px;
+    background: #878788;
+    border-radius: 50%;
+    margin: auto
+}
+
+.bs4-order-tracking li:after {
+    content: '';
+    width: 150%;
+    height: 2px;
+    background: #878788;
+    position: absolute;
+    left: 0%;
+    right: 0%;
+    top: 15px;
+    z-index: -1
+}
+
+.bs4-order-tracking li:first-child:after {
+    left: 50%
+}
+
+.bs4-order-tracking li:last-child:after {
+    left: 0% !important;
+    width: 0% !important
+}
+
+.bs4-order-tracking li.active {
+    font-weight: bold;
+    color: #EE5B57
+}
+
+.bs4-order-tracking li.active>div {
+    background: #EE5B57
+}
+
+.bs4-order-tracking li.active:after {
+    background: #EE5B57
+}
+
+.card-timeline {
+    background-color: #fff;
+    z-index: 0
+}
+
+/* Custom styles for order status tags */
+.badge-status {
+    display: inline-block;
+    padding: 0.5em 0.75em;
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: baseline;
+    border-radius: 0.375rem;
+    margin: 2px 0;
+    width: 120px;
+    /* Set a fixed width for consistency */
+    word-wrap: break-word;
+}
+
+/* Adjustments for different statuses */
+.badge-pending {
+    background-color: #ffefc1;
+    color: #856404;
+}
+
+.badge-confirmed {
+    background-color: #cce5ff;
+    color: #004085;
+}
+
+.badge-prepared {
+    background-color: #73C6B6;
+    color: #0B5345;
+}
+
+.badge-completed {
+    background-color: #EE5B57;
+    color: #fff;
+}
+
+.badge-canceled {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.badge-default {
+    background-color: #e2e3e5;
+    color: #6c757d;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .badge-status {
+        font-size: 0.75rem;
+        padding: 0.3em 0.6em;
+        width: 100px;
+        /* Adjust width for smaller screens */
+    }
+}
+
+@media (max-width: 576px) {
+    .badge-status {
+        font-size: 0.7rem;
+        padding: 0.25em 0.5em;
+        width: 90px;
+        /* Adjust width for even smaller screens */
+    }
+}
