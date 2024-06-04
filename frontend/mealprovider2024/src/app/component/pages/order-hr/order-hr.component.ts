@@ -106,7 +106,7 @@ export class OrderHRComponent {
           totals[order.customer_id] += Number(order.total_price);
           return totals;
         }, {} as { [key: string]: number });
-        let uniqueCustomers = res.orders.reduce((acc:Order_HR[], order:Order_HR) => {
+        /*let uniqueCustomers = res.orders.reduce((acc:Order_HR[], order:Order_HR) => {
           let existingCustomer = acc.find(o => o.customer_id === order.customer_id);
           if (!existingCustomer) {
             acc.push({ ...order, paid: order.paid });
@@ -114,10 +114,24 @@ export class OrderHRComponent {
             existingCustomer.paid = existingCustomer.paid && order.paid;
           }
           return acc;
-        }, [] as Order_HR[]);
+        }, [] as Order_HR[]);*/
+        let uniqueCustomers = res.orders.reduce((acc: Order_HR[], order: Order_HR) => {
+          // 过滤掉不符合条件的订单
+          if (order.department === formValue.department && order.position === formValue.position) {
+            let existingCustomer = acc.find(o => o.customer_id === order.customer_id);
+            if (!existingCustomer) {
+              acc.push({ ...order, paid: order.paid });
+            } else {
+              existingCustomer.paid = existingCustomer.paid && order.paid;
+            }
+          }
+          return acc;
+        }, []);
+        
         console.log(uniqueCustomers);
         this.user_payment=totalSpendingByCustomer;
         this.orders=uniqueCustomers;
+        console.log(this.orders);
       },
       error: err => {
         console.log(err);
@@ -153,10 +167,8 @@ export class OrderHRComponent {
         console.log(err);
       }
     });
-    
   }
   onClickforPDF() {
-
     this.apiService.Get_PDF().subscribe({
       next: res => {
         console.log(res);
