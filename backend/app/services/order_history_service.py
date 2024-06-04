@@ -63,7 +63,8 @@ def get_order_history_service_for_employee(data):
             item_list = []
             for item_id, quantity, item_total_price in items:
                 cursor.execute(
-                    "SELECT item_name,image_url FROM menus_items WHERE item_id = %s", (item_id,)
+                    "SELECT item_name,image_url FROM menus_items WHERE item_id = %s",
+                    (item_id,),
                 )
                 item_name = cursor.fetchall()
                 item_list.append(
@@ -252,7 +253,8 @@ def get_order_history_service_for_restaurant(data):
             item_list = []
             for item_id, quantity, item_total_price in items:
                 cursor.execute(
-                    "SELECT item_name,image_url FROM menus_items WHERE item_id = %s", (item_id,)
+                    "SELECT item_name,image_url FROM menus_items WHERE item_id = %s",
+                    (item_id,),
                 )
                 item_name = cursor.fetchall()
                 item_list.append(
