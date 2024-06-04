@@ -100,8 +100,6 @@ export class RestaurantPageComponent implements OnInit {
       price: [''],
       image_url: [''],
     });
-
-    
   }
 
   ngOnInit(): void {}

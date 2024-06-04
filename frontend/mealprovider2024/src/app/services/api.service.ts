@@ -34,6 +34,7 @@ export class ApiService {
   updatecartURL:string;
   getrestaurantURL: string;
   getmenuURL: string;
+  menu_itemURL:string;
   constructor(private http : HttpClient){
     this.apiURL='http://35.224.128.24/api/';
     this.getrestaurantURL =this.apiURL+'restaurants';
@@ -50,10 +51,9 @@ export class ApiService {
     this.change_menu=this.apiURL+'change_menu_item';
     this.getpdfURL=this.apiURL+'generatePDF';
     this.updatecartURL=this.apiURL+'update_cart';
+    this.menu_itemURL=this.apiURL+'menu_item';
   }
-  getRestaurants(
-    campus_name: campus_request
-  ): Observable<Restaurantinfomation[]> {
+  getRestaurants(campus_name: campus_request): Observable<Restaurantinfomation[]> {
     return this.http.post<Restaurantinfomation[]>(
       this.getrestaurantURL,
       campus_name
@@ -61,6 +61,10 @@ export class ApiService {
   }
   getFoods(res_id_user_role: ResIDUserRole): Observable<FoodRes[]> {
     return this.http.post<FoodRes[]>(this.getmenuURL, res_id_user_role);
+  }
+  getFoods_item(item_id:string): Observable<FoodRes> {
+    console.log({'item_id':item_id});
+    return this.http.post<FoodRes>(this.menu_itemURL, {'item_id':item_id});
   }
   updateCart(cart_data:any):Observable<any>{
     return this.http.post<any>(this.updatecartURL,cart_data);

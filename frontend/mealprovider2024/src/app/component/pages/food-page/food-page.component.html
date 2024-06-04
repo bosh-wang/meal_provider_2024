@@ -9,16 +9,16 @@
 
 <app-not-found [visible]="!food" notFoundMessage="查無此餐點!" resetLinkText="返回首頁"></app-not-found>
 <div *ngIf="food" class="container">
-  <img [src]="food[0]?.image_url??''" [alt]="food[0]?.item_name??''">
+  <img [src]="food?.image_url??''" [alt]="food?.item_name??''">
   <div class="details">
     <div class="header">
       <span class="name">
-        {{food[0].item_name}}
+        {{food.item_name}}
       </span>
     </div>
 
     <div class="restaurant_name">
-      <p class="Restaurant"> {{food[0].restaurant_name}}</p>
+      <p class="Restaurant"> {{food.restaurant_name}}</p>
     </div>
     <!--
     <div class="rating">
@@ -26,20 +26,20 @@
     </div>-->
 
     <div class="tags">
-      <a *ngFor="let tag of food[0].category" routerLink="/tag/{{tag}}">
-        {{tag}}
+      <a>
+        {{food.category}}
       </a>
     </div>
 
     <div class="description">
       <div>
-        <a>{{food[0].description}}</a>
+        <a>{{food.description}}</a>
       </div>
     </div>
 
     <div class="price">
       <span>
-        {{food[0].price | currency}}
+        {{food.price | currency}}
       </span>
     </div>
 
@@ -62,7 +62,7 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" *ngIf="food">
-        Are you sure you want to delete <strong>{{food[0].item_name}}</strong>?
+        Are you sure you want to delete <strong>{{food.item_name}}</strong>?
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" (click)="deleteFood()">Delete</button>
@@ -82,7 +82,7 @@
       </div>
       <div class="modal-body">
         <div class="modal-body" *ngIf="food">
-          <p>Are you sure you want to adjust the price of <strong>{{food[0].item_name}}</strong>?</p>
+          <p>Are you sure you want to adjust the price of <strong>{{food.item_name}}</strong>?</p>
         </div>
         <div class="mb-3">
           <label for="newPrice" class="form-label">New Price</label>
