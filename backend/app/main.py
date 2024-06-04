@@ -19,7 +19,7 @@ app = Flask(__name__)
 CORS(
     app,
     resources={
-        r"/api/*": {
+        r"/backend/api/*": {
             "origins": "*",  # 允许的域名，可以根据需求修改
             "methods": ["GET", "POST"],  # 允许的 HTTP 方法
             "allow_headers": ["Content-Type", "Authorization"],  # 允许的请求头
@@ -125,7 +125,7 @@ def get_menu_item():
 
 
 # 取得餐廳
-@app.route("/api/restaurants", methods=["POST"])
+@app.route("/backend/api/restaurants", methods=["POST"])
 def get_restaurant():
     data = request.json
     return get_restaurants_service.get_restaurant(data)
