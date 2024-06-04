@@ -54,7 +54,7 @@ export class RestaurantPageComponent implements OnInit {
     restaurant_id: '',
   };
 
-  @Input() userRole: string | null = null;
+  @Input() userRole:  string | null;
   @Input() userid: string | null = null;
 
   constructor(
@@ -64,11 +64,14 @@ export class RestaurantPageComponent implements OnInit {
     private apiService: ApiService,
     private userService: UserService
   ) {
+    this.userRole = this.userService.getUserRole();
+    this.userid = this.userService.getUserId();
+    console.log('header', this.userRole, this.userid);
     this.activateRoute.params.subscribe((params) => {
       console.log(params, 'params'); // 输出参数
       if (params['id']) {
         var res_id_user_role: ResIDUserRole = {
-          role: 'employee',
+          role: this.userRole,
           restaurant_id: params['id'],
         };
         this.api_input = res_id_user_role;
@@ -98,9 +101,7 @@ export class RestaurantPageComponent implements OnInit {
       image_url: [''],
     });
 
-    this.userRole = this.userService.getUserRole();
-    this.userid = this.userService.getUserId();
-    console.log('header', this.userRole, this.userid);
+    
   }
 
   ngOnInit(): void {}

@@ -78,7 +78,7 @@ export class FoodPageComponent implements OnInit {
     const dataToSend = {
       "cart_status": "update",
       "user_id": this.userid,
-      "item_id": this.food.id, 
+      "item_id": this.food[0].item_id, 
       "quantity": 1
     }
     console.log('Data to send:', dataToSend);
