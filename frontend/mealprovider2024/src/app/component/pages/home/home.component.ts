@@ -88,7 +88,7 @@ export class HomeComponent implements OnInit {
 
   httpClient = inject(HttpClient);
 
-  fetchData() {
+  /*fetchData() {
     this.httpClient
       .get('http://35.224.128.24:80/api/restaurants')
       .subscribe((data: any) => {
@@ -101,5 +101,5 @@ export class HomeComponent implements OnInit {
       '${this.apiUrl}/api/restaurants',
       {}
     );
-  }
+  }*/
 }

@@ -45,8 +45,7 @@ export class ApiService {
     this.orderKitchen=this.apiURL+'orderHistoryRestaurant';
     this.orderstatus=this.apiURL+'change_order_status';
     this.orderEmployee=this.apiURL+'orderHistoryEmployee';
-    this.order_payment=this.apiURL+'api/payment';
-    this.order_payment=this.apiURL+'api/payment';
+    this.order_payment=this.apiURL+'payment';
     this.order_rating=this.apiURL+'updateRating';
     this.change_menu=this.apiURL+'change_menu_item';
     this.getpdfURL=this.apiURL+'generatePDF';
