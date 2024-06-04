@@ -7,7 +7,7 @@ import { UserService } from '../../../services/user.service';
 import { HttpClientModule } from '@angular/common/http';
 import { MatSnackBarModule ,MatSnackBar} from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import CryptoJS from 'crypto-js';
+
 
 @Component({
   selector: 'app-login',

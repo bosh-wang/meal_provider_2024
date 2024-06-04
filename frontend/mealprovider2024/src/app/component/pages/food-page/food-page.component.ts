@@ -33,7 +33,7 @@ import { ResIDUserRole } from '../../../shared/model/Restaurant';
   styleUrls: ['./food-page.component.css'],
 })
 export class FoodPageComponent implements OnInit {
-  food!: FoodRes[];
+  food!: FoodRes;
   newFood: Food = new Food();
   newPrice!: number;
   @Input() userRole: string | null = null;
@@ -53,32 +53,39 @@ export class FoodPageComponent implements OnInit {
         restaurant_id: params['food-id'],
         role: 'employee',
       };
-      this.apiService.getFoods(res_id_user_role).subscribe((res) => {
-        this.food = res;
-        //console.log(this.food, 'api response');
-        if (params['food-id']) {
+      this.apiService.getFoods_item(params['food-id']).subscribe({
+        next: res => {
+          console.log(res);
+          this.food = res;
+          //console.log(this.food, 'api response');
+       /* if (params['food-id']) {
           console.log(params['food-id'], 'params food id');
           this.food = this.foodService.getFoodById(
             this.food,
             params['food-id']
           );
           console.log(this.food, 'food item');
+        }*/
+        },
+        error: err => {
+          console.log(err);
         }
       });
     });
     this.userRole = this.userService.getUserRole();
 
     this.userid = this.userService.getUserId();
+    console.log(this.userRole,this.food);
   }
 
   ngOnInit(): void {}
 
   addToCart() {
-    this.cartService.addToCart(this.food);
+    this.cartService.addToCart([this.food]);
     const dataToSend = {
       "cart_status": "update",
       "user_id": this.userid,
-      "item_id": this.food.id, 
+      "item_id": this.food.item_id, 
       "quantity": 1
     }
     console.log('Data to send:', dataToSend);
@@ -102,8 +109,8 @@ export class FoodPageComponent implements OnInit {
     //this.menuService.deleteFood(this.food.id);
     const dataToSend = {
       change_status: 'DELETE',
-      item_id: this.food ? this.food[0].item_id : '',
-      availability: this.food[0].availability,
+      item_id: this.food ? this.food.item_id : '',
+      availability: this.food.availability,
     };
     console.log('Data to send:', dataToSend);
     this.apiService.Change_menu(dataToSend).subscribe({
@@ -123,7 +130,7 @@ export class FoodPageComponent implements OnInit {
 
     const dataToSend = {
       change_status: 'ADJUST',
-      item_id: this.food ? this.food[0].item_id : '',
+      item_id: this.food ? this.food.item_id : '',
       price: Number(this.newPrice),
     };
     console.log('Data to send:', dataToSend);

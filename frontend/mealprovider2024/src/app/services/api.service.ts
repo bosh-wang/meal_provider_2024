@@ -3,17 +3,23 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Restaurant } from '../shared/model/Restaurant';
+import {
+  AllRestaurant,
+  ResIDUserRole,
+  Restaurant,
+  Restaurantinfomation,
+} from '../shared/model/Restaurant';
 import { Campus_name, campus_request } from '../shared/model/Campus_name';
 import { Login } from '../shared/model/Login';
 import { Order_HR ,Order_Kitchen,Order_employee} from '../shared/model/Order';
 import { NewFood } from '../shared/model/addfood';
+import { Food, FoodRes } from '../shared/model/Food';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
-  getresaurantURL:string;
+  
   loginURL:string;
   orderHR:string;
   order_paymentNotification:string;
@@ -26,10 +32,13 @@ export class ApiService {
   getpdfURL:string;
   apiURL:string;
   updatecartURL:string;
-  
+  getrestaurantURL: string;
+  getmenuURL: string;
+  menu_itemURL:string;
   constructor(private http : HttpClient){
-    this.getresaurantURL='http://35.224.128.24:80/api/restaurants';
     this.apiURL='http://35.224.128.24/api/';
+    this.getrestaurantURL =this.apiURL+'restaurants';
+    this.getmenuURL =this.apiURL+'menu';
     this.loginURL=this.apiURL+'signin';
     this.orderHR=this.apiURL+'orderHistoryHR';
     this.order_paymentNotification=this.apiURL+'paymentNotification';
@@ -42,9 +51,20 @@ export class ApiService {
     this.change_menu=this.apiURL+'change_menu_item';
     this.getpdfURL=this.apiURL+'generatePDF';
     this.updatecartURL=this.apiURL+'update_cart';
+    this.menu_itemURL=this.apiURL+'menu_item';
   }
-  getRestaurants(campus_name:any):Observable<any>{
-    return this.http.post<any>(this.getresaurantURL,campus_name);
+  getRestaurants(campus_name: campus_request): Observable<Restaurantinfomation[]> {
+    return this.http.post<Restaurantinfomation[]>(
+      this.getrestaurantURL,
+      campus_name
+    );
+  }
+  getFoods(res_id_user_role: ResIDUserRole): Observable<FoodRes[]> {
+    return this.http.post<FoodRes[]>(this.getmenuURL, res_id_user_role);
+  }
+  getFoods_item(item_id:string): Observable<FoodRes> {
+    console.log({'item_id':item_id});
+    return this.http.post<FoodRes>(this.menu_itemURL, {'item_id':item_id});
   }
   updateCart(cart_data:any):Observable<any>{
     return this.http.post<any>(this.updatecartURL,cart_data);

@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit {
   restaurant: Restaurantinfomation[] = [];
   data: any[] = [];
   campus_name: Campus_name[] = [];
-  private apiUrl = 'http://35.224.128.24:80';
+  //private apiUrl = 'http://35.224.128.24:80';
 
   constructor(
     private restaurantService: RestaurantService,
