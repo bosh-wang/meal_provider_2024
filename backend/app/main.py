@@ -10,7 +10,7 @@ from services import (
     adjust_menu_service,
     get_restaurants_service,
     cart_service,
-    createPDF
+    createPDF,
 )
 
 app = Flask(__name__)
@@ -113,6 +113,7 @@ def signin():
 def get_menu():
     data = request.json
     return get_menu_service.get_menu(data)
+
 
 # Get menu_item
 @app.route("/api/menu_item", methods=["POST"])
