@@ -63,6 +63,7 @@ export class OrderAdminComponent {
       next: res => {
         console.log(res);
         this.orders = res.orders;
+        console.log(this.orders[0]['order_date'])
       },
       error: err => {
         console.log(err);
@@ -72,6 +73,7 @@ export class OrderAdminComponent {
   selectedOrder: any = null;
   selectOrder(order: Order_Kitchen) {
     this.selectedOrder = order;
+    console.log(this.selectedOrder.item)
   }
   submit(order_id: string, order_status_before: string, flag: number) {
     let order_status_after: string;
