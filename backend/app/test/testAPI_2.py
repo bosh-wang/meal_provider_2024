@@ -36,21 +36,23 @@ print("Home endpoint response:", response.text)
 
 # # get menu
 ## 餐廳管理員
-# post_data = {
-#     "role": "restaurant_staff",
-#     "restaurant_id": "restaurant003"
-# }
+post_data = {
+    "role": "restaurant_staff",
+    "restaurant_id": "restaurant003"
+}
 ## 員工
-post_data = {"role": "HR", "restaurant_id": "restaurant003"}
+post_data = {"role": "employee", "restaurant_id": "restaurant003"}
 response = requests.post(f"{base_url}/api/menu", json=post_data)
-print(response)
+
 print("POST /api/data response:", response.json())
 
+
+
 # api/menu_item
-post_data = {"item_id": "item809"}
-response = requests.post(f"{base_url}/api/menu_item", json=post_data)
-print(response)
-print("POST /api/data response:", response.json())
+# post_data = {"item_id": "item809"}
+# response = requests.post(f"{base_url}/api/menu_item", json=post_data)
+# print(response)
+# print("POST /api/data response:", response.json())
 
 
 # post_data = {"role": "restaurant_staff", "restaurant_id": "restaurant007"}
@@ -99,7 +101,7 @@ print("POST /api/data response:", response.json())
 
 # # change order status 好像要先改成去資料庫抓
 # post_data ={
-#     "order_id": 14,
+#     "order_id": 22,
 #     "order_status_before": "PENDING",
 #     "order_status_after": "CONFIRMED"
 # }
