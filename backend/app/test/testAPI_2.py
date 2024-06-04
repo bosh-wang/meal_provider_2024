@@ -53,10 +53,6 @@ print(response)
 print("POST /api/data response:", response.json())
 
 
-
-
-
-
 # post_data = {"role": "restaurant_staff", "restaurant_id": "restaurant007"}
 # response = requests.post(f"{base_url}/api/menu", json=post_data)
 # print("POST /api/data response:", response.json())

@@ -20,6 +20,7 @@ pool = redis.ConnectionPool(
 )
 redis_client = redis.Redis(connection_pool=pool)
 
+
 # Database connection configuration
 def get_db_connection():
     conn = psycopg2.connect(
@@ -32,11 +33,10 @@ def get_db_connection():
     conn.set_client_encoding("UTF8")
     return conn
 
+
 def custom_json_serializer(obj):
     if isinstance(obj, (datetime, date)):
         return obj.isoformat()
     elif isinstance(obj, Decimal):
         return float(obj)
     raise TypeError(f"Type {type(obj)} not serializable")
-
-

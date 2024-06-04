@@ -162,6 +162,8 @@ def get_menu(data):
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
+
 def get_item(data):
     print(data)
     item_id = data.get("item_id")
@@ -234,7 +236,9 @@ def get_item(data):
         if item is None:
             return jsonify({"error": "Item not found"}), 404
 
-        json_result = json.dumps(item, ensure_ascii=False, default=custom_json_serializer)
+        json_result = json.dumps(
+            item, ensure_ascii=False, default=custom_json_serializer
+        )
         # Store the result in Redis cache
         redis_client.setex(cache_key, cache_expiry, json_result)
         response = app.response_class(
@@ -245,6 +249,7 @@ def get_item(data):
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+
 
 def get_item(data):
     print("來這裡囉")
@@ -318,7 +323,9 @@ def get_item(data):
         if item is None:
             return jsonify({"error": "Item not found"}), 404
 
-        json_result = json.dumps(item, ensure_ascii=False, default=custom_json_serializer)
+        json_result = json.dumps(
+            item, ensure_ascii=False, default=custom_json_serializer
+        )
         # Store the result in Redis cache
         redis_client.setex(cache_key, cache_expiry, json_result)
         response = app.response_class(
