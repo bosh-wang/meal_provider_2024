@@ -163,6 +163,7 @@ def get_menu(data):
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
+
 def get_item(data):
     print("來這裡囉")
     item_id = data.get("item_id")
