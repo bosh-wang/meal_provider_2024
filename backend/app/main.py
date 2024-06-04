@@ -125,7 +125,7 @@ def get_menu_item():
 
 
 # 取得餐廳
-@app.route("/backend/backend/api/restaurants", methods=["POST"])
+@app.route("/backend/api/restaurants", methods=["POST"])
 def get_restaurant():
     data = request.json
     return get_restaurants_service.get_restaurant(data)
