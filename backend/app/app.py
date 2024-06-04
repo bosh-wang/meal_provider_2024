@@ -11,7 +11,7 @@ from services import (
 app = Flask(__name__)
 
 
-@app.route("/backend")
+@app.route("/backend/")
 def index():
     return "Hello, I am alive!"
 
