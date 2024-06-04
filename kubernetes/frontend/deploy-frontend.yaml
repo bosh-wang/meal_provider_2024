@@ -19,14 +19,17 @@ spec:
         image: ghcr.io/${{ github.repository_owner }}/meal_provider_frontend:${{ github.sha }}
         ports:
         - containerPort: 80
+        env:
+          - name: BACKEND_HOST
+            value: "backend"
         resources:
           requests:
-            cpu: 100m
-            memory: 512Mi
+            cpu: 500m
+            memory: 1Gi
             ephemeral-storage: "2Gi"
           limits:
-            cpu: 200m
-            memory: 1Gi
+            cpu: 1000m
+            memory: 2Gi
             ephemeral-storage: "3Gi"
         livenessProbe:
           httpGet:
