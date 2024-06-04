@@ -43,7 +43,6 @@ def custom_json_serializer(obj):
 
 
 def get_menu(data):
-    # data = request.json
     r_id = data.get("restaurant_id")
     role = data.get("role")
 
@@ -103,7 +102,7 @@ def get_menu(data):
                     m.item_id;
             """
             cursor.execute(query, (r_id,))
-        elif role == "restaurant_staff":
+        elif role == "restaurant_staff" or role == "HR":
             query = """
                 SELECT 
                     m.item_id,
@@ -163,95 +162,173 @@ def get_menu(data):
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+def get_item(data):
+    print(data)
+    item_id = data.get("item_id")
 
+    if not item_id:
+        return jsonify({"error": "Missing item_id"}), 400
 
-# from flask import Flask, jsonify
-# import psycopg2
-# from psycopg2.extras import RealDictCursor
-# import json
-# from decimal import Decimal
-# from datetime import datetime, date
-# import os
+    try:
+        cache_key = f"item:{item_id}"
+        cache_expiry = timedelta(hours=1)
 
-# app = Flask(__name__)
+        start_time = time.time()
 
-# # Database connection configuration
-# def get_db_connection():
-#     conn = psycopg2.connect(
-#         host = os.getenv("DB_HOST"),
-#         database = os.getenv("DB_NAME"),
-#         user = os.getenv("DB_USER"),
-#         password = os.getenv("DB_PASSWORD"),
-#         port = os.getenv("DB_PORT")
-#     )
-#     conn.set_client_encoding('UTF8')
-#     return conn
+        # Check if the data is in Redis cache
+        cached_item = redis_client.get(cache_key)
 
-# def custom_json_serializer(obj):
-#     if isinstance(obj, (datetime, date)):
-#         return obj.isoformat()
-#     elif isinstance(obj, Decimal):
-#         return float(obj)
-#     raise TypeError(f"Type {type(obj)} not serializable")
+        if cached_item:
+            redis_time = time.time() - start_time
+            print(f"Cache hit, Time taken with Redis: {redis_time:.6f} seconds")
+            return app.response_class(
+                response=cached_item, status=200, mimetype="application/json"
+            )
 
+        start_time = time.time()
+        conn = get_db_connection()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
 
-# def get_menu(data):
-#     r_id = data.get('restaurant_id')
-#     try:
-#         conn = get_db_connection()
-#         cursor = conn.cursor(cursor_factory=RealDictCursor)
+        query = """
+            SELECT 
+                m.item_id,
+                m.restaurant_id,
+                r.type AS restaurant_type,
+                r.name AS restaurant_name,
+                m.category,
+                m.item_name,
+                m.description,
+                m.price,
+                m.availability,
+                m.image_url,
+                ROUND(AVG(rt.star_rating), 1) AS star_rating
+            FROM 
+                menus_items m
+            LEFT JOIN 
+                meals_ratings rt ON m.item_id = rt.item_id
+            INNER JOIN
+                restaurants r ON m.restaurant_id = r.restaurant_id
+            WHERE 
+                m.item_id = %s
+            GROUP BY 
+                m.item_id,
+                m.restaurant_id,
+                r.type,
+                r.name,
+                m.category,
+                m.item_name,
+                m.description,
+                m.price,
+                m.availability,
+                m.image_url;
+        """
+        cursor.execute(query, (item_id,))
 
-#         query = """
-#             SELECT
-#                 m.item_id,
-#                 m.restaurant_id,
-#                 r.type AS restaurant_type,
-#                 r.name AS restaurant_name,
-#                 m.category,
-#                 m.item_name,
-#                 m.description,
-#                 m.price,
-#                 m.availability,
-#                 m.image_url,
-#                 ROUND(AVG(rt.star_rating), 1) AS star_rating
-#             FROM
-#                 menus_items m
-#             LEFT JOIN
-#                 meals_ratings rt ON m.item_id = rt.item_id
-#             INNER JOIN
-#                 restaurants r ON m.restaurant_id = r.restaurant_id
-#             WHERE
-#                 m.restaurant_id = %s
-#             GROUP BY
-#                 m.item_id,
-#                 m.restaurant_id,
-#                 r.type,
-#                 r.name,
-#                 m.category,
-#                 m.item_name,
-#                 m.description,
-#                 m.price,
-#                 m.availability,
-#                 m.image_url
-#             ORDER BY
-#                 m.item_id;
-#         """
+        item = cursor.fetchone()
 
-#         cursor.execute(query, (r_id,))
-#         menu_items = cursor.fetchall()
+        cursor.close()
+        conn.close()
+        db_time = time.time() - start_time
+        print(f"Time taken with DB: {db_time:.6f} seconds")
 
-#         cursor.close()
-#         conn.close()
+        if item is None:
+            return jsonify({"error": "Item not found"}), 404
 
-#         json_result = json.dumps(menu_items, ensure_ascii=False, default=custom_json_serializer)
+        json_result = json.dumps(item, ensure_ascii=False, default=custom_json_serializer)
+        # Store the result in Redis cache
+        redis_client.setex(cache_key, cache_expiry, json_result)
+        response = app.response_class(
+            response=json_result, status=200, mimetype="application/json"
+        )
+        response.headers["Content-Type"] = "application/json; charset=utf-8"
+        return response
 
-#         response = app.response_class(
-#             response=json_result,
-#             status=200,
-#             mimetype='application/json'
-#         )
-#         response.headers['Content-Type'] = 'application/json; charset=utf-8'
-#         return response
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
-#     except Exception as e:
-#         return jsonify({"error": str(e)}), 500
+def get_item(data):
+    print("來這裡囉")
+    item_id = data.get("item_id")
+
+    if not item_id:
+        return jsonify({"error": "Missing item_id"}), 400
+
+    try:
+        cache_key = f"item:{item_id}"
+        cache_expiry = timedelta(hours=1)
+
+        start_time = time.time()
+
+        # Check if the data is in Redis cache
+        cached_item = redis_client.get(cache_key)
+
+        if cached_item:
+            redis_time = time.time() - start_time
+            print(f"Cache hit, Time taken with Redis: {redis_time:.6f} seconds")
+            return app.response_class(
+                response=cached_item, status=200, mimetype="application/json"
+            )
+
+        start_time = time.time()
+        conn = get_db_connection()
+        cursor = conn.cursor(cursor_factory=RealDictCursor)
+
+        query = """
+            SELECT 
+                m.item_id,
+                m.restaurant_id,
+                r.type AS restaurant_type,
+                r.name AS restaurant_name,
+                m.category,
+                m.item_name,
+                m.description,
+                m.price,
+                m.availability,
+                m.image_url,
+                ROUND(AVG(rt.star_rating), 1) AS star_rating
+            FROM 
+                menus_items m
+            LEFT JOIN 
+                meals_ratings rt ON m.item_id = rt.item_id
+            INNER JOIN
+                restaurants r ON m.restaurant_id = r.restaurant_id
+            WHERE 
+                m.item_id = %s
+            GROUP BY 
+                m.item_id,
+                m.restaurant_id,
+                r.type,
+                r.name,
+                m.category,
+                m.item_name,
+                m.description,
+                m.price,
+                m.availability,
+                m.image_url;
+        """
+        cursor.execute(query, (item_id,))
+
+        item = cursor.fetchone()
+
+        cursor.close()
+        conn.close()
+        db_time = time.time() - start_time
+        print(f"Time taken with DB: {db_time:.6f} seconds")
+
+        if item is None:
+            return jsonify({"error": "Item not found"}), 404
+
+        json_result = json.dumps(item, ensure_ascii=False, default=custom_json_serializer)
+        # Store the result in Redis cache
+        redis_client.setex(cache_key, cache_expiry, json_result)
+        response = app.response_class(
+            response=json_result, status=200, mimetype="application/json"
+        )
+        print(response)
+        print(json_result)
+        response.headers["Content-Type"] = "application/json; charset=utf-8"
+        return response
+
+    except Exception as e:
+        print(f"Error: {e}")
+        return jsonify({"error": str(e)}), 500

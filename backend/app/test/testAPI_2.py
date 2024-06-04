@@ -24,14 +24,14 @@ print("Home endpoint response:", response.text)
 
 
 # # get restaurant
-post_data = {"campus": "竹科竹科園區"}
+# post_data = {"campus": "竹科竹科園區"}
 
 # response = requests.post(f"{base_url}/api/restaurants", json=post_data)
 # print("POST /api/data response:", response.json())
 # post_data = {
 # }
-response = requests.post(f"{base_url}/api/restaurants", json=post_data)
-print("POST /api/data response:", response.json())
+# response = requests.post(f"{base_url}/api/restaurants", json=post_data)
+# print("POST /api/data response:", response.json())
 
 
 # # get menu
@@ -41,9 +41,21 @@ print("POST /api/data response:", response.json())
 #     "restaurant_id": "restaurant003"
 # }
 ## 員工
-# post_data = {"role": "employee", "restaurant_id": "restaurant003"}
-# response = requests.post(f"{base_url}/api/menu", json=post_data)
-# print("POST /api/data response:", response.json())
+post_data = {"role": "HR", "restaurant_id": "restaurant003"}
+response = requests.post(f"{base_url}/api/menu", json=post_data)
+print(response)
+print("POST /api/data response:", response.json())
+
+# api/menu_item
+post_data = {"item_id": "item809"}
+response = requests.post(f"{base_url}/api/menu_item", json=post_data)
+print(response)
+print("POST /api/data response:", response.json())
+
+
+
+
+
 
 # post_data = {"role": "restaurant_staff", "restaurant_id": "restaurant007"}
 # response = requests.post(f"{base_url}/api/menu", json=post_data)
