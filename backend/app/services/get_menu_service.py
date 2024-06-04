@@ -42,126 +42,126 @@ def custom_json_serializer(obj):
     raise TypeError(f"Type {type(obj)} not serializable")
 
 
-def get_menu(data):
-    r_id = data.get("restaurant_id")
-    role = data.get("role")
+# def get_menu(data):
+#     r_id = data.get("restaurant_id")
+#     role = data.get("role")
 
-    try:
-        cache_key = f"menu:{r_id,role}"
-        cache_expiry = timedelta(hours=1)
+#     try:
+#         cache_key = f"menu:{r_id,role}"
+#         cache_expiry = timedelta(hours=1)
 
-        start_time = time.time()  # Start timing for Redis
+#         start_time = time.time()  # Start timing for Redis
 
-        # Check if the data is in Redis cache
-        cached_menu = redis_client.get(cache_key)
+#         # Check if the data is in Redis cache
+#         cached_menu = redis_client.get(cache_key)
 
-        if cached_menu:
-            redis_time = time.time() - start_time  # Calculate Redis time
-            print(f"Cache hit, Time taken with Redis: {redis_time:.6f} seconds")
-            return app.response_class(
-                response=cached_menu, status=200, mimetype="application/json"
-            )
-        start_time = time.time()  # Start timing for DB query
-        conn = get_db_connection()
-        cursor = conn.cursor(cursor_factory=RealDictCursor)
+#         if cached_menu:
+#             redis_time = time.time() - start_time  # Calculate Redis time
+#             print(f"Cache hit, Time taken with Redis: {redis_time:.6f} seconds")
+#             return app.response_class(
+#                 response=cached_menu, status=200, mimetype="application/json"
+#             )
+#         start_time = time.time()  # Start timing for DB query
+#         conn = get_db_connection()
+#         cursor = conn.cursor(cursor_factory=RealDictCursor)
 
-        if role == "employee":
-            query = """
-                SELECT 
-                    m.item_id,
-                    m.restaurant_id,
-                    r.type AS restaurant_type,
-                    r.name AS restaurant_name,
-                    m.category,
-                    m.item_name,
-                    m.description,
-                    m.price,
-                    m.availability,
-                    m.image_url,
-                    ROUND(AVG(rt.star_rating), 1) AS star_rating
-                FROM 
-                    menus_items m
-                LEFT JOIN 
-                    meals_ratings rt ON m.item_id = rt.item_id
-                INNER JOIN
-                    restaurants r ON m.restaurant_id = r.restaurant_id
-                WHERE 
-                    m.restaurant_id = %s AND m.availability = True
-                GROUP BY 
-                    m.item_id,
-                    m.restaurant_id,
-                    r.type,
-                    r.name,
-                    m.category,
-                    m.item_name,
-                    m.description,
-                    m.price,
-                    m.availability,
-                    m.image_url
-                ORDER BY 
-                    m.item_id;
-            """
-            cursor.execute(query, (r_id,))
-        elif role == "restaurant_staff" or role == "HR":
-            query = """
-                SELECT 
-                    m.item_id,
-                    m.restaurant_id,
-                    r.type AS restaurant_type,
-                    r.name AS restaurant_name,
-                    m.category,
-                    m.item_name,
-                    m.description,
-                    m.price,
-                    m.availability,
-                    m.image_url,
-                    ROUND(AVG(rt.star_rating), 1) AS star_rating
-                FROM 
-                    menus_items m
-                LEFT JOIN 
-                    meals_ratings rt ON m.item_id = rt.item_id
-                INNER JOIN
-                    restaurants r ON m.restaurant_id = r.restaurant_id
-                WHERE 
-                    m.restaurant_id = %s
-                GROUP BY 
-                    m.item_id,
-                    m.restaurant_id,
-                    r.type,
-                    r.name,
-                    m.category,
-                    m.item_name,
-                    m.description,
-                    m.price,
-                    m.availability,
-                    m.image_url
-                ORDER BY 
-                    m.item_id;
-            """
-            cursor.execute(query, (r_id,))
-        else:
-            return jsonify({"error": "Invalid role"}), 400
+#         if role == "employee":
+#             query = """
+#                 SELECT 
+#                     m.item_id,
+#                     m.restaurant_id,
+#                     r.type AS restaurant_type,
+#                     r.name AS restaurant_name,
+#                     m.category,
+#                     m.item_name,
+#                     m.description,
+#                     m.price,
+#                     m.availability,
+#                     m.image_url,
+#                     ROUND(AVG(rt.star_rating), 1) AS star_rating
+#                 FROM 
+#                     menus_items m
+#                 LEFT JOIN 
+#                     meals_ratings rt ON m.item_id = rt.item_id
+#                 INNER JOIN
+#                     restaurants r ON m.restaurant_id = r.restaurant_id
+#                 WHERE 
+#                     m.restaurant_id = %s AND m.availability = True
+#                 GROUP BY 
+#                     m.item_id,
+#                     m.restaurant_id,
+#                     r.type,
+#                     r.name,
+#                     m.category,
+#                     m.item_name,
+#                     m.description,
+#                     m.price,
+#                     m.availability,
+#                     m.image_url
+#                 ORDER BY 
+#                     m.item_id;
+#             """
+#             cursor.execute(query, (r_id,))
+#         elif role == "restaurant_staff" or role == "HR":
+#             query = """
+#                 SELECT 
+#                     m.item_id,
+#                     m.restaurant_id,
+#                     r.type AS restaurant_type,
+#                     r.name AS restaurant_name,
+#                     m.category,
+#                     m.item_name,
+#                     m.description,
+#                     m.price,
+#                     m.availability,
+#                     m.image_url,
+#                     ROUND(AVG(rt.star_rating), 1) AS star_rating
+#                 FROM 
+#                     menus_items m
+#                 LEFT JOIN 
+#                     meals_ratings rt ON m.item_id = rt.item_id
+#                 INNER JOIN
+#                     restaurants r ON m.restaurant_id = r.restaurant_id
+#                 WHERE 
+#                     m.restaurant_id = %s
+#                 GROUP BY 
+#                     m.item_id,
+#                     m.restaurant_id,
+#                     r.type,
+#                     r.name,
+#                     m.category,
+#                     m.item_name,
+#                     m.description,
+#                     m.price,
+#                     m.availability,
+#                     m.image_url
+#                 ORDER BY 
+#                     m.item_id;
+#             """
+#             cursor.execute(query, (r_id,))
+#         else:
+#             return jsonify({"error": "Invalid role"}), 400
 
-        menu_items = cursor.fetchall()
+#         menu_items = cursor.fetchall()
 
-        cursor.close()
-        conn.close()
-        db_time = time.time() - start_time  # Calculate DB query time
-        print(f"Time taken with DB: {db_time:.6f} seconds")
+#         cursor.close()
+#         conn.close()
+#         db_time = time.time() - start_time  # Calculate DB query time
+#         print(f"Time taken with DB: {db_time:.6f} seconds")
 
-        json_result = json.dumps(
-            menu_items, ensure_ascii=False, default=custom_json_serializer
-        )
-        # Store the result in Redis cache
-        redis_client.setex(cache_key, cache_expiry, json_result)
-        response = app.response_class(
-            response=json_result, status=200, mimetype="application/json"
-        )
-        response.headers["Content-Type"] = "application/json; charset=utf-8"
-        return response
+#         json_result = json.dumps(
+#             menu_items, ensure_ascii=False, default=custom_json_serializer
+#         )
+#         # Store the result in Redis cache
+#         redis_client.setex(cache_key, cache_expiry, json_result)
+#         response = app.response_class(
+#             response=json_result, status=200, mimetype="application/json"
+#         )
+#         response.headers["Content-Type"] = "application/json; charset=utf-8"
+#         return response
 
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+#     except Exception as e:
+#         return jsonify({"error": str(e)}), 500
 
 
 
