@@ -36,16 +36,12 @@ print("Home endpoint response:", response.text)
 
 # # get menu
 ## 餐廳管理員
-post_data = {
-    "role": "restaurant_staff",
-    "restaurant_id": "restaurant003"
-}
+post_data = {"role": "restaurant_staff", "restaurant_id": "restaurant003"}
 ## 員工
 post_data = {"role": "employee", "restaurant_id": "restaurant003"}
 response = requests.post(f"{base_url}/api/menu", json=post_data)
 
 print("POST /api/data response:", response.json())
-
 
 
 # api/menu_item
