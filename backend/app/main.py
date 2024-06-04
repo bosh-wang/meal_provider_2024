@@ -30,7 +30,7 @@ CORS(
 )
 
 
-@app.route("/backend/")
+@app.route("/backend")
 def index():
     return "Hello, I am alive!"
 
