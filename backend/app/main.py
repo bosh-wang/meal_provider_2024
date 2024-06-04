@@ -115,6 +115,15 @@ def get_menu():
     return get_menu_service.get_menu(data)
 
 
+# Get menu_item
+@app.route("/api/menu_item", methods=["POST"])
+def get_menu_item():
+    print("有main喔")
+    data = request.json
+    print(data)
+    return get_menu_service.get_item(data)
+
+
 # 取得餐廳
 @app.route("/api/restaurants", methods=["POST"])
 def get_restaurant():
