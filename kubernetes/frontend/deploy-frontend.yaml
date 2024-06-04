@@ -39,5 +39,6 @@ spec:
           httpGet:
             path: /
             port: 4200
-          initialDelaySeconds: 30
+          initialDelaySeconds: 60
           periodSeconds: 10
+          timeoutSeconds: 5
