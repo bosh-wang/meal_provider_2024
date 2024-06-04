@@ -1,0 +1,124 @@
+/* Importing Google Fonts */
+/* @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap'); */
+
+body {
+  font-family: '蘋果儷中黑', sans-serif;
+  font-optical-sizing: auto;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+header {
+  background: #ffffff;
+  padding: 0.5rem 1rem;
+  border-bottom: 2px solid #EE5B57;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+a {
+  color: #EE5B57;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover {
+  color: #BF360C;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.home {
+  width: 4.0rem;
+  height: 4.0rem;
+  /* margin-right: 5px; */
+
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  gap: 1rem;
+}
+
+nav ul li {
+  position: relative;
+}
+
+nav ul li a {
+  padding: 1rem;
+  display: block;
+  font-size: 1rem;
+  /* Adjust the font size of nav links */
+}
+
+
+.campus-menu,
+.menu {
+  display: none;
+  position: absolute;
+  background-color: #ffffff;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  min-width: 10rem;
+  padding: 0.5rem 0;
+}
+
+.campus-menu a,
+.menu a {
+  padding: 0.5rem 1rem;
+  display: block;
+  white-space: nowrap;
+  color: #333;
+}
+
+.campus-menu-container:hover .campus-menu,
+.menu-container:hover .menu {
+  display: block;
+}
+
+
+
+/* Adding styles for the cart link */
+.cart-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  color: #EE5B57;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.cart-link:hover {
+  color: #BF360C;
+}
+
+/* Styles for the shopping cart icon */
+.cart-link i {
+  margin-left: 0.5rem;
+}
+
+/* Styles for the cart quantity */
+.cart-quantity {
+  background: #EE5B57;
+  color: #ffffff;
+  padding: 0.2rem 0.5rem;
+  border-radius: 50%;
+  font-size: 0.8rem;
+  margin-left: 0.5rem;
+  position: absolute;
+  top: -5px;
+  right: -10px;
+}
