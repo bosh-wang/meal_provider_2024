@@ -13,4 +13,10 @@ describe('UserService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+  it('設定role之後，要能成功取得其值', () => {
+    const role = 'HR';
+    service.setUserRole(role);
+    expect(service.getUserRole()).toBe(role);
+    // 測試案例內容
+  });
 });

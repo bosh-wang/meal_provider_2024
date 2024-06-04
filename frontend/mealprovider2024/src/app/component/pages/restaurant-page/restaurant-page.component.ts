@@ -46,17 +46,17 @@ import { UserService } from '../../../services/user.service';
 export class RestaurantPageComponent implements OnInit {
   campus_name: Campus_name[] = [];
   food!: FoodRes[];
-  restaurant_id: string = '';
+  
   newfood!: FormGroup;
   newfoodObj: NewFood = new NewFood();
   api_input: ResIDUserRole = {
     role: '',
     restaurant_id: '',
   };
-
+  restid='';
   @Input() userRole:  string | null;
   @Input() userid: string | null = null;
-
+  @Input() restaurant_id:  string | null;
   constructor(
     private foodService: FoodService,
     private activateRoute: ActivatedRoute,
@@ -66,10 +66,13 @@ export class RestaurantPageComponent implements OnInit {
   ) {
     this.userRole = this.userService.getUserRole();
     this.userid = this.userService.getUserId();
+    this.restaurant_id=userService.getrestaurantId();
     console.log('header', this.userRole, this.userid);
     this.activateRoute.params.subscribe((params) => {
       console.log(params, 'params'); // 输出参数
+      this.restid=params['id'];
       if (params['id']) {
+        console.log(params['id'])
         var res_id_user_role: ResIDUserRole = {
           role: this.userRole,
           restaurant_id: params['id'],
@@ -77,9 +80,6 @@ export class RestaurantPageComponent implements OnInit {
         this.api_input = res_id_user_role;
         this.apiService.getFoods(res_id_user_role).subscribe((res) => {
           this.food = res;
-          console.log(res, 'API response');
-          console.log(this.food, 'api response');
-
           if (params['food-searchTerm']) {
             console.log(params['food-searchTerm'], 'input food-searchTerm');
             console.log(this.food, 'inner food data');
@@ -89,6 +89,23 @@ export class RestaurantPageComponent implements OnInit {
             );
             console.log(this.food, 'food-searchTerm results');
           }
+        });
+      }
+      if(params['food-searchTerm']){
+        console.log(this.restid,"restid");
+        var res_id_user_role: ResIDUserRole = {
+          role: this.userRole,
+          restaurant_id: this.restid,
+        };
+        this.api_input = res_id_user_role;
+        this.apiService.getFoods(res_id_user_role).subscribe((res) => {
+        this.food = res;
+        console.log(this.food, 'inner food data');
+        this.food = this.foodService.getAllFoodBySearchTerm(
+          this.food,
+          params['food-searchTerm']
+        );
+        console.log(this.food, 'food-searchTerm results');
         });
       }
     });
@@ -109,8 +126,8 @@ export class RestaurantPageComponent implements OnInit {
     this.newfoodObj.item_name = this.newfood.value.item_name;
     this.newfoodObj.description = this.newfood.value.description;
     this.newfoodObj.price = this.newfood.value.price;
-    this.newfoodObj.imageUrl = this.newfood.value.image_url;
-    this.newfoodObj.availibility = true;
+    this.newfoodObj.image_url = this.newfood.value.image_url;
+    this.newfoodObj.availability = true;
     this.newfoodObj.change_status = 'ADD';
     this.newfoodObj.restaurant_id = this.restaurant_id;
     console.log(this.newfoodObj);

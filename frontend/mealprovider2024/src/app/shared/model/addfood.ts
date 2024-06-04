@@ -1,10 +1,10 @@
 export class NewFood{
     "change_status"!:string;
-    "restaurant_id"!:string;
+    "restaurant_id"!:string|null;
     "category"!:string; 
     "item_name"!: string;  //item_name
     "price"!: number; //price
-    "imageUrl"!: string;  //image_url
+    "image_url"!: string;  //image_url
     "description"?: string; //description
-    "availibility"!: boolean; //availibility
+    "availability"!: boolean; //availibility
   }
