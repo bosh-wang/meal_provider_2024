@@ -21,4 +21,5 @@ EXPOSE 4200
 
 # 启动 Angular 应用
 CMD ["ng", "serve", "--host", "0.0.0.0"]
+# CMD ["npm", "start"]
 

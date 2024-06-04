@@ -1,6 +1,6 @@
 {
   "/api": {
-    "target": "http://35.224.128.24",
+    "target": "http://backend:5000",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
