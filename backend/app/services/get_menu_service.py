@@ -67,7 +67,7 @@ def custom_json_serializer(obj):
 
 #         if role == "employee":
 #             query = """
-#                 SELECT 
+#                 SELECT
 #                     m.item_id,
 #                     m.restaurant_id,
 #                     r.type AS restaurant_type,
@@ -79,15 +79,15 @@ def custom_json_serializer(obj):
 #                     m.availability,
 #                     m.image_url,
 #                     ROUND(AVG(rt.star_rating), 1) AS star_rating
-#                 FROM 
+#                 FROM
 #                     menus_items m
-#                 LEFT JOIN 
+#                 LEFT JOIN
 #                     meals_ratings rt ON m.item_id = rt.item_id
 #                 INNER JOIN
 #                     restaurants r ON m.restaurant_id = r.restaurant_id
-#                 WHERE 
+#                 WHERE
 #                     m.restaurant_id = %s AND m.availability = True
-#                 GROUP BY 
+#                 GROUP BY
 #                     m.item_id,
 #                     m.restaurant_id,
 #                     r.type,
@@ -98,13 +98,13 @@ def custom_json_serializer(obj):
 #                     m.price,
 #                     m.availability,
 #                     m.image_url
-#                 ORDER BY 
+#                 ORDER BY
 #                     m.item_id;
 #             """
 #             cursor.execute(query, (r_id,))
 #         elif role == "restaurant_staff" or role == "HR":
 #             query = """
-#                 SELECT 
+#                 SELECT
 #                     m.item_id,
 #                     m.restaurant_id,
 #                     r.type AS restaurant_type,
@@ -116,15 +116,15 @@ def custom_json_serializer(obj):
 #                     m.availability,
 #                     m.image_url,
 #                     ROUND(AVG(rt.star_rating), 1) AS star_rating
-#                 FROM 
+#                 FROM
 #                     menus_items m
-#                 LEFT JOIN 
+#                 LEFT JOIN
 #                     meals_ratings rt ON m.item_id = rt.item_id
 #                 INNER JOIN
 #                     restaurants r ON m.restaurant_id = r.restaurant_id
-#                 WHERE 
+#                 WHERE
 #                     m.restaurant_id = %s
-#                 GROUP BY 
+#                 GROUP BY
 #                     m.item_id,
 #                     m.restaurant_id,
 #                     r.type,
@@ -135,7 +135,7 @@ def custom_json_serializer(obj):
 #                     m.price,
 #                     m.availability,
 #                     m.image_url
-#                 ORDER BY 
+#                 ORDER BY
 #                     m.item_id;
 #             """
 #             cursor.execute(query, (r_id,))
@@ -162,7 +162,6 @@ def custom_json_serializer(obj):
 
 #     except Exception as e:
 #         return jsonify({"error": str(e)}), 500
-
 
 
 def get_menu(data):
@@ -294,8 +293,6 @@ def get_menu(data):
         else:
             return jsonify({"error": "Invalid role"}), 400
 
-        
-
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
@@ -308,22 +305,22 @@ def get_item(data):
         return jsonify({"error": "Missing item_id"}), 400
 
     try:
-        cache_key = f"item:{item_id}"
-        cache_expiry = timedelta(hours=1)
+        # cache_key = f"item:{item_id}"
+        # cache_expiry = timedelta(hours=1)
 
-        start_time = time.time()
+        # start_time = time.time()
 
-        # Check if the data is in Redis cache
-        cached_item = redis_client.get(cache_key)
+        # # Check if the data is in Redis cache
+        # cached_item = redis_client.get(cache_key)
 
-        if cached_item:
-            redis_time = time.time() - start_time
-            print(f"Cache hit, Time taken with Redis: {redis_time:.6f} seconds")
-            return app.response_class(
-                response=cached_item, status=200, mimetype="application/json"
-            )
+        # if cached_item:
+        #     redis_time = time.time() - start_time
+        #     print(f"Cache hit, Time taken with Redis: {redis_time:.6f} seconds")
+        #     return app.response_class(
+        #         response=cached_item, status=200, mimetype="application/json"
+        #     )
 
-        start_time = time.time()
+        # start_time = time.time()
         conn = get_db_connection()
         cursor = conn.cursor(cursor_factory=RealDictCursor)
 
@@ -366,8 +363,8 @@ def get_item(data):
 
         cursor.close()
         conn.close()
-        db_time = time.time() - start_time
-        print(f"Time taken with DB: {db_time:.6f} seconds")
+        # db_time = time.time() - start_time
+        # print(f"Time taken with DB: {db_time:.6f} seconds")
 
         if item is None:
             return jsonify({"error": "Item not found"}), 404
@@ -376,7 +373,7 @@ def get_item(data):
             item, ensure_ascii=False, default=custom_json_serializer
         )
         # Store the result in Redis cache
-        redis_client.setex(cache_key, cache_expiry, json_result)
+        # redis_client.setex(cache_key, cache_expiry, json_result)
         response = app.response_class(
             response=json_result, status=200, mimetype="application/json"
         )
