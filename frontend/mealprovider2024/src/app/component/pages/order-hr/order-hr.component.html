@@ -29,10 +29,10 @@
               <option selected disabled>Month</option>
               <option *ngFor="let month of months" [value]="month.value">{{ month.name }}</option>
             </select>
-            <button class="btn btn-outline-success me-2" type="submit">Search</button>
+            <button class="btn btn-outline-dark me-2" type="submit">Search</button>
           </form>
-          <button type="button" class="btn btn-outline-danger me-2"   (click)="onClick()" data-bs-toggle="modal" data-bs-target="#exampleModal">Notification</button>
-          <button type="button" class="btn btn-outline-primary"   (click)="onClickforPDF()" >Get PDF</button>
+          <button type="button" class="btn btn-outline-dark me-2"   (click)="onClick()" data-bs-toggle="modal" data-bs-target="#exampleModal">Notification</button>
+          <button type="button" class="btn btn-outline-dark"   (click)="onClickforPDF()" >Get PDF</button>
         </div>
       </div>
   </nav>
