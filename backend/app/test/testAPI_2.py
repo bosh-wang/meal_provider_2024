@@ -98,13 +98,13 @@ print("POST /api/data response:", response.json())
 # print("POST /api/data response:", response.json())
 
 # # change order status 好像要先改成去資料庫抓
-# post_data ={
-#     "order_id": 14,
-#     "order_status_before": "PENDING",
-#     "order_status_after": "CONFIRMED"
-# }
-# response = requests.post(f"{base_url}/api/change_order_status", json=post_data)
-# print("POST /api/data response:", response.json())
+post_data ={
+    "order_id": 22,
+    "order_status_before": "PENDING",
+    "order_status_after": "CONFIRMED"
+}
+response = requests.post(f"{base_url}/api/change_order_status", json=post_data)
+print("POST /api/data response:", response.json())
 
 
 # # check order status
