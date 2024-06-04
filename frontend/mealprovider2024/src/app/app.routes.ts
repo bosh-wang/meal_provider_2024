@@ -8,8 +8,9 @@ import { OrderListComponent } from './component/pages/order-list/order-list.comp
 import { OrderAdminComponent } from './component/pages/order-admin/order-admin.component';
 import { OrderDashboardComponent } from './component/pages/order-dashboard/order-dashboard.component';
 import { OrderHRComponent } from './component/pages/order-hr/order-hr.component';
+import { authGuard } from './auth.guard';
 export const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: HomeComponent, canActivate: [authGuard] },
 
   { path: 'search/:searchTerm', component: HomeComponent },
 
