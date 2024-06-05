@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  labels:
+    app: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        # image: ghcr.io/${{ github.repository_owner }}/meal_provider_frontend:${{ github.sha }}
+        image : ghcr.io/estheryang2000/meal_provider_2024-testfronend:latest
+        ports:
+        - containerPort: 4200
+        resources:
+          requests:
+            cpu: 500m
+            memory: 1Gi
+            ephemeral-storage: "2Gi"
+          limits:
+            cpu: 1000m
+            memory: 2Gi
+            ephemeral-storage: "3Gi"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 4200
+          initialDelaySeconds: 60
+          periodSeconds: 30
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 4200
+          initialDelaySeconds: 60
+          periodSeconds: 10
+          timeoutSeconds: 5

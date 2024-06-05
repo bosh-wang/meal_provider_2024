@@ -59,8 +59,8 @@ export class HomeComponent implements OnInit {
       this.campus_name = [{ name: [params['campus-name']] }];
       var name: campus_request = params['campus-name']
         ? {
-            campus: this.campus_name[0] ? this.campus_name[0].name[0] : '',
-          }
+          campus: this.campus_name[0] ? this.campus_name[0].name[0] : '',
+        }
         : { campus: '' };
       this.apiService.getRestaurants(name).subscribe((res) => {
         this.restaurant = res;
@@ -84,13 +84,13 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   httpClient = inject(HttpClient);
 
   /*fetchData() {
     this.httpClient
-      .get('http://35.224.128.24:80/api/restaurants')
+      .get('http://35.224.128.24:80/backend/api/restaurants')
       .subscribe((data: any) => {
         console.log(data);
         this.data = data;
@@ -98,7 +98,7 @@ export class HomeComponent implements OnInit {
   }
   getRestaurant(): Observable<Restaurant> {
     return this.httpClient.post<Restaurant>(
-      '${this.apiUrl}/api/restaurants',
+      '${this.apiUrl}/restaurants',
       {}
     );
   }*/

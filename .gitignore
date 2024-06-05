@@ -1,6 +1,14 @@
+# enviroment
+venv/
 __pycache__
-data
-venv
-config
 .env
-/temp
+#data
+data/
+temp/
+
+#config
+credential.yaml
+config/meal_provider_system.json
+.env
+.angular
+node_modules
