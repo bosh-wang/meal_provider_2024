@@ -1,0 +1,65 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend
+  labels:
+    app: backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: ghcr.io/estheryang2000/meal_provider_2024-backend:<IMAGE_TAG>
+        ports:
+        - containerPort: 5000
+        resources:
+          requests:
+            cpu: 500m
+            memory: 1Gi
+            ephemeral-storage: "2Gi"
+          limits:
+            cpu: 1000m
+            memory: 2Gi
+            ephemeral-storage: "3Gi"
+        env:
+          - name: DB_HOST
+            value: "citus-coordinator-service"
+          - name: DB_NAME
+            value: "postgres"
+          - name: DB_PASSWORD
+            value: "backend"
+          - name: DB_PORT
+            value: "5432"
+          - name: DB_USER
+            value: "backend"
+          - name: SENDER_EMAIL
+            value: "wangbosh66@gmail.com"
+          - name: SENDER_PASSWORD
+            value: "nuys wgiz vyib wqbh"
+          - name: REDIS_HOST
+            value: "redis-service"
+          - name: REDIS_PORT
+            value: "6379"
+        livenessProbe:
+          httpGet:
+            path: /backend
+            port: 5000
+          initialDelaySeconds: 180
+          timeoutSeconds: 10
+          periodSeconds: 30
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /backend
+            port: 5000
+          initialDelaySeconds: 30
+          timeoutSeconds: 10
+          periodSeconds: 10
+          failureThreshold: 3

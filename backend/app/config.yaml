@@ -1,0 +1,6 @@
+GCP:
+  database : "postgres"
+  host : "localhost"
+  user : "backend"
+  password : "backend"
+  port : 5432
