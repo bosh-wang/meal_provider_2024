@@ -1,0 +1,31 @@
+<app-search></app-search>
+<app-restaurant-type></app-restaurant-type>
+<app-not-found [visible]="!restaurant || !restaurant.length" notFoundMessage="查無此餐廳!"
+  resetLinkText="返回首頁"></app-not-found>
+
+<ul>
+  <li *ngFor="let item of restaurant">
+    <a routerLink="/restaurant/{{item.restaurant_id}}">
+      <img [src]="item.image_url" [alt]="item.name">
+      <div class="content">
+        <div class="name">
+          {{item.name}}
+        </div>
+        <div class="product-item-footer">
+          <div class="campus">
+            <span>{{item.campus}}</span>
+          </div>
+          <div class="fab">
+            <span>工廠: {{item.campus_building}}</span>
+          </div>
+          <div class="canteen">
+            <span>食堂: {{item.canteen_number}}</span>
+          </div>
+          <div class="origins">
+            <span>{{item.type}}</span>
+          </div>
+        </div>
+      </div>
+    </a>
+  </li>
+</ul>

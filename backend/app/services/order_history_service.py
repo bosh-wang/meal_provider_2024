@@ -2,6 +2,7 @@ from datetime import datetime
 import psycopg2
 from dotenv import load_dotenv
 import os
+import pytz
 
 # load_dotenv()
 
@@ -52,7 +53,7 @@ def get_order_history_service_for_employee(data):
             cursor.execute(
                 """SELECT 
                            item_id, 
-                           quantity, 
+                           quantity,
                            price FROM 
                            orders_items WHERE 
                            order_id = %s""",
@@ -62,21 +63,29 @@ def get_order_history_service_for_employee(data):
             item_list = []
             for item_id, quantity, item_total_price in items:
                 cursor.execute(
-                    "SELECT item_name FROM menus_items WHERE item_id = %s", (item_id,)
+                    "SELECT item_name,image_url FROM menus_items WHERE item_id = %s",
+                    (item_id,),
                 )
                 item_name = cursor.fetchall()
                 item_list.append(
                     {
                         "item_id": item_id,
-                        "item_name": item_name,
+                        "item_name": item_name[0][0],
+                        "image_url": item_name[0][1],
                         "quantity": quantity,
                         "unit_price": item_total_price / quantity,
                     }
                 )
+            # Convert order_date to UTC+8
+            utc = pytz.utc
+            utc8 = pytz.timezone("Asia/Shanghai")
+            order_date_utc = order_date.replace(tzinfo=utc)
+            order_date_utc8 = order_date_utc.astimezone(utc8)
+
             order_history.append(
                 {
                     "order_id": order_id,
-                    "order_date": order_date.strftime("%Y-%m-%dT%H:%M:%S"),
+                    "order_date": order_date_utc8.strftime("%Y-%m-%dT%H:%M:%S"),
                     "items": item_list,
                     "total_price": total_price,
                     "order_status": order_status,
@@ -143,7 +152,15 @@ def get_order_history_service_for_hr(data):
             )
             employee_info = cursor.fetchall()
 
+            print(order_date)
+
             department, position = employee_info[0][0], employee_info[0][1]
+
+            # Convert order_date to UTC+8
+            utc = pytz.utc
+            utc8 = pytz.timezone("Asia/Shanghai")
+            order_date_utc = order_date.replace(tzinfo=utc)
+            order_date_utc8 = order_date_utc.astimezone(utc8)
 
             order_history.append(
                 {
@@ -151,7 +168,7 @@ def get_order_history_service_for_hr(data):
                     "department": department,
                     "position": position,
                     "order_id": order_id,
-                    "order_date": order_date.strftime("%Y-%m-%dT%H:%M:%S"),
+                    "order_date": order_date_utc.strftime("%Y-%m-%dT%H:%M:%S"),
                     "total_price": total_price,
                     "paid": paid,
                 }
@@ -226,7 +243,7 @@ def get_order_history_service_for_restaurant(data):
             cursor.execute(
                 """SELECT 
                            item_id, 
-                           quantity, 
+                           quantity,
                            price FROM 
                            orders_items WHERE 
                            order_id = %s""",
@@ -236,17 +253,38 @@ def get_order_history_service_for_restaurant(data):
             item_list = []
             for item_id, quantity, item_total_price in items:
                 cursor.execute(
-                    "SELECT item_name FROM menus_items WHERE item_id = %s", (item_id,)
+                    "SELECT item_name,image_url FROM menus_items WHERE item_id = %s",
+                    (item_id,),
                 )
                 item_name = cursor.fetchall()
                 item_list.append(
                     {
                         "item_id": item_id,
-                        "item_name": item_name,
+                        "item_name": item_name[0][0],
+                        "image_url": item_name[0][1],
                         "quantity": quantity,
                         "unit_price": item_total_price / quantity,
                     }
                 )
+
+            # Convert order_date to UTC+8
+            utc = pytz.utc
+            utc8 = pytz.timezone("Asia/Shanghai")
+            date_utc = order_date.replace(tzinfo=utc)
+            order_date = date_utc.astimezone(utc8)
+            if confirmed_date:
+                date_utc = confirmed_date.replace(tzinfo=utc)
+                confirmed_date = date_utc.astimezone(utc8)
+            if prepared_date:
+                date_utc = prepared_date.replace(tzinfo=utc)
+                prepared_date = date_utc.astimezone(utc8)
+            if completed_date:
+                date_utc = completed_date.replace(tzinfo=utc)
+                completed_date = date_utc.astimezone(utc8)
+            if canceled_date:
+                date_utc = canceled_date.replace(tzinfo=utc)
+                canceled_date = date_utc.astimezone(utc8)
+
             order_history.append(
                 {
                     "customer_id": user_id,
