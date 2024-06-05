@@ -38,7 +38,7 @@ export class FoodPageComponent implements OnInit {
   newPrice!: number;
   @Input() userRole: string | null = null;
   @Input() userid: string | null = null;
-
+  @Input() rest_id:  string | null;
   constructor(
     private activatedRoute: ActivatedRoute,
     private foodService: FoodService,
@@ -57,6 +57,7 @@ export class FoodPageComponent implements OnInit {
         next: res => {
           console.log(res);
           this.food = res;
+
           //console.log(this.food, 'api response');
        /* if (params['food-id']) {
           console.log(params['food-id'], 'params food id');
@@ -73,7 +74,7 @@ export class FoodPageComponent implements OnInit {
       });
     });
     this.userRole = this.userService.getUserRole();
-
+    this.rest_id=userService.getrestaurantId();
     this.userid = this.userService.getUserId();
     console.log(this.userRole,this.food);
   }
