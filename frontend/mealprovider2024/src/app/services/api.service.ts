@@ -36,7 +36,7 @@ export class ApiService {
   getmenuURL: string;
   menu_itemURL: string;
   constructor(private http: HttpClient) {
-    this.apiURL = 'http://backend:5000/api/';
+    this.apiURL = 'http://35.224.128.24:80/backend/api/';
     this.getrestaurantURL = this.apiURL + 'restaurants';
     this.getmenuURL = this.apiURL + 'menu';
     this.loginURL = this.apiURL + 'signin';

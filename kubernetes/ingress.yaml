@@ -23,9 +23,20 @@ spec:
     - http:
         paths:
           - pathType: Prefix
-            path: "/"
+            path: "/backend"
             backend:
               service:
                 name: backend
                 port:
                   number: 5000
+    - http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: frontend
+                port:
+                  number: 4200
+                
+            

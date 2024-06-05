@@ -90,7 +90,7 @@ export class HomeComponent implements OnInit {
 
   fetchData() {
     this.httpClient
-      .get('http://backend:5000/api/restaurants')
+      .get('http://35.224.128.24:80/backend/api/restaurants')
       .subscribe((data: any) => {
         console.log(data);
         this.data = data;
@@ -98,7 +98,7 @@ export class HomeComponent implements OnInit {
   }
   getRestaurant(): Observable<Restaurant> {
     return this.httpClient.post<Restaurant>(
-      '${this.apiUrl}/api/restaurants',
+      '${this.apiUrl}/restaurants',
       {}
     );
   }
