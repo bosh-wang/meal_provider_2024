@@ -53,4 +53,4 @@ jobs:
       
       - name: Deploy the frontend service
         run: |
-          kubectl apply -f kubernetes/backend/deploy-frontend.yaml --validate=false
+          kubectl apply -f kubernetes/frontend/deploy-frontend.yaml --validate=false
