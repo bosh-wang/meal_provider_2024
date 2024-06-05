@@ -70,12 +70,18 @@ export class HomeComponent implements OnInit {
             this.restaurant,
             params['searchTerm']
           );
+          console.log(this.restaurant[0].name);
         }
         if (params['tag-type']) {
           this.restaurant = this.restaurantService.getAllRestaurantByTag(
             this.restaurant,
             params['tag-type']
           );
+          console.log(this.restaurant[0].name);
+        }
+        if(params['campus-name']){
+          this.restaurant=restaurantService.getAllRestaurantByCampus(this.restaurant,params['campus-name']);
+          console.log(this.restaurant[0].name);
         }
       });
 
