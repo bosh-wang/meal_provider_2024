@@ -6,7 +6,7 @@
 <!--<app-tag></app-tag>-->
 <app-not-found [visible]="!food || !food.length" notFoundMessage="查無此餐點!" resetLinkText="返回首頁"></app-not-found>
 <div class="container">
-  <button data-bs-toggle="modal" data-bs-target="#exampleModal" *ngIf="userRole === 'restaurant_staff'">Add
+  <button data-bs-toggle="modal" data-bs-target="#exampleModal" *ngIf="userRole === 'restaurant_staff' && restaurant_id===restid">Add
     Food</button>
 </div>
 <ul>

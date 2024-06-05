@@ -45,7 +45,7 @@
 
     <button (click)="addToCart()"> Add to Cart</button>
 
-    <div class="button-options" *ngIf="userRole === 'restaurant_staff'">
+    <div class="button-options" *ngIf="userRole === 'restaurant_staff' && rest_id===food.restaurant_id">
       <!-- <button type="submit">Add Food</button> -->
       <button data-bs-toggle="modal" data-bs-target="#deleteModal"> Delete Food</button>
       <button data-bs-toggle="modal" data-bs-target="#adjustModal"> Update Price</button>

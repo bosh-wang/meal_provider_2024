@@ -65,6 +65,7 @@ export class HomeComponent implements OnInit {
         : { campus: '' };
       this.apiService.getRestaurants(name).subscribe((res) => {
         this.restaurant = res;
+        console.log(this.restaurant);
         if (params['searchTerm']) {
           this.restaurant = this.restaurantService.getAllRestaurantBySearchTerm(
             this.restaurant,
