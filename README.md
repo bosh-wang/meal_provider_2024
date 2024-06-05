@@ -17,7 +17,7 @@ cd backend/
 pip install requirements.txt
 cd app/
 ```
-# 取得資料庫資料 get_information.py
+## 取得資料庫資料 get_information.py
 python get_information.py
 
 # 點餐 order_service.py
