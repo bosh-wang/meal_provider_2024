@@ -7,38 +7,53 @@ base_url = "http://127.0.0.1:5000"
 response = requests.get(f"{base_url}/")
 print("Home endpoint response:", response.text)
 
-# # sign in
-# post_data = {
-#     "role": "restaurant_staff",
-#     "email": "ranbirkapoor@tsmc.com",
-#     "password_hash": "0b14d501a594442a01c6859541bcb3e8164d183d32937b851835442f69d5c94e"
-# }
+# # # sign in
+# post_data = {"password": "~j@;_R,.qD=|", "role": "HR", "email": "hughjackman@tsmc.com"}
 # response = requests.post(f"{base_url}/api/signin", json=post_data)
 # print("POST /api/data response:", response.json())
 
+
+# "role": "restaurant_staff",
+# "email": "ranbirkapoor@tsmc.com",
+# "password": "*fqyav|){Nc0"
+
+
+# "password": ":]!,-[^N86Lj",
+# "role": "employee",
+# "email": "jakegyllenhaal@tsmc.com"
+
+
 # # get restaurant
-# post_data = {
-#     "campus": "南科嘉義園區"
-# }
+# post_data = {"campus": "竹科竹科園區"}
+
+# response = requests.post(f"{base_url}/api/restaurants", json=post_data)
+# print("POST /api/data response:", response.json())
 # post_data = {
 # }
 # response = requests.post(f"{base_url}/api/restaurants", json=post_data)
 # print("POST /api/data response:", response.json())
 
+
 # # get menu
 ## 餐廳管理員
-# post_data = {
-#     "role": "restaurant_staff",
-#     "restaurant_id": "restaurant003"
-# }
+post_data = {"role": "restaurant_staff", "restaurant_id": "restaurant003"}
 ## 員工
 post_data = {"role": "employee", "restaurant_id": "restaurant003"}
 response = requests.post(f"{base_url}/api/menu", json=post_data)
+
 print("POST /api/data response:", response.json())
 
-post_data = {"role": "restaurant_staff", "restaurant_id": "restaurant007"}
-response = requests.post(f"{base_url}/api/menu", json=post_data)
+
+# api/menu_item
+post_data = {"item_id": "item809"}
+response = requests.post(f"{base_url}/api/menu_item", json=post_data)
+print(response)
 print("POST /api/data response:", response.json())
+
+
+# post_data = {"role": "restaurant_staff", "restaurant_id": "restaurant007"}
+# response = requests.post(f"{base_url}/api/menu", json=post_data)
+# print("POST /api/data response:", response.json())
 # # adjust menu-add
 # post_data = {
 #     "change_status": "ADD",
@@ -82,7 +97,7 @@ print("POST /api/data response:", response.json())
 
 # # change order status 好像要先改成去資料庫抓
 # post_data ={
-#     "order_id": 14,
+#     "order_id": 22,
 #     "order_status_before": "PENDING",
 #     "order_status_after": "CONFIRMED"
 # }
@@ -100,21 +115,18 @@ print("POST /api/data response:", response.json())
 
 ## 購物車部分
 # # 更新購物車
-# post_data ={
-#    "cart_status": "update",
-#    "user_id": "user03",
-#    "item_id": "item003",
-#    "quantity": 2
+# post_data = {
+#     "cart_status": "update",
+#     "user_id": "user03",
+#     "item_id": "item023",
+#     "quantity": 2,
 # }
 # response = requests.post(f"{base_url}/api/update_cart", json=post_data)
 # print("POST /api/data response:", response.json())
 
 
 # # 查看購物車
-# post_data ={
-#    "cart_status": "check",
-#    "user_id": "user03"
-# }
+# post_data = {"cart_status": "check", "user_id": "user03"}
 
 # #送出訂單
 # post_data ={

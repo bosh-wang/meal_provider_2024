@@ -131,15 +131,26 @@ def get_restaurant(data):
             print("有輸入")
             # Query to fetch restaurant_ids based on campus
             query = """
-                SELECT r.restaurant_id, r.type AS restaurant_type, r.name AS restaurant_name, r.image_url, rs.campus_building, rs.canteen_number
-                FROM restaurants r
-                JOIN restaurants_stands rs ON r.restaurant_id = rs.restaurant_id
-                WHERE rs.campus = %s
-                ORDER BY r.restaurant_id;
+                SELECT 
+                    r.restaurant_id, 
+                    r.type AS restaurant_type, 
+                    r.name AS restaurant_name, 
+                    r.image_url, 
+                    rs.campus_building, 
+                    rs.canteen_number, 
+                    rs.campus
+                FROM 
+                    restaurants r
+                JOIN 
+                    restaurants_stands rs ON r.restaurant_id = rs.restaurant_id
+                WHERE 
+                    rs.campus = %s
+                ORDER BY 
+                    r.restaurant_id;
             """
             cursor.execute(query, (campus,))
         else:
-            campus = "no_filter"
+            campus = "no_filterss"
             cache_key = f"restaurants:{campus}"
             cache_expiry = timedelta(hours=1)
 
@@ -159,9 +170,20 @@ def get_restaurant(data):
             print("沒輸入")
             # Query to fetch all restaurants
             query = """
-                SELECT restaurant_id, type AS restaurant_type, name AS restaurant_name, image_url
-                FROM restaurants
-                ORDER BY restaurant_id;
+                SELECT 
+                    rs.restaurant_id,
+                    rs.type,
+                    rs.name,
+                    r.image_url,
+                    rs.campus_building,
+                    rs.canteen_number,
+                    rs.campus
+                FROM 
+                    restaurants_stands rs
+                JOIN 
+                    restaurants r ON rs.restaurant_id = r.restaurant_id
+                ORDER BY 
+                    rs.restaurant_id;
             """
             cursor.execute(query)
 

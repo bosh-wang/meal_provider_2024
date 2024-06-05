@@ -12,7 +12,7 @@ class FlaskTestCase(unittest.TestCase):
         self.assertEqual(result.status_code, 200)
 
     def test_home_data(self):
-        result = self.app.get("/")
+        result = self.app.get("/backend")
         self.assertEqual(result.data.decode("utf-8"), "Hello, I am alive!")
 
 
