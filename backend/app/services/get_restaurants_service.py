@@ -133,8 +133,8 @@ def get_restaurant(data):
             query = """
                 SELECT 
                     r.restaurant_id, 
-                    r.type AS restaurant_type, 
-                    r.name AS restaurant_name, 
+                    r.type, 
+                    r.name, 
                     r.image_url, 
                     rs.campus_building, 
                     rs.canteen_number, 
