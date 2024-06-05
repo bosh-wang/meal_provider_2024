@@ -16,9 +16,7 @@ spec:
     spec:
       containers:
       - name: frontend
-        # image: ghcr.io/estheryang2000/meal_provider_frontend:309739ba4e92855e5901d0eebd93ed7cbf61d79c
-        image: ghcr.io/estheryang2000/meal_provider_frontend:<IMAGE_TAG>
-        imagePullPolicy: Always
+        image: ghcr.io/estheryang2000/meal_provider_2024-frontend:<IMAGE_TAG>
         # image: ghcr.io/${{ github.repository_owner }}/meal_provider_frontend:${{ github.sha }}
         # image : ghcr.io/estheryang2000/meal_provider_2024-testfronend:latest
         ports:
