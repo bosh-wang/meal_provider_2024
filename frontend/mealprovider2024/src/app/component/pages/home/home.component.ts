@@ -22,7 +22,6 @@ import { Restaurant } from '../../../shared/model/Restaurant';
 import { RestaurantService } from '../../../services/restaurant.service';
 import { RestaurantTypeComponent } from '../restaurant-type/restaurant-type.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { json } from 'stream/consumers';
 import { ApiService } from '../../../services/api.service';
 import { Campus_name } from '../../../shared/model/Campus_name';
 
@@ -35,6 +34,7 @@ import { Campus_name } from '../../../shared/model/Campus_name';
     RouterOutlet,
     RouterLink,
     RouterLinkActive,
+    
     SearchComponent,
     TagComponent,
     NotFoundComponent,
@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit {
   restaurant: Restaurantinfomation[] = [];
   data: any[] = [];
   campus_name: Campus_name[] = [];
-  //private apiUrl = 'http://35.224.128.24:80';
+  
 
   constructor(
     private restaurantService: RestaurantService,
@@ -56,6 +56,7 @@ export class HomeComponent implements OnInit {
     private apiService: ApiService
   ) {
     this.activateRoute.params.subscribe((params) => {
+      console.log(params)
       this.campus_name = [{ name: [params['campus-name']] }];
       var name: campus_request = params['campus-name']
         ? {
@@ -88,18 +89,5 @@ export class HomeComponent implements OnInit {
 
   httpClient = inject(HttpClient);
 
-  /*fetchData() {
-    this.httpClient
-      .get('http://35.224.128.24:80/backend/api/restaurants')
-      .subscribe((data: any) => {
-        console.log(data);
-        this.data = data;
-      });
-  }
-  getRestaurant(): Observable<Restaurant> {
-    return this.httpClient.post<Restaurant>(
-      '${this.apiUrl}/restaurants',
-      {}
-    );
-  }*/
+  
 }
