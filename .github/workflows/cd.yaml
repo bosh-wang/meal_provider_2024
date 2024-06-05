@@ -51,6 +51,11 @@ jobs:
         run: |
           kubectl apply -f kubernetes/backend/deploy-backend.yaml --validate=false
       
+      - name: Set up Kubernetes config
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > $HOME/.kube/config
+
       - name: Deploy the frontend service
         run: |
           kubectl apply -f kubernetes/frontend/deploy-frontend.yaml --validate=false
