@@ -10,7 +10,6 @@ jobs:
   deploy:
     if: github.event.pull_request.merged == true && (github.event.pull_request.head.ref == 'backend_sharon' || github.event.pull_request.head.ref == 'frontend/willie')
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repository
       uses: actions/checkout@v2
