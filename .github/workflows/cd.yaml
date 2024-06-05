@@ -8,7 +8,7 @@ on:
 
 jobs:
   deploy:
-    if: github.event.pull_request.merged == true && github.event.pull_request.head.ref == 'backend_sharon'
+    if: github.event.pull_request.merged == true && (github.event.pull_request.head.ref == 'backend_sharon' || github.event.pull_request.head.ref == 'frontend/willie')
     runs-on: ubuntu-latest
 
     steps:
@@ -18,22 +18,39 @@ jobs:
       - name: Log in to GitHub Container Registry
         run: echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Build Docker image
+      - name: Build Docker Backend image
         working-directory: ./backend
         run: docker build -t ghcr.io/estheryang2000/meal_provider_2024-backend:${{ github.sha }} .
 
-      - name: Push Docker image
+      - name: Push Docker Backend image
         working-directory: ./backend
         run: docker push ghcr.io/estheryang2000/meal_provider_2024-backend:${{ github.sha }}
+      
+      - name: Build Docker Frontend image
+        working-directory: ./frontend/mealprovider2024
+        run: docker build -t ghcr.io/estheryang2000/meal_provider_2024-frontend:${{ github.sha }} .
+      
+      - name: Push Docker Frontend image
+        working-directory: ./frontend/mealprovider2024
+        run: docker push ghcr.io/estheryang2000/meal_provider_2024-frontend:${{ github.sha }}
 
-      - name: Replace image in deployment yaml
+      - name: Replace backend image in deployment yaml
         run: |
           sed -i "s|<IMAGE_TAG>|${{ github.sha }}|g" kubernetes/backend/deploy-backend.yaml
+
+      - name: Replace backend image in deployment yaml
+        run: |
+          sed -i "s|<IMAGE_TAG>|${{ github.sha }}|g" kubernetes/frontend/deploy-frontend.yaml
 
       - name: Set up Kubernetes config
         run: |
           mkdir -p $HOME/.kube
           echo "${{ secrets.KUBE_CONFIG }}" | base64 -d > $HOME/.kube/config
-      - name: Deploy
+
+      - name: Deploy the backend service
         run: |
           kubectl apply -f kubernetes/backend/deploy-backend.yaml --validate=false
+      
+      - name: Deploy the frontend service
+        run: |
+          kubectl apply -f kubernetes/backend/deploy-frontend.yaml --validate=false
